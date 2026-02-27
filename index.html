@@ -1044,7 +1044,7 @@
         <div class="why-card-tag">⭐ Top Reason</div>
         <span class="why-emoji">🏆</span>
         <div class="why-title">Maths Specialist</div>
-        <p class="why-desc">Sian holds a BSc in Primary Education specialising in maths, and is a maths lead at school. She knows exactly how to make numbers click for children aged&nbsp;4–10.</p>
+        <p class="why-desc">Sian holds a BSc in Primary Education specialising in maths, and is a maths lead at school. She knows exactly how to make numbers click for children aged <span style="white-space:nowrap;">4–10.</span></p>
       </div>
       <div class="why-card reveal">
         <span class="why-emoji">👥</span>
@@ -1729,7 +1729,7 @@
     const funNums = document.querySelectorAll('.fun-fact-num');
     const configs = [
       { count: 10, suffix: '+' }, { count: 4, suffix: '' },
-      { count: 4, suffix: '' },   { count: 10, suffix: '' },
+      null,                        { count: 100, suffix: '%' },
     ];
     funNums.forEach((el, i) => {
       if (configs[i]) {
