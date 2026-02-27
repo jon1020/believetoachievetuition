@@ -739,180 +739,133 @@
     }
 
     /* ── BOOKING WIDGET ── */
-    #booking-widget-scope {
-      --bw-cream: #FAF7F2; --bw-ink: #1A1814; --bw-bark: #6B5B45;
-      --bw-gold: #C9963A; --bw-sage: #7A9E7E; --bw-blush: #E8DDD0;
-      --bw-white: #FFFFFF; --bw-red: #c0392b;
-    }
-    .bw-widget { width: 100%; max-width: 580px; background: var(--bw-white); border-radius: 20px; overflow: hidden; box-shadow: 0 8px 60px rgba(26,24,20,0.12), 0 2px 12px rgba(26,24,20,0.06); font-family: 'Nunito', sans-serif; }
-    .bw-header { background: var(--bw-ink); padding: 2rem 2.5rem; position: relative; overflow: hidden; }
-    .bw-header::after { content: ''; position: absolute; top: -30px; right: -30px; width: 140px; height: 140px; background: var(--bw-gold); border-radius: 50%; opacity: 0.15; }
-    .bw-header h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--bw-white); line-height: 1.2; position: relative; z-index: 1; }
-    .bw-header p { color: var(--bw-gold); font-size: 0.875rem; margin-top: 0.35rem; font-weight: 600; position: relative; z-index: 1; }
-    .bw-body { padding: 2rem 2.5rem 2.5rem; }
+    /* ── BOOKING WIDGET ── */
+    .bw-widget { width: 100%; max-width: 580px; background: var(--warm-white); border-radius: 20px; overflow: hidden; box-shadow: 0 8px 60px rgba(10,46,46,0.14), 0 2px 12px rgba(10,46,46,0.08); font-family: 'Nunito', sans-serif; }
+    .bw-header { background: var(--brown); padding: 2rem 2.5rem; position: relative; overflow: hidden; }
+    .bw-header::after { content: ''; position: absolute; top: -30px; right: -30px; width: 140px; height: 140px; background: var(--amber); border-radius: 50%; opacity: 0.15; }
+    .bw-header h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--warm-white); line-height: 1.2; position: relative; z-index: 1; }
+    .bw-header p { color: var(--gold); font-size: 0.875rem; margin-top: 0.35rem; font-weight: 700; position: relative; z-index: 1; letter-spacing: 0.03em; }
+    .bw-body { padding: 2rem 2.5rem 2.5rem; background: var(--warm-white); }
     .bw-steps { display: flex; gap: 0.5rem; margin-bottom: 2rem; align-items: center; }
-    .bw-step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--bw-blush); transition: all 0.3s; }
-    .bw-step-dot.bw-active { background: var(--bw-gold); width: 24px; border-radius: 4px; }
-    .bw-step-dot.bw-done { background: var(--bw-sage); }
+    .bw-step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all 0.3s; }
+    .bw-step-dot.bw-active { background: var(--amber); width: 24px; border-radius: 4px; }
+    .bw-step-dot.bw-done { background: var(--sage); }
     .bw-section { display: none; }
     .bw-section.bw-active { display: block; animation: bwFadeIn 0.3s ease; }
     @keyframes bwFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-    .bw-section-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--bw-ink); margin-bottom: 1.25rem; }
-    .bw-info-note { background: #f0f7f1; border: 1px solid #c3dfc7; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.82rem; color: #4a7a50; margin-bottom: 1.1rem; line-height: 1.5; }
-    .bw-child-card { border: 1.5px solid var(--bw-blush); border-radius: 14px; padding: 1rem 1.1rem; margin-bottom: 0.75rem; animation: bwFadeIn 0.25s ease; }
+    .bw-section-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--text); margin-bottom: 1.25rem; }
+    .bw-info-note { background: var(--sage-pale); border: 1px solid var(--sage-light); border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.82rem; color: var(--brown-mid); margin-bottom: 1.1rem; line-height: 1.5; }
+    .bw-child-card { border: 1.5px solid var(--border); border-radius: 14px; padding: 1rem 1.1rem; margin-bottom: 0.75rem; animation: bwFadeIn 0.25s ease; background: var(--cream); }
     .bw-child-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
-    .bw-child-tag { font-size: 0.72rem; font-weight: 700; color: var(--bw-bark); text-transform: uppercase; letter-spacing: 0.06em; }
-    .bw-child-name-display { font-size: 0.95rem; font-weight: 600; color: var(--bw-ink); margin-top: 0.1rem; }
+    .bw-child-tag { font-size: 0.72rem; font-weight: 700; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.06em; }
+    .bw-child-name-display { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-top: 0.1rem; }
     .bw-child-session-row { display: flex; justify-content: space-between; align-items: center; }
-    .bw-s-label { font-size: 0.85rem; color: var(--bw-bark); }
-    .bw-s-time { font-size: 0.78rem; color: var(--bw-bark); opacity: 0.7; margin-top: 0.15rem; }
+    .bw-s-label { font-size: 0.85rem; color: var(--text-mid); }
+    .bw-s-time { font-size: 0.78rem; color: var(--text-light); margin-top: 0.15rem; }
     .bw-s-price { font-size: 0.9rem; font-weight: 700; text-align: right; }
-    .bw-remove-child-btn { background: none; border: none; cursor: pointer; color: var(--bw-bark); font-size: 0.78rem; opacity: 0.5; transition: opacity 0.2s, color 0.2s; display: flex; align-items: center; gap: 0.25rem; padding: 0; }
-    .bw-remove-child-btn:hover { opacity: 1; color: var(--bw-red); }
-    .bw-adding-form { border: 1.5px solid var(--bw-gold); border-radius: 14px; padding: 1.1rem; margin-bottom: 0.75rem; background: #FEFCF8; }
-    .bw-adding-form-title { font-size: 0.75rem; font-weight: 700; color: var(--bw-gold); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.9rem; }
-    .bw-name-field label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--bw-bark); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
-    .bw-name-field input { width: 100%; padding: 0.75rem 1rem; border: 1.5px solid var(--bw-blush); border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; color: var(--bw-ink); background: var(--bw-white); outline: none; transition: border-color 0.2s; }
-    .bw-name-field input:focus { border-color: var(--bw-gold); }
-    .bw-name-field input.bw-error { border-color: var(--bw-red); }
-    .bw-form-label { font-size: 0.75rem; font-weight: 600; color: var(--bw-bark); text-transform: uppercase; letter-spacing: 0.05em; margin: 0.9rem 0 0.5rem; display: block; }
+    .bw-remove-child-btn { background: none; border: none; cursor: pointer; color: var(--text-light); font-size: 0.78rem; opacity: 0.6; transition: opacity 0.2s, color 0.2s; display: flex; align-items: center; gap: 0.25rem; padding: 0; font-family: 'Nunito', sans-serif; }
+    .bw-remove-child-btn:hover { opacity: 1; color: var(--amber); }
+    .bw-adding-form { border: 1.5px solid var(--amber); border-radius: 14px; padding: 1.1rem; margin-bottom: 0.75rem; background: var(--amber-pale); }
+    .bw-adding-form-title { font-size: 0.75rem; font-weight: 700; color: var(--amber); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.9rem; }
+    .bw-name-field label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+    .bw-name-field input { width: 100%; padding: 0.75rem 1rem; border: 1.5px solid var(--border); border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; color: var(--text); background: var(--warm-white); outline: none; transition: border-color 0.2s; }
+    .bw-name-field input:focus { border-color: var(--amber); }
+    .bw-name-field input.bw-error { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(224,90,78,0.15); }
+    .bw-form-label { font-size: 0.75rem; font-weight: 700; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.05em; margin: 0.9rem 0 0.5rem; display: block; }
     .bw-session-opts { display: grid; gap: 0.55rem; }
-    .bw-session-opt { border: 1.5px solid var(--bw-blush); border-radius: 11px; padding: 0.8rem 1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: border-color 0.15s, background 0.15s; background: var(--bw-white); }
-    .bw-session-opt:hover { border-color: var(--bw-bark); background: var(--bw-cream); }
-    .bw-session-opt.bw-selected { border-color: var(--bw-gold); background: #FDF8F0; }
-    .bw-opt-label { font-size: 0.875rem; font-weight: 600; color: var(--bw-ink); }
-    .bw-opt-sub { font-size: 0.75rem; color: var(--bw-bark); margin-top: 0.1rem; }
-    .bw-opt-price { font-size: 0.95rem; font-weight: 700; color: var(--bw-ink); flex-shrink: 0; margin-left: 0.75rem; }
-    .bw-session-opt.bw-selected .bw-opt-price::before { content: '✓ '; color: var(--bw-gold); }
+    .bw-session-opt { border: 1.5px solid var(--border); border-radius: 11px; padding: 0.8rem 1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: border-color 0.15s, background 0.15s; background: var(--warm-white); }
+    .bw-session-opt:hover { border-color: var(--sage); background: var(--sage-pale); }
+    .bw-session-opt.bw-selected { border-color: var(--amber); background: var(--amber-pale); }
+    .bw-opt-label { font-size: 0.875rem; font-weight: 600; color: var(--text); }
+    .bw-opt-sub { font-size: 0.75rem; color: var(--text-light); margin-top: 0.1rem; }
+    .bw-opt-price { font-size: 0.95rem; font-weight: 700; color: var(--text); flex-shrink: 0; margin-left: 0.75rem; }
+    .bw-session-opt.bw-selected .bw-opt-price::before { content: '✓ '; color: var(--amber); }
     .bw-time-slot-wrap { display: none; margin-top: 0.9rem; }
-    .bw-time-slot-wrap.bw-visible { display: block; background: #FEFCF8; border: 1.5px solid var(--bw-gold); border-radius: 12px; padding: 0.85rem 1rem; }
-    .bw-time-slot-wrap.bw-visible .bw-form-label { color: var(--bw-gold); font-weight: 800; }
+    .bw-time-slot-wrap.bw-visible { display: block; background: var(--sage-pale); border: 2px solid var(--sage); border-radius: 12px; padding: 0.85rem 1rem; }
+    .bw-time-slot-wrap.bw-visible .bw-form-label { color: var(--sage); font-weight: 800; font-size: 0.8rem; }
     .bw-time-slots { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    .bw-ts-btn { padding: 0.55rem 1.25rem; border-radius: 9px; border: 2px solid var(--bw-gold); background: var(--bw-white); font-family: 'Nunito', sans-serif; font-size: 0.875rem; font-weight: 600; color: var(--bw-ink); cursor: pointer; transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1); }
-    .bw-ts-btn:hover:not(:disabled) { background: var(--bw-gold) !important; color: var(--bw-white) !important; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(201,150,58,0.3); }
-    .bw-ts-btn.bw-selected { background: var(--bw-gold) !important; border-color: var(--bw-gold) !important; color: var(--bw-white) !important; font-weight: 700; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,150,58,0.3); }
-    .bw-ts-btn:disabled { background: var(--bw-blush); border-color: var(--bw-blush); color: #aaa; cursor: not-allowed; text-decoration: line-through; opacity: 0.7; }
+    .bw-ts-btn { padding: 0.6rem 1.4rem; border-radius: 9px; border: 2px solid var(--sage); background: var(--warm-white); font-family: 'Nunito', sans-serif; font-size: 0.875rem; font-weight: 600; color: var(--brown); cursor: pointer; transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1); }
+    .bw-ts-btn:hover:not(:disabled) { background: var(--sage); color: white; border-color: var(--sage); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(42,140,140,0.3); }
+    .bw-ts-btn.bw-selected { background: var(--sage); border-color: var(--sage); color: white; font-weight: 700; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(42,140,140,0.3); }
+    .bw-ts-btn:disabled { background: var(--cream); border-color: var(--border); color: var(--text-light); cursor: not-allowed; text-decoration: line-through; opacity: 0.6; }
     .bw-form-btns { display: flex; gap: 0.5rem; margin-top: 0.9rem; }
-    .bw-btn-confirm { flex: 1; padding: 0.7rem; border-radius: 10px; background: var(--bw-ink); color: var(--bw-white); border: 2px solid var(--bw-ink); font-family: 'Nunito', sans-serif; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-    .bw-btn-confirm:hover { background: var(--bw-white) !important; color: var(--bw-ink) !important; border-color: var(--bw-ink) !important; transform: none !important; box-shadow: none !important; }
-    .bw-btn-cancel { padding: 0.7rem 1rem; border-radius: 10px; background: none; border: 1.5px solid var(--bw-blush); color: var(--bw-bark); font-family: 'Nunito', sans-serif; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: border-color 0.2s; }
-    .bw-btn-cancel:hover { border-color: var(--bw-bark); }
-    .bw-add-child-btn { width: 100%; background: none; border: 1.5px dashed var(--bw-blush); border-radius: 10px; color: var(--bw-bark); font-family: 'Nunito', sans-serif; font-size: 0.875rem; font-weight: 500; padding: 0.7rem 1rem; cursor: pointer; transition: border-color 0.2s, color 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.4rem; margin-bottom: 1rem; }
-    .bw-add-child-btn:hover { border-color: var(--bw-gold); color: var(--bw-ink); }
+    .bw-btn-confirm { flex: 1; padding: 0.7rem; border-radius: 10px; background: var(--brown); color: white; border: 2px solid var(--brown); font-family: 'Nunito', sans-serif; font-size: 0.875rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
+    .bw-btn-confirm:hover { background: white; color: var(--brown); border-color: var(--brown); }
+    .bw-btn-cancel { padding: 0.7rem 1rem; border-radius: 10px; background: none; border: 1.5px solid var(--border); color: var(--text-mid); font-family: 'Nunito', sans-serif; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: border-color 0.2s; }
+    .bw-btn-cancel:hover { border-color: var(--text-mid); }
+    .bw-add-child-btn { width: 100%; background: none; border: 2px dashed var(--border); border-radius: 10px; color: var(--text-mid); font-family: 'Nunito', sans-serif; font-size: 0.875rem; font-weight: 600; padding: 0.7rem 1rem; cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.4rem; margin-bottom: 1rem; }
+    .bw-add-child-btn:hover { border-color: var(--amber); color: var(--brown); background: var(--amber-pale); }
     .bw-plus { font-size: 1.2rem; line-height: 1; }
-    .bw-sibling-locked { display: flex; align-items: center; gap: 0.6rem; background: var(--bw-blush); border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.8rem; color: var(--bw-bark); opacity: 0.7; margin-bottom: 1rem; }
-    .bw-sibling-active { background: #f0f7f1; border: 1px solid #c3dfc7; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.82rem; color: #4a7a50; margin-bottom: 1rem; }
+    .bw-sibling-locked { display: flex; align-items: center; gap: 0.6rem; background: var(--cream); border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.8rem; color: var(--text-mid); opacity: 0.8; margin-bottom: 1rem; }
+    .bw-sibling-active { background: var(--sage-pale); border: 1px solid var(--sage-light); border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.82rem; color: var(--brown-mid); margin-bottom: 1rem; }
     .bw-cal-section { margin-top: 0.25rem; }
-    .bw-cal-label { font-size: 0.8rem; font-weight: 600; color: var(--bw-bark); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.65rem; }
+    .bw-cal-label { font-size: 0.8rem; font-weight: 700; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.65rem; }
     .bw-cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
-    .bw-cal-nav-btn { background: none; border: 1.5px solid var(--bw-blush); border-radius: 8px; width: 32px; height: 32px; cursor: pointer; font-size: 1rem; color: var(--bw-bark); display: flex; align-items: center; justify-content: center; transition: border-color 0.2s; }
-    .bw-cal-nav-btn:hover { border-color: var(--bw-gold); color: var(--bw-ink); }
-    .bw-cal-month { font-size: 0.9rem; font-weight: 600; color: var(--bw-ink); }
+    .bw-cal-nav-btn { background: none; border: 1.5px solid var(--border); border-radius: 8px; width: 32px; height: 32px; cursor: pointer; font-size: 1rem; color: var(--text-mid); display: flex; align-items: center; justify-content: center; transition: border-color 0.2s; }
+    .bw-cal-nav-btn:hover { border-color: var(--amber); color: var(--brown); }
+    .bw-cal-month { font-size: 0.9rem; font-weight: 700; color: var(--text); }
     .bw-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
-    .bw-cal-head { font-size: 0.7rem; color: var(--bw-bark); font-weight: 600; padding: 0.3rem 0; }
-    .bw-cal-day { aspect-ratio: 1; border-radius: 8px; border: none; background: none; font-size: 0.82rem; cursor: default; font-family: 'Nunito', sans-serif; color: #ccc; display: flex; align-items: center; justify-content: center; position: relative; flex-direction: column; gap: 1px; }
-    .bw-cal-day.bw-avail { background: #FDF8F0; color: var(--bw-ink); cursor: pointer; font-weight: 500; }
-    .bw-cal-day.bw-avail::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: var(--bw-sage); }
-    .bw-cal-day.bw-avail:hover { background: #f5eddc; outline: 1.5px solid var(--bw-sage); }
-    .bw-cal-day.bw-partial { background: #FDF8F0; color: var(--bw-ink); cursor: pointer; font-weight: 500; }
-    .bw-cal-day.bw-partial::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: var(--bw-gold); }
-    .bw-cal-day.bw-partial:hover { background: #f5eddc; outline: 1.5px solid var(--bw-gold); }
-    .bw-cal-day.bw-picked { background: var(--bw-gold) !important; color: var(--bw-white) !important; font-weight: 700; outline: none !important; }
+    .bw-cal-head { font-size: 0.7rem; color: var(--text-light); font-weight: 700; padding: 0.3rem 0; }
+    .bw-cal-day { aspect-ratio: 1; border-radius: 8px; border: none; background: none; font-size: 0.82rem; cursor: default; font-family: 'Nunito', sans-serif; color: var(--border); display: flex; align-items: center; justify-content: center; position: relative; flex-direction: column; gap: 1px; }
+    .bw-cal-day.bw-avail { background: var(--gold-pale); color: var(--text); cursor: pointer; font-weight: 600; }
+    .bw-cal-day.bw-avail::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: var(--sage); }
+    .bw-cal-day.bw-avail:hover { background: var(--sage-pale); outline: 1.5px solid var(--sage); }
+    .bw-cal-day.bw-partial { background: var(--gold-pale); color: var(--text); cursor: pointer; font-weight: 600; }
+    .bw-cal-day.bw-partial::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
+    .bw-cal-day.bw-partial:hover { background: var(--sage-pale); outline: 1.5px solid var(--gold); }
+    .bw-cal-day.bw-picked { background: var(--amber) !important; color: white !important; font-weight: 700; outline: none !important; }
     .bw-cal-day.bw-picked::after { background: rgba(255,255,255,0.6) !important; }
-    .bw-cal-day.bw-full { background: var(--bw-blush); color: #bbb; }
-    .bw-cal-day.bw-today { outline: 2px solid var(--bw-bark); outline-offset: -2px; }
-    .bw-date-pill { display: none; align-items: center; justify-content: space-between; background: #FDF8F0; border: 1.5px solid var(--bw-gold); border-radius: 10px; padding: 0.65rem 1rem; margin-top: 0.75rem; }
+    .bw-cal-day.bw-full { background: var(--cream); color: var(--border); }
+    .bw-cal-day.bw-today { outline: 2px solid var(--text-mid); outline-offset: -2px; }
+    .bw-date-pill { display: none; align-items: center; justify-content: space-between; background: var(--amber-pale); border: 1.5px solid var(--amber); border-radius: 10px; padding: 0.65rem 1rem; margin-top: 0.75rem; }
     .bw-date-pill.bw-show { display: flex; }
-    .bw-dp-date { font-size: 0.875rem; font-weight: 600; color: var(--bw-ink); }
-    .bw-dp-time { font-size: 0.78rem; color: var(--bw-bark); margin-top: 0.1rem; }
-    .bw-dp-clear { background: none; border: none; cursor: pointer; color: var(--bw-bark); font-size: 0.78rem; opacity: 0.6; transition: opacity 0.2s; }
+    .bw-dp-date { font-size: 0.875rem; font-weight: 700; color: var(--text); }
+    .bw-dp-time { font-size: 0.78rem; color: var(--text-mid); margin-top: 0.1rem; }
+    .bw-dp-clear { background: none; border: none; cursor: pointer; color: var(--text-mid); font-size: 0.78rem; opacity: 0.7; transition: opacity 0.2s; font-family: 'Nunito', sans-serif; }
     .bw-dp-clear:hover { opacity: 1; }
-    .bw-tc-wrap { display: flex; align-items: flex-start; gap: 0.75rem; background: #faf7f2; border-radius: 10px; padding: 0.9rem 1rem; margin-bottom: 1rem; }
-    .bw-tc-wrap input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--bw-gold); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
-    .bw-tc-wrap label { font-size: 0.82rem; color: var(--bw-bark); line-height: 1.5; cursor: pointer; }
-    .bw-tc-wrap a { color: var(--bw-gold); text-decoration: underline; }
-    .bw-total-row { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 0 0; border-top: 1.5px solid var(--bw-blush); margin-top: 0.75rem; }
-    .bw-total-label { font-size: 0.95rem; font-weight: 600; color: var(--bw-ink); }
+    .bw-tc-wrap { display: flex; align-items: flex-start; gap: 0.75rem; background: var(--cream); border-radius: 10px; padding: 0.9rem 1rem; margin-bottom: 1rem; }
+    .bw-tc-wrap input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--amber); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
+    .bw-tc-wrap label { font-size: 0.82rem; color: var(--text-mid); line-height: 1.5; cursor: pointer; }
+    .bw-tc-wrap a { color: var(--amber); text-decoration: underline; }
+    .bw-total-row { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 0 0; border-top: 1.5px solid var(--border); margin-top: 0.75rem; }
+    .bw-total-label { font-size: 0.95rem; font-weight: 700; color: var(--text); }
     .bw-total-right { text-align: right; }
-    .bw-total-amount { font-size: 1.2rem; font-weight: 700; color: var(--bw-ink); }
-    .bw-saving-note { font-size: 0.75rem; color: var(--bw-sage); font-weight: 500; margin-top: 0.1rem; }
+    .bw-total-amount { font-size: 1.2rem; font-weight: 700; color: var(--text); }
+    .bw-saving-note { font-size: 0.75rem; color: var(--sage); font-weight: 600; margin-top: 0.1rem; }
     .bw-field { margin-bottom: 1rem; }
-    .bw-field label { display: block; font-size: 0.8rem; font-weight: 500; color: var(--bw-bark); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
-    .bw-field input { width: 100%; padding: 0.8rem 1rem; border: 1.5px solid var(--bw-blush); border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; color: var(--bw-ink); background: var(--bw-white); transition: border-color 0.2s; outline: none; }
-    .bw-field input:focus { border-color: var(--bw-gold); }
+    .bw-field label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-mid); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .bw-field input { width: 100%; padding: 0.8rem 1rem; border: 1.5px solid var(--border); border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; color: var(--text); background: var(--warm-white); transition: border-color 0.2s; outline: none; }
+    .bw-field input:focus { border-color: var(--amber); }
     .bw-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    .bw-booking-summary { background: #faf7f2; border-radius: 12px; padding: 1.1rem; margin-bottom: 1.25rem; }
-    .bw-bs-row { display: flex; justify-content: space-between; font-size: 0.875rem; padding: 0.3rem 0; color: var(--bw-bark); }
-    .bw-bs-row.bw-total { border-top: 1px solid var(--bw-blush); margin-top: 0.5rem; padding-top: 0.75rem; font-weight: 600; color: var(--bw-ink); font-size: 1rem; }
-    .bw-bs-row.bw-disc { color: var(--bw-sage); font-weight: 500; }
-    .bw-bs-div { border: none; border-top: 1px dashed var(--bw-blush); margin: 0.4rem 0; }
-    .bw-btn { width: 100%; padding: 0.95rem; border-radius: 12px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; outline: none; }
-    .bw-btn.bw-btn-primary { background: var(--bw-ink); color: var(--bw-white); }
-    .bw-btn.bw-btn-primary:hover:not(:disabled) { background: #2d2b27; transform: translateY(-1px); }
-    .bw-btn.bw-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
-    .bw-btn.bw-btn-back { background: none; color: var(--bw-bark); font-size: 0.85rem; font-weight: 400; width: auto; padding: 0.5rem 0; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem; cursor: pointer; }
-    .bw-btn.bw-btn-back:hover { color: var(--bw-ink); }
+    .bw-booking-summary { background: var(--cream); border-radius: 12px; padding: 1.1rem; margin-bottom: 1.25rem; border: 1px solid var(--border); }
+    .bw-bs-row { display: flex; justify-content: space-between; font-size: 0.875rem; padding: 0.3rem 0; color: var(--text-mid); }
+    .bw-bs-row.bw-total { border-top: 1px solid var(--border); margin-top: 0.5rem; padding-top: 0.75rem; font-weight: 700; color: var(--text); font-size: 1rem; }
+    .bw-bs-row.bw-disc { color: var(--sage); font-weight: 600; }
+    .bw-bs-div { border: none; border-top: 1px dashed var(--border); margin: 0.4rem 0; }
+    .bw-btn { width: 100%; padding: 0.95rem; border-radius: 12px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; border: none; outline: none; }
+    .bw-btn.bw-btn-primary { background: var(--brown); color: white; border: 2px solid var(--brown); }
+    .bw-btn.bw-btn-primary:hover:not(:disabled) { background: white; color: var(--brown); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(26,74,74,0.2); }
+    .bw-btn.bw-btn-primary:disabled { opacity: 0.35; cursor: not-allowed; transform: none !important; }
+    .bw-btn.bw-btn-back { background: none; color: var(--text-mid); font-size: 0.85rem; font-weight: 600; width: auto; padding: 0.5rem 0; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem; cursor: pointer; border: none; }
+    .bw-btn.bw-btn-back:hover { color: var(--text); }
     .bw-mt1 { margin-top: 1rem; }
     .bw-sending-state { text-align: center; padding: 2rem 0; }
-    .bw-spinner { width: 40px; height: 40px; border: 3px solid var(--bw-blush); border-top-color: var(--bw-gold); border-radius: 50%; animation: bwSpin 0.8s linear infinite; margin: 0 auto 1rem; }
+    .bw-spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--amber); border-radius: 50%; animation: bwSpin 0.8s linear infinite; margin: 0 auto 1rem; }
     @keyframes bwSpin { to { transform: rotate(360deg); } }
-    .bw-sending-state p { color: var(--bw-bark); font-size: 0.9rem; }
+    .bw-sending-state p { color: var(--text-mid); font-size: 0.9rem; }
     .bw-success-state { text-align: center; padding: 1rem 0; }
-    .bw-success-icon { width: 64px; height: 64px; background: var(--bw-sage); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; font-size: 1.75rem; color: white; }
-    .bw-success-state h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 0.5rem; }
-    .bw-success-state p { color: var(--bw-bark); font-size: 0.9rem; line-height: 1.6; }
-    .bw-success-details { background: #faf7f2; border-radius: 12px; padding: 1.1rem; margin: 1.25rem 0; text-align: left; }
-    .bw-badge { display: inline-block; background: var(--bw-blush); color: var(--bw-bark); font-size: 0.72rem; font-weight: 500; padding: 0.2rem 0.6rem; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1rem; }
-    .bw-error-note { background: #fdf0f0; border: 1px solid #f5c6c6; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.82rem; color: var(--bw-red); margin-top: 0.75rem; display: none; }
+    .bw-success-icon { width: 64px; height: 64px; background: var(--sage); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; font-size: 1.75rem; color: white; }
+    .bw-success-state h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text); }
+    .bw-success-state p { color: var(--text-mid); font-size: 0.9rem; line-height: 1.6; }
+    .bw-success-details { background: var(--cream); border-radius: 12px; padding: 1.1rem; margin: 1.25rem 0; text-align: left; border: 1px solid var(--border); }
+    .bw-badge { display: inline-block; background: var(--sage-pale); color: var(--brown-mid); font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1rem; }
+    .bw-error-note { background: var(--amber-pale); border: 1px solid var(--amber-light); border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.82rem; color: var(--amber); margin-top: 0.75rem; display: none; }
     .bw-cal-legend { display: flex; gap: 1rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
-    .bw-legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; color: var(--bw-bark); }
+    .bw-legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; color: var(--text-mid); }
     .bw-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .bw-ld-gold { background: var(--bw-gold); }
-    .bw-ld-sage { background: var(--bw-sage); }
-    .bw-ld-blush { background: var(--bw-blush); }
-
-    /* ── FUN EXTRAS ── */
-    .btn-primary {
-      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease, background 0.2s ease !important;
-    }
-    .btn-primary:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 8px 24px rgba(224,90,78,0.3);
-    }
-    .subject-bubble {
-      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), border-color 0.2s, background 0.2s !important;
-    }
-    .why-emoji {
-      display: inline-block;
-      transition: transform 0.2s ease;
-    }
-    /* Pulsing glow on Book Now nav CTA */
-    .nav-cta {
-      animation: ctaPulse 3s ease-in-out infinite;
-    }
-    @keyframes ctaPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(224,90,78,0.0); }
-      50%       { box-shadow: 0 0 0 6px rgba(224,90,78,0.15); }
-    }
-    /* Slide-in underline on nav links */
-    nav a:not(.nav-cta) {
-      position: relative;
-    }
-    nav a:not(.nav-cta)::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0;
-      width: 0; height: 2px;
-      background: var(--amber);
-      border-radius: 2px;
-      transition: width 0.25s ease;
-    }
-    nav a:not(.nav-cta):hover::after { width: 100%; }
-    /* Rubber-band service card hover */
-    .service-card {
-      transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease !important;
-      will-change: transform;
-    }
+    .bw-ld-gold { background: var(--gold); }
+    .bw-ld-sage { background: var(--sage); }
+    .bw-ld-blush { background: var(--border); }
   </style>
 </head>
 <body>
@@ -1793,16 +1746,10 @@
   });
 </script>
 
+
 <!-- BOOKING WIDGET SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-// ═══════════════════════════════════════════════════════════════
-//  ✏️  AVAILABILITY — UPDATE EACH WEEK
-//
-//  true  = both slots open (green dot)
-//  false = fully booked (grey)
-//  { "9:00": true, "10:00": false } = partial (gold dot)
-// ═══════════════════════════════════════════════════════════════
 const BW_AVAILABILITY = {
   "2026-03-01": true,
   "2026-03-08": true,
@@ -1814,7 +1761,6 @@ const BW_AVAILABILITY = {
   "2026-04-19": true,
   "2026-04-26": true,
 };
-// ═══════════════════════════════════════════════════════════════
 
 const BW_EMAILJS_PUBLIC_KEY  = 'YcHluYUj5pINA5zCe';
 const BW_EMAILJS_SERVICE_ID  = 'service_j11tywx';
@@ -1822,363 +1768,224 @@ const BW_EMAILJS_TEMPLATE_ID = 'template_lom6kel';
 const BW_TC_LINK = 'https://drive.google.com/file/d/1mY-IwfBuHAZkx5xAL9B5h941SI6M-eZu/preview';
 const BW_SIBLING_RATE = 27;
 const BW_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-
 const BW_SESSIONS = [
   { value: '1hr-maths',    label: '1 Hour Maths',            price: 30, hours: 1, sub: '9–10am or 10–11am' },
   { value: '1hr-literacy', label: '1 Hour Literacy',          price: 30, hours: 1, sub: '9–10am or 10–11am' },
   { value: '2hr-both',     label: '2 Hours Maths & Literacy', price: 60, hours: 2, sub: 'Full session · 9–11am' },
 ];
 
-let bwChildren      = [];
-let bwNextId        = 1;
-let bwAddingSession = null;
-let bwAddingTime    = null;
-let bwFormOpen      = false;
-let bwSelectedDate  = null;
-let bwCalYear, bwCalMonth;
+let bwChildren=[], bwNextId=1, bwAddingSession=null, bwAddingTime=null, bwFormOpen=false, bwSelectedDate=null, bwCalYear, bwCalMonth;
 
-function bwDateStatus(ds) {
-  const av = BW_AVAILABILITY[ds];
-  if (av === undefined) return 'hidden';
-  if (av === false) return 'full';
-  if (av === true)  return 'avail';
-  return Object.values(av).some(v => v === true) ? 'partial' : 'full';
-}
+function bwDateStatus(ds){const av=BW_AVAILABILITY[ds];if(av===undefined)return'hidden';if(av===false)return'full';if(av===true)return'avail';return Object.values(av).some(v=>v===true)?'partial':'full';}
+function bwSlotAvailable(ds,slot){const av=BW_AVAILABILITY[ds];if(av===true)return true;if(av===false)return false;if(typeof av==='object')return av[slot]===true;return false;}
 
-function bwSlotAvailable(ds, slot) {
-  const av = BW_AVAILABILITY[ds];
-  if (av === true)  return true;
-  if (av === false) return false;
-  if (typeof av === 'object') return av[slot] === true;
-  return false;
-}
-
-window.addEventListener('load', () => {
-  const now = new Date();
-  bwCalYear  = now.getFullYear();
-  bwCalMonth = now.getMonth();
+window.addEventListener('load',()=>{
+  const now=new Date(); bwCalYear=now.getFullYear(); bwCalMonth=now.getMonth();
   emailjs.init(BW_EMAILJS_PUBLIC_KEY);
-  bwRenderSessionOpts();
-  bwRenderCalendar();
-  document.getElementById('bw-adding-form-title').textContent = 'Child 1';
-  document.getElementById('bw-cancel-btn').style.display = 'none';
-  bwFormOpen = true;
+  bwRenderSessionOpts(); bwRenderCalendar();
+  document.getElementById('bw-adding-form-title').textContent='Child 1';
+  document.getElementById('bw-cancel-btn').style.display='none';
+  bwFormOpen=true;
 });
 
-function bwRenderSessionOpts() {
-  const container = document.getElementById('bw-session-opts');
-  container.innerHTML = '';
-  BW_SESSIONS.forEach(s => {
-    const el = document.createElement('div');
-    el.className = 'bw-session-opt';
-    el.innerHTML = `<div><div class="bw-opt-label">${s.label}</div><div class="bw-opt-sub">${s.sub}</div></div><div class="bw-opt-price">£${s.price}</div>`;
-    el.addEventListener('click', () => bwPickSession(s.value));
-    container.appendChild(el);
+function bwRenderSessionOpts(){
+  const c=document.getElementById('bw-session-opts'); c.innerHTML='';
+  BW_SESSIONS.forEach(s=>{
+    const el=document.createElement('div'); el.className='bw-session-opt';
+    el.innerHTML=`<div><div class="bw-opt-label">${s.label}</div><div class="bw-opt-sub">${s.sub}</div></div><div class="bw-opt-price">£${s.price}</div>`;
+    el.addEventListener('click',()=>bwPickSession(s.value)); c.appendChild(el);
   });
 }
 
-function bwRenderTimeSlotBtns(ds) {
-  const container = document.getElementById('bw-time-slots');
-  container.innerHTML = '';
-  [{ slot: '9:00', label: '9–10am' }, { slot: '10:00', label: '10–11am' }].forEach(t => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'bw-ts-btn';
-    btn.textContent = t.label;
-    const isFull = ds && !bwSlotAvailable(ds, t.slot);
-    if (isFull) {
-      btn.disabled = true;
-      btn.title = 'This slot is fully booked';
-    } else {
-      btn.addEventListener('click', () => bwPickTimeSlot(t.slot, btn));
-    }
-    container.appendChild(btn);
+function bwRenderTimeSlotBtns(ds){
+  const c=document.getElementById('bw-time-slots'); c.innerHTML='';
+  [{slot:'9:00',label:'9–10am'},{slot:'10:00',label:'10–11am'}].forEach(t=>{
+    const btn=document.createElement('button'); btn.type='button'; btn.className='bw-ts-btn'; btn.textContent=t.label;
+    if(ds&&!bwSlotAvailable(ds,t.slot)){btn.disabled=true;btn.title='Fully booked';}
+    else btn.addEventListener('click',()=>bwPickTimeSlot(t.slot,btn));
+    c.appendChild(btn);
   });
 }
 
-function bwPickSession(value) {
-  bwAddingSession = BW_SESSIONS.find(s => s.value === value);
-  bwAddingTime = null;
-  document.querySelectorAll('.bw-session-opt').forEach(el => {
-    el.classList.toggle('bw-selected', el.querySelector('.bw-opt-label').textContent === bwAddingSession.label);
-  });
-  document.querySelectorAll('.bw-ts-btn').forEach(b => b.classList.remove('bw-selected'));
-  const tsWrap = document.getElementById('bw-time-slot-wrap');
-  if (bwAddingSession.hours === 1) {
-    bwRenderTimeSlotBtns(bwSelectedDate);
-    tsWrap.classList.add('bw-visible');
-  } else {
+function bwPickSession(value){
+  bwAddingSession=BW_SESSIONS.find(s=>s.value===value); bwAddingTime=null;
+  document.querySelectorAll('.bw-session-opt').forEach(el=>el.classList.toggle('bw-selected',el.querySelector('.bw-opt-label').textContent===bwAddingSession.label));
+  document.querySelectorAll('.bw-ts-btn').forEach(b=>b.classList.remove('bw-selected'));
+  const tsWrap=document.getElementById('bw-time-slot-wrap');
+  if(bwAddingSession.hours===1){bwRenderTimeSlotBtns(bwSelectedDate);tsWrap.classList.add('bw-visible');}
+  else{
     tsWrap.classList.remove('bw-visible');
-    if (bwSelectedDate && !bwSlotAvailable(bwSelectedDate, '9:00')) {
-      document.querySelectorAll('.bw-session-opt').forEach(el => el.classList.remove('bw-selected'));
-      bwAddingSession = null;
-      alert('Sorry, the 2-hour session (9–11am) is not available on this Sunday as the 9–10am slot is fully booked.');
-    } else {
-      bwAddingTime = '9:00';
-    }
+    if(bwSelectedDate&&!bwSlotAvailable(bwSelectedDate,'9:00')){document.querySelectorAll('.bw-session-opt').forEach(el=>el.classList.remove('bw-selected'));bwAddingSession=null;alert('Sorry, the 2-hour session (9–11am) is not available on this Sunday as the 9–10am slot is fully booked.');}
+    else bwAddingTime='9:00';
   }
 }
 
-function bwPickTimeSlot(slot, btn) {
-  bwAddingTime = slot;
-  document.querySelectorAll('.bw-ts-btn').forEach(b => b.classList.remove('bw-selected'));
-  btn.classList.add('bw-selected');
+function bwPickTimeSlot(slot,btn){bwAddingTime=slot;document.querySelectorAll('.bw-ts-btn').forEach(b=>b.classList.remove('bw-selected'));btn.classList.add('bw-selected');}
+
+function bwConfirmChild(){
+  const nameEl=document.getElementById('bw-adding-name'); const name=nameEl.value.trim();
+  if(!name){nameEl.classList.add('bw-error');nameEl.focus();return;} nameEl.classList.remove('bw-error');
+  if(!bwAddingSession){alert('Please select a session for this child.');return;}
+  if(!bwAddingTime){alert('Please choose a time slot for this child.');return;}
+  const timeLabel=bwAddingSession.hours===2?'9–11am':bwAddingTime==='9:00'?'9–10am':'10–11am';
+  bwChildren.push({id:bwNextId++,name,...bwAddingSession,time:bwAddingTime,timeLabel});
+  bwFormOpen=false;bwAddingSession=null;bwAddingTime=null;bwResetForm();bwRenderAll();
 }
 
-function bwConfirmChild() {
-  const nameEl = document.getElementById('bw-adding-name');
-  const name = nameEl.value.trim();
-  if (!name) { nameEl.classList.add('bw-error'); nameEl.focus(); return; }
-  nameEl.classList.remove('bw-error');
-  if (!bwAddingSession) { alert('Please select a session for this child.'); return; }
-  if (!bwAddingTime)    { alert('Please choose a time slot for this child.'); return; }
-  const timeLabel = bwAddingSession.hours === 2 ? '9–11am' : bwAddingTime === '9:00' ? '9–10am' : '10–11am';
-  bwChildren.push({ id: bwNextId++, name, ...bwAddingSession, time: bwAddingTime, timeLabel });
-  bwFormOpen = false; bwAddingSession = null; bwAddingTime = null;
-  bwResetForm(); bwRenderAll();
-}
+function bwCancelChild(){bwFormOpen=false;bwAddingSession=null;bwAddingTime=null;bwResetForm();bwRenderAll();}
 
-function bwCancelChild() {
-  bwFormOpen = false; bwAddingSession = null; bwAddingTime = null;
-  bwResetForm(); bwRenderAll();
-}
-
-function bwResetForm() {
-  document.getElementById('bw-adding-name').value = '';
+function bwResetForm(){
+  document.getElementById('bw-adding-name').value='';
   document.getElementById('bw-adding-name').classList.remove('bw-error');
-  document.querySelectorAll('.bw-session-opt').forEach(o => o.classList.remove('bw-selected'));
+  document.querySelectorAll('.bw-session-opt').forEach(o=>o.classList.remove('bw-selected'));
   document.getElementById('bw-time-slot-wrap').classList.remove('bw-visible');
-  document.getElementById('bw-adding-form').style.display = 'none';
+  document.getElementById('bw-adding-form').style.display='none';
 }
 
-function bwOpenFormForNext() {
-  bwFormOpen = true; bwAddingSession = null; bwAddingTime = null;
-  document.getElementById('bw-adding-form-title').textContent = 'Child ' + (bwChildren.length + 1);
-  document.getElementById('bw-adding-name').value = '';
+function bwOpenFormForNext(){
+  bwFormOpen=true;bwAddingSession=null;bwAddingTime=null;
+  document.getElementById('bw-adding-form-title').textContent='Child '+(bwChildren.length+1);
+  document.getElementById('bw-adding-name').value='';
   document.getElementById('bw-adding-name').classList.remove('bw-error');
-  document.querySelectorAll('.bw-session-opt').forEach(o => o.classList.remove('bw-selected'));
+  document.querySelectorAll('.bw-session-opt').forEach(o=>o.classList.remove('bw-selected'));
   document.getElementById('bw-time-slot-wrap').classList.remove('bw-visible');
-  document.getElementById('bw-adding-form').style.display = 'block';
-  document.getElementById('bw-add-more-wrap').style.display = 'none';
-  document.getElementById('bw-cancel-btn').style.display = 'block';
+  document.getElementById('bw-adding-form').style.display='block';
+  document.getElementById('bw-add-more-wrap').style.display='none';
+  document.getElementById('bw-cancel-btn').style.display='block';
   document.getElementById('bw-adding-name').focus();
 }
 
-function bwRemoveChild(id) {
-  bwChildren = bwChildren.filter(c => c.id !== id); bwRenderAll();
-}
+function bwRemoveChild(id){bwChildren=bwChildren.filter(c=>c.id!==id);bwRenderAll();}
 
-function bwRenderAll() {
-  const count = bwChildren.length;
-  const hasSibling = count >= 2;
-  document.getElementById('bw-children-list').innerHTML = bwChildren.map((c, i) => {
-    const dp = hasSibling ? Math.round(BW_SIBLING_RATE * c.hours) : c.price;
-    const priceHTML = hasSibling
-      ? `<span style="text-decoration:line-through;opacity:0.35;font-size:0.8rem;margin-right:0.3rem;">£${c.price}</span><span style="color:var(--bw-sage);font-weight:700;">£${dp}</span>`
-      : `<span style="color:var(--bw-ink);">£${c.price}</span>`;
-    return `<div class="bw-child-card">
-      <div class="bw-child-card-header">
-        <div><div class="bw-child-tag">Child ${i+1}</div><div class="bw-child-name-display">${c.name}</div></div>
-        <button class="bw-remove-child-btn" type="button" onclick="bwRemoveChild(${c.id})">✕ Remove</button>
-      </div>
-      <div class="bw-child-session-row">
-        <div><div class="bw-s-label">${c.label}</div><div class="bw-s-time">${c.timeLabel}</div></div>
-        <div class="bw-s-price">${priceHTML}</div>
-      </div>
-    </div>`;
+function bwRenderAll(){
+  const count=bwChildren.length; const hasSibling=count>=2;
+  document.getElementById('bw-children-list').innerHTML=bwChildren.map((c,i)=>{
+    const dp=hasSibling?Math.round(BW_SIBLING_RATE*c.hours):c.price;
+    const priceHTML=hasSibling?`<span style="text-decoration:line-through;opacity:0.35;font-size:0.8rem;margin-right:0.3rem;">£${c.price}</span><span style="color:var(--sage);font-weight:700;">£${dp}</span>`:`<span style="color:var(--text);">£${c.price}</span>`;
+    return`<div class="bw-child-card"><div class="bw-child-card-header"><div><div class="bw-child-tag">Child ${i+1}</div><div class="bw-child-name-display">${c.name}</div></div><button class="bw-remove-child-btn" type="button" onclick="bwRemoveChild(${c.id})">✕ Remove</button></div><div class="bw-child-session-row"><div><div class="bw-s-label">${c.label}</div><div class="bw-s-time">${c.timeLabel}</div></div><div class="bw-s-price">${priceHTML}</div></div></div>`;
   }).join('');
-
-  document.getElementById('bw-add-more-wrap').style.display  = (count > 0 && count < 5 && !bwFormOpen) ? 'block' : 'none';
-  document.getElementById('bw-sibling-locked').style.display = (count === 1 && !bwFormOpen) ? 'flex'  : 'none';
-  document.getElementById('bw-sibling-active').style.display = (hasSibling && !bwFormOpen)  ? 'block' : 'none';
-  document.getElementById('bw-cal-section').style.display    = (count > 0 && !bwFormOpen)   ? 'block' : 'none';
-  bwRenderTotal(); bwRenderProceedBtn();
+  document.getElementById('bw-add-more-wrap').style.display=(count>0&&count<5&&!bwFormOpen)?'block':'none';
+  document.getElementById('bw-sibling-locked').style.display=(count===1&&!bwFormOpen)?'flex':'none';
+  document.getElementById('bw-sibling-active').style.display=(hasSibling&&!bwFormOpen)?'block':'none';
+  document.getElementById('bw-cal-section').style.display=(count>0&&!bwFormOpen)?'block':'none';
+  bwRenderTotal();bwRenderProceedBtn();
 }
 
-function bwCalcTotal() {
-  const hasSibling = bwChildren.length >= 2;
-  return bwChildren.reduce((s, c) => s + (hasSibling ? Math.round(BW_SIBLING_RATE * c.hours) : c.price), 0);
+function bwCalcTotal(){const h=bwChildren.length>=2;return bwChildren.reduce((s,c)=>s+(h?Math.round(BW_SIBLING_RATE*c.hours):c.price),0);}
+
+function bwRenderTotal(){
+  const count=bwChildren.length;const hasSibling=count>=2;const total=bwCalcTotal();const standard=bwChildren.reduce((s,c)=>s+c.price,0);
+  document.getElementById('bw-total-section').style.display=(count>0&&!bwFormOpen)?'block':'none';
+  document.getElementById('bw-total-amt').textContent='£'+total;
+  const sn=document.getElementById('bw-saving-note');
+  if(hasSibling&&total<standard){sn.style.display='block';sn.textContent='Saving £'+(standard-total)+' with sibling discount';}else sn.style.display='none';
 }
 
-function bwRenderTotal() {
-  const count = bwChildren.length;
-  const hasSibling = count >= 2;
-  const total    = bwCalcTotal();
-  const standard = bwChildren.reduce((s, c) => s + c.price, 0);
-  document.getElementById('bw-total-section').style.display = (count > 0 && !bwFormOpen) ? 'block' : 'none';
-  document.getElementById('bw-total-amt').textContent = '£' + total;
-  const sn = document.getElementById('bw-saving-note');
-  if (hasSibling && total < standard) { sn.style.display = 'block'; sn.textContent = 'Saving £' + (standard - total) + ' with sibling discount'; }
-  else sn.style.display = 'none';
-}
+function bwRenderProceedBtn(){document.getElementById('bw-proceed-btn').disabled=!(bwChildren.length>0&&bwSelectedDate&&!bwFormOpen);}
 
-function bwRenderProceedBtn() {
-  document.getElementById('bw-proceed-btn').disabled = !(bwChildren.length > 0 && bwSelectedDate && !bwFormOpen);
-}
-
-function bwRenderCalendar() {
-  document.getElementById('bw-cal-month').textContent = BW_MONTHS[bwCalMonth] + ' ' + bwCalYear;
-  const grid = document.getElementById('bw-cal-grid');
-  grid.innerHTML = '';
-  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d => {
-    const h = document.createElement('div'); h.className = 'bw-cal-head'; h.textContent = d; grid.appendChild(h);
-  });
-  const firstDay    = new Date(bwCalYear, bwCalMonth, 1).getDay();
-  const daysInMonth = new Date(bwCalYear, bwCalMonth + 1, 0).getDate();
-  const today = new Date(); today.setHours(0,0,0,0);
-  for (let i = 0; i < firstDay; i++) {
-    const e = document.createElement('div'); e.className = 'bw-cal-day'; grid.appendChild(e);
-  }
-  for (let d = 1; d <= daysInMonth; d++) {
-    const date = new Date(bwCalYear, bwCalMonth, d);
-    const ds = bwToDS(date);
-    const el = document.createElement('button');
-    el.type = 'button'; el.className = 'bw-cal-day'; el.textContent = d;
-    if (date.getDay() === 0 && date >= today) {
-      const status = bwDateStatus(ds);
-      if (status === 'avail') {
-        el.classList.add('bw-avail');
-        if (bwSelectedDate === ds) el.classList.add('bw-picked');
-        el.addEventListener('click', () => bwPickDate(ds, date));
-      } else if (status === 'partial') {
-        el.classList.add('bw-partial');
-        if (bwSelectedDate === ds) el.classList.add('bw-picked');
-        el.addEventListener('click', () => bwPickDate(ds, date));
-      } else if (status === 'full') {
-        el.classList.add('bw-full'); el.title = 'Fully booked';
-      }
+function bwRenderCalendar(){
+  document.getElementById('bw-cal-month').textContent=BW_MONTHS[bwCalMonth]+' '+bwCalYear;
+  const grid=document.getElementById('bw-cal-grid'); grid.innerHTML='';
+  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d=>{const h=document.createElement('div');h.className='bw-cal-head';h.textContent=d;grid.appendChild(h);});
+  const firstDay=new Date(bwCalYear,bwCalMonth,1).getDay();
+  const daysInMonth=new Date(bwCalYear,bwCalMonth+1,0).getDate();
+  const today=new Date();today.setHours(0,0,0,0);
+  for(let i=0;i<firstDay;i++){const e=document.createElement('div');e.className='bw-cal-day';grid.appendChild(e);}
+  for(let d=1;d<=daysInMonth;d++){
+    const date=new Date(bwCalYear,bwCalMonth,d);const ds=bwToDS(date);
+    const el=document.createElement('button');el.type='button';el.className='bw-cal-day';el.textContent=d;
+    if(date.getDay()===0&&date>=today){
+      const status=bwDateStatus(ds);
+      if(status==='avail'){el.classList.add('bw-avail');if(bwSelectedDate===ds)el.classList.add('bw-picked');el.addEventListener('click',()=>bwPickDate(ds,date));}
+      else if(status==='partial'){el.classList.add('bw-partial');if(bwSelectedDate===ds)el.classList.add('bw-picked');el.addEventListener('click',()=>bwPickDate(ds,date));}
+      else if(status==='full'){el.classList.add('bw-full');el.title='Fully booked';}
     }
-    if (ds === bwToDS(today)) el.classList.add('bw-today');
+    if(ds===bwToDS(today))el.classList.add('bw-today');
     grid.appendChild(el);
   }
 }
 
-function bwPickDate(ds, date) {
-  bwSelectedDate = ds;
-  document.getElementById('bw-dp-date').textContent = date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+function bwPickDate(ds,date){
+  bwSelectedDate=ds;
+  document.getElementById('bw-dp-date').textContent=date.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   document.getElementById('bw-date-pill').classList.add('bw-show');
-  if (bwAddingSession && bwAddingSession.hours === 1) {
-    bwRenderTimeSlotBtns(ds);
-    document.getElementById('bw-time-slot-wrap').classList.add('bw-visible');
-    bwAddingTime = null;
-  }
-  bwRenderCalendar(); bwRenderProceedBtn();
+  if(bwAddingSession&&bwAddingSession.hours===1){bwRenderTimeSlotBtns(ds);document.getElementById('bw-time-slot-wrap').classList.add('bw-visible');bwAddingTime=null;}
+  bwRenderCalendar();bwRenderProceedBtn();
 }
 
-function bwClearDate() {
-  bwSelectedDate = null; bwAddingTime = null;
+function bwClearDate(){
+  bwSelectedDate=null;bwAddingTime=null;
   document.getElementById('bw-date-pill').classList.remove('bw-show');
-  if (bwAddingSession && bwAddingSession.hours === 1) {
-    bwRenderTimeSlotBtns(null);
-    document.querySelectorAll('.bw-ts-btn').forEach(b => b.classList.remove('bw-selected'));
-  }
-  bwRenderCalendar(); bwRenderProceedBtn();
+  if(bwAddingSession&&bwAddingSession.hours===1){bwRenderTimeSlotBtns(null);document.querySelectorAll('.bw-ts-btn').forEach(b=>b.classList.remove('bw-selected'));}
+  bwRenderCalendar();bwRenderProceedBtn();
 }
 
-function bwChangeMonth(dir) {
-  bwCalMonth += dir;
-  if (bwCalMonth > 11) { bwCalMonth = 0; bwCalYear++; }
-  if (bwCalMonth < 0)  { bwCalMonth = 11; bwCalYear--; }
-  bwRenderCalendar();
+function bwChangeMonth(dir){bwCalMonth+=dir;if(bwCalMonth>11){bwCalMonth=0;bwCalYear++;}if(bwCalMonth<0){bwCalMonth=11;bwCalYear--;}bwRenderCalendar();}
+function bwToDS(date){return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');}
+
+function bwGoTo(step){
+  if(step===2)bwBuildBookingSummary();
+  document.querySelectorAll('.bw-section').forEach(s=>s.classList.remove('bw-active'));
+  document.getElementById('bw-step-'+step).classList.add('bw-active');
+  for(let i=1;i<=3;i++){const dot=document.getElementById('bw-dot-'+i);if(dot)dot.className='bw-step-dot'+(i<step?' bw-done':i===step?' bw-active':'');}
 }
 
-function bwToDS(date) {
-  return date.getFullYear() + '-' + String(date.getMonth()+1).padStart(2,'0') + '-' + String(date.getDate()).padStart(2,'0');
-}
-
-function bwGoTo(step) {
-  if (step === 2) bwBuildBookingSummary();
-  document.querySelectorAll('.bw-section').forEach(s => s.classList.remove('bw-active'));
-  document.getElementById('bw-step-' + step).classList.add('bw-active');
-  for (let i = 1; i <= 3; i++) {
-    const dot = document.getElementById('bw-dot-' + i);
-    if (dot) dot.className = 'bw-step-dot' + (i < step ? ' bw-done' : i === step ? ' bw-active' : '');
-  }
-}
-
-function bwBuildBookingSummary() {
-  const hasSibling = bwChildren.length >= 2;
-  const d = new Date(bwSelectedDate + 'T00:00:00');
-  const dateLabel = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-  let html = '';
-  bwChildren.forEach((c, i) => {
-    if (i > 0) html += '<hr class="bw-bs-div">';
-    const dp = hasSibling ? Math.round(BW_SIBLING_RATE * c.hours) : c.price;
-    html += `<div class="bw-bs-row"><span style="font-weight:600;">${c.name}</span><span>${c.label}</span></div>`;
-    html += `<div class="bw-bs-row"><span style="padding-left:0.5rem;opacity:0.6">Time</span><span>${c.timeLabel}</span></div>`;
-    if (hasSibling) {
-      html += `<div class="bw-bs-row"><span style="padding-left:0.5rem;opacity:0.45">Standard</span><span style="text-decoration:line-through;opacity:0.45">£${c.price}</span></div>`;
-      html += `<div class="bw-bs-row bw-disc"><span style="padding-left:0.5rem">Sibling rate</span><span>£${dp}</span></div>`;
-    } else {
-      html += `<div class="bw-bs-row"><span style="padding-left:0.5rem">Price</span><span>£${c.price}</span></div>`;
-    }
+function bwBuildBookingSummary(){
+  const hasSibling=bwChildren.length>=2;
+  const d=new Date(bwSelectedDate+'T00:00:00');
+  const dateLabel=d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  let html='';
+  bwChildren.forEach((c,i)=>{
+    if(i>0)html+='<hr class="bw-bs-div">';
+    const dp=hasSibling?Math.round(BW_SIBLING_RATE*c.hours):c.price;
+    html+=`<div class="bw-bs-row"><span style="font-weight:700;">${c.name}</span><span>${c.label}</span></div>`;
+    html+=`<div class="bw-bs-row"><span style="padding-left:0.5rem;opacity:0.6">Time</span><span>${c.timeLabel}</span></div>`;
+    if(hasSibling){html+=`<div class="bw-bs-row"><span style="padding-left:0.5rem;opacity:0.45">Standard</span><span style="text-decoration:line-through;opacity:0.45">£${c.price}</span></div>`;html+=`<div class="bw-bs-row bw-disc"><span style="padding-left:0.5rem">Sibling rate</span><span>£${dp}</span></div>`;}
+    else html+=`<div class="bw-bs-row"><span style="padding-left:0.5rem">Price</span><span>£${c.price}</span></div>`;
   });
-  html += `<div class="bw-bs-row" style="margin-top:0.5rem;"><span>Date</span><span>${dateLabel}</span></div>`;
-  html += `<div class="bw-bs-row bw-total"><span>Total due</span><span>£${bwCalcTotal()}</span></div>`;
-  document.getElementById('bw-booking-summary').innerHTML = html;
+  html+=`<div class="bw-bs-row" style="margin-top:0.5rem;"><span>Date</span><span>${dateLabel}</span></div>`;
+  html+=`<div class="bw-bs-row bw-total"><span>Total due</span><span>£${bwCalcTotal()}</span></div>`;
+  document.getElementById('bw-booking-summary').innerHTML=html;
 }
 
-async function bwSubmitBooking() {
-  const first = document.getElementById('bw-first-name').value.trim();
-  const last  = document.getElementById('bw-last-name').value.trim();
-  const email = document.getElementById('bw-email').value.trim();
-  const phone = document.getElementById('bw-phone').value.trim();
-  const tcOk  = document.getElementById('bw-tc-checkbox').checked;
-  const errEl = document.getElementById('bw-error-note');
-  errEl.style.display = 'none';
-  if (!first || !last || !email || !phone) { errEl.textContent = 'Please fill in all fields.'; errEl.style.display = 'block'; return; }
-  if (!tcOk) { errEl.textContent = 'Please read and agree to the Terms and Conditions to continue.'; errEl.style.display = 'block'; return; }
-
-  const hasSibling = bwChildren.length >= 2;
-  const total = bwCalcTotal();
-  const d = new Date(bwSelectedDate + 'T00:00:00');
-  const dateLabel = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-  const bookingSummaryText = bwChildren.map((c, i) => {
-    const dp = hasSibling ? Math.round(BW_SIBLING_RATE * c.hours) : c.price;
-    return `Child ${i+1}: ${c.name}\nSession: ${c.label} (${c.timeLabel})\nPrice: £${dp}${hasSibling ? ' (sibling rate)' : ''}`;
-  }).join('\n\n') + `\n\nDate: ${dateLabel}\nTotal: £${total}`;
-  const payRef = (first[0] + last).replace(/\s/g,'').toUpperCase() + '-' + bwSelectedDate.replace(/-/g,'');
-
-  document.querySelectorAll('.bw-section').forEach(s => s.classList.remove('bw-active'));
+async function bwSubmitBooking(){
+  const first=document.getElementById('bw-first-name').value.trim();
+  const last=document.getElementById('bw-last-name').value.trim();
+  const email=document.getElementById('bw-email').value.trim();
+  const phone=document.getElementById('bw-phone').value.trim();
+  const tcOk=document.getElementById('bw-tc-checkbox').checked;
+  const errEl=document.getElementById('bw-error-note'); errEl.style.display='none';
+  if(!first||!last||!email||!phone){errEl.textContent='Please fill in all fields.';errEl.style.display='block';return;}
+  if(!tcOk){errEl.textContent='Please read and agree to the Terms and Conditions to continue.';errEl.style.display='block';return;}
+  const hasSibling=bwChildren.length>=2;const total=bwCalcTotal();
+  const d=new Date(bwSelectedDate+'T00:00:00');
+  const dateLabel=d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const bookingSummaryText=bwChildren.map((c,i)=>{const dp=hasSibling?Math.round(BW_SIBLING_RATE*c.hours):c.price;return`Child ${i+1}: ${c.name}\nSession: ${c.label} (${c.timeLabel})\nPrice: £${dp}${hasSibling?' (sibling rate)':''}`;}).join('\n\n')+`\n\nDate: ${dateLabel}\nTotal: £${total}`;
+  const payRef=(first[0]+last).replace(/\s/g,'').toUpperCase()+'-'+bwSelectedDate.replace(/-/g,'');
+  document.querySelectorAll('.bw-section').forEach(s=>s.classList.remove('bw-active'));
   document.getElementById('bw-step-sending').classList.add('bw-active');
-
-  try {
-    await emailjs.send(BW_EMAILJS_SERVICE_ID, BW_EMAILJS_TEMPLATE_ID, {
-      parent_name: first + ' ' + last, parent_email: email,
-      booking_summary: bookingSummaryText, total, payment_ref: payRef, tc_link: BW_TC_LINK
-    });
-    await emailjs.send(BW_EMAILJS_SERVICE_ID, BW_EMAILJS_TEMPLATE_ID, {
-      parent_name: 'NEW BOOKING — ' + first + ' ' + last,
-      parent_email: 'believetoachievetuition@gmail.com',
-      booking_summary: bookingSummaryText + '\n\nPhone: ' + phone + '\nEmail: ' + email,
-      total, payment_ref: payRef, tc_link: BW_TC_LINK
-    });
-    bwShowSuccess(dateLabel, total, payRef);
-  } catch(err) {
-    document.querySelectorAll('.bw-section').forEach(s => s.classList.remove('bw-active'));
+  try{
+    await emailjs.send(BW_EMAILJS_SERVICE_ID,BW_EMAILJS_TEMPLATE_ID,{parent_name:first+' '+last,parent_email:email,booking_summary:bookingSummaryText,total,payment_ref:payRef,tc_link:BW_TC_LINK});
+    await emailjs.send(BW_EMAILJS_SERVICE_ID,BW_EMAILJS_TEMPLATE_ID,{parent_name:'NEW BOOKING — '+first+' '+last,parent_email:'believetoachievetuition@gmail.com',booking_summary:bookingSummaryText+'\n\nPhone: '+phone+'\nEmail: '+email,total,payment_ref:payRef,tc_link:BW_TC_LINK});
+    bwShowSuccess(dateLabel,total,payRef);
+  }catch(err){
+    document.querySelectorAll('.bw-section').forEach(s=>s.classList.remove('bw-active'));
     document.getElementById('bw-step-2').classList.add('bw-active');
-    errEl.textContent = 'Sorry, there was a problem sending your confirmation. Please try again or contact believetoachievetuition@gmail.com directly.';
-    errEl.style.display = 'block';
+    errEl.textContent='Sorry, there was a problem sending your confirmation. Please try again or contact believetoachievetuition@gmail.com directly.';errEl.style.display='block';
   }
 }
 
-function bwShowSuccess(dateLabel, total, payRef) {
-  const hasSibling = bwChildren.length >= 2;
-  let html = '';
-  bwChildren.forEach(c => {
-    html += `<div class="bw-bs-row"><span style="font-weight:600;">${c.name}</span><span>${c.label} · ${c.timeLabel}</span></div>`;
-  });
-  if (hasSibling) html += `<div class="bw-bs-row bw-disc"><span>Sibling discount applied</span></div>`;
-  html += `<div class="bw-bs-row"><span>Date</span><span>${dateLabel}</span></div>`;
-  html += `<div class="bw-bs-row bw-total"><span>Amount due</span><span>£${total}</span></div>`;
-  html += `<div style="background:#f0f7f1;border-radius:8px;padding:0.6rem 0.85rem;margin-top:0.75rem;">
-    <div style="font-size:0.72rem;font-weight:700;color:#4a7a50;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.2rem;">Payment Reference</div>
-    <div style="font-weight:700;color:var(--bw-ink);font-size:1rem;letter-spacing:0.05em;">${payRef}</div>
-  </div>`;
-  document.getElementById('bw-success-details').innerHTML = html;
-  document.querySelectorAll('.bw-section').forEach(s => s.classList.remove('bw-active'));
+function bwShowSuccess(dateLabel,total,payRef){
+  const hasSibling=bwChildren.length>=2; let html='';
+  bwChildren.forEach(c=>{html+=`<div class="bw-bs-row"><span style="font-weight:700;">${c.name}</span><span>${c.label} · ${c.timeLabel}</span></div>`;});
+  if(hasSibling)html+=`<div class="bw-bs-row bw-disc"><span>Sibling discount applied</span></div>`;
+  html+=`<div class="bw-bs-row"><span>Date</span><span>${dateLabel}</span></div>`;
+  html+=`<div class="bw-bs-row bw-total"><span>Amount due</span><span>£${total}</span></div>`;
+  html+=`<div style="background:var(--sage-pale);border-radius:8px;padding:0.6rem 0.85rem;margin-top:0.75rem;"><div style="font-size:0.72rem;font-weight:700;color:var(--brown-mid);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.2rem;">Payment Reference</div><div style="font-weight:700;color:var(--text);font-size:1rem;letter-spacing:0.05em;">${payRef}</div></div>`;
+  document.getElementById('bw-success-details').innerHTML=html;
+  document.querySelectorAll('.bw-section').forEach(s=>s.classList.remove('bw-active'));
   document.getElementById('bw-step-success').classList.add('bw-active');
-  document.querySelectorAll('.bw-step-dot').forEach(d => d.className = 'bw-step-dot bw-done');
+  document.querySelectorAll('.bw-step-dot').forEach(d=>d.className='bw-step-dot bw-done');
 }
 </script>
 
