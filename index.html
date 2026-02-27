@@ -256,7 +256,6 @@
       border-radius: 24px;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       gap: 1rem; color: var(--text-light);
-      border: 2px dashed var(--border);
     }
     .about-img-placeholder svg { opacity: 0.4; }
     .about-img-placeholder p { font-size: 0.85rem; font-weight: 600; text-align: center; padding: 0 2rem; }
@@ -608,8 +607,8 @@
       section { padding: 70px 1.25rem; }
       nav { padding: 0 1.25rem; }
       .stat-grid { grid-template-columns: 1fr 1fr; }
-      #gdpr > .section-inner > div[style*="grid-template-columns:1fr 1fr"],
-      #safeguarding > .section-inner > div[style*="grid-template-columns:1fr 1fr 1fr"] {
+      #tab-gdpr div[style*="grid-template-columns:1fr 1fr"],
+      #tab-safeguarding div[style*="grid-template-columns:1fr 1fr 1fr"] {
         grid-template-columns: 1fr !important;
       }
     }
@@ -885,7 +884,7 @@
     <li><a href="#services">Sessions</a></li>
     <li><a href="#reviews">Reviews</a></li>
     <li><a href="#faq">FAQs</a></li>
-    <li><a href="#terms">T&amp;Cs</a></li>
+    <li><a href="#policies">Policies</a></li>
     <li><a href="#booking" class="nav-cta">Book Now</a></li>
   </ul>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
@@ -899,9 +898,7 @@
   <a href="#services" onclick="toggleMenu()">Sessions</a>
   <a href="#reviews" onclick="toggleMenu()">Reviews</a>
   <a href="#faq" onclick="toggleMenu()">FAQs</a>
-  <a href="#terms" onclick="toggleMenu()">Terms &amp; Conditions</a>
-  <a href="#gdpr" onclick="toggleMenu()">Privacy &amp; GDPR</a>
-  <a href="#safeguarding" onclick="toggleMenu()">Safeguarding</a>
+  <a href="#policies" onclick="toggleMenu()">Policies</a>
   <a href="#booking" onclick="toggleMenu()">Book Now</a>
 </div>
 
@@ -1060,12 +1057,24 @@
   <div class="section-inner">
     <div class="about-grid">
       <div class="about-img-wrap reveal">
-        <div class="about-img-placeholder">
-          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="32" cy="22" r="12" stroke="#7A5C46" stroke-width="2"/>
-            <path d="M8 56c0-13.255 10.745-24 24-24s24 10.745 24 24" stroke="#7A5C46" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <p>Add a friendly photo of Sian here — warm and approachable works best!</p>
+        <div class="about-img-placeholder" style="background:linear-gradient(135deg,var(--sage-pale) 0%,var(--amber-pale) 100%);border:none;border-radius:24px;position:relative;overflow:hidden;">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem;padding:2rem;">
+            <div style="width:110px;height:110px;background:rgba(42,140,140,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid rgba(42,140,140,0.3);">
+              <svg width="60" height="60" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="22" r="13" fill="rgba(42,140,140,0.25)" stroke="var(--sage)" stroke-width="2"/>
+                <path d="M6 58c0-14.359 11.640-26 26-26s26 11.641 26 26" fill="rgba(42,140,140,0.15)" stroke="var(--sage)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div style="text-align:center;">
+              <p style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--brown);margin-bottom:0.3rem;">Photo of Sian</p>
+              <p style="font-size:0.8rem;color:var(--text-light);font-weight:500;">Replace this with a warm,<br>approachable photo</p>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-top:0.5rem;">
+              <span style="background:rgba(42,140,140,0.15);color:var(--sage);font-size:0.7rem;font-weight:700;padding:0.3rem 0.75rem;border-radius:50px;">BSc Primary Education</span>
+              <span style="background:rgba(224,90,78,0.12);color:var(--amber);font-size:0.7rem;font-weight:700;padding:0.3rem 0.75rem;border-radius:50px;">Maths Specialist</span>
+              <span style="background:rgba(42,140,140,0.15);color:var(--sage);font-size:0.7rem;font-weight:700;padding:0.3rem 0.75rem;border-radius:50px;">Enhanced DBS</span>
+            </div>
+          </div>
         </div>
         <div class="about-accent-box">
           <div class="num">10</div>
@@ -1437,15 +1446,15 @@
         <div id="contactForm">
           <div class="form-group">
             <label>Your Name</label>
-            <input type="text" placeholder="e.g. Emma Johnson" />
+            <input type="text" id="contact-name" placeholder="e.g. Emma Johnson" />
           </div>
           <div class="form-group">
             <label>Email Address</label>
-            <input type="email" placeholder="your@email.com" />
+            <input type="email" id="contact-email" placeholder="your@email.com" />
           </div>
           <div class="form-group">
             <label>Child's Age</label>
-            <select>
+            <select id="contact-age">
               <option value="">Select age...</option>
               <option>4 years old</option>
               <option>5 years old</option>
@@ -1459,7 +1468,7 @@
           </div>
           <div class="form-group">
             <label>Interested In</label>
-            <select>
+            <select id="contact-type">
               <option value="">Select session type...</option>
               <option>Online 1:1 Session (30 min)</option>
               <option>Online 1:1 Session (60 min)</option>
@@ -1469,9 +1478,10 @@
           </div>
           <div class="form-group">
             <label>Your Message</label>
-            <textarea placeholder="Tell Sian a little about your child and what support you're looking for..."></textarea>
+            <textarea id="contact-msg" placeholder="Tell Sian a little about your child and what support you're looking for..."></textarea>
           </div>
-          <button class="form-submit" onclick="submitForm()">Send Message ✦</button>
+          <div id="contact-error" style="display:none;color:#ff9a8b;font-size:0.85rem;margin-bottom:0.75rem;background:rgba(255,100,80,0.15);padding:0.75rem 1rem;border-radius:10px;"></div>
+          <button class="form-submit" id="contact-submit-btn" onclick="submitForm()">Send Message ✦</button>
         </div>
         <div class="form-success" id="formSuccess">
           <div class="checkmark">✅</div>
@@ -1508,83 +1518,101 @@
             <p>Online sessions: Nationwide (UK)<br>Group sessions: Carnon Downs, Truro</p>
           </div>
         </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">📘</div>
+          <div>
+            <h4>Facebook</h4>
+            <p><a href="https://www.facebook.com/believetoachievetuition" target="_blank" rel="noopener" style="color:var(--sage-light);text-decoration:none;">Find &amp; message Sian on Facebook</a></p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- TERMS & CONDITIONS -->
-<section id="terms" style="background:var(--cream);padding:60px 2rem;">
+<!-- POLICIES SECTION -->
+<section id="policies" style="background:var(--cream);padding:60px 2rem;">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-tag">Terms &amp; Conditions</div>
-      <h2 class="section-title" style="font-size:1.8rem;">Terms &amp; <em>Conditions</em></h2>
+      <div class="section-tag">Policies</div>
+      <h2 class="section-title" style="font-size:1.8rem;">Terms &amp; <em>Policies</em></h2>
+      <p class="section-sub">Everything you need to know about how Believe to Achieve Tuition operates.</p>
     </div>
-    <div style="background:var(--warm-white);border:1px solid var(--border);border-radius:20px;padding:2.5rem;max-width:800px;" class="reveal">
-      <p style="color:var(--text-mid);font-size:0.95rem;line-height:1.8;margin-bottom:1.5rem;">
-        Please read Sian's full Terms and Conditions before booking. All bookings are subject to these terms.
-      </p>
-      <a href="https://drive.google.com/file/d/1mY-IwfBuHAZkx5xAL9B5h941SI6M-eZu/view?usp=sharing" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;">📄 Read Terms &amp; Conditions (PDF)</a>
+
+    <!-- Tab navigation -->
+    <div class="reveal" style="display:flex;gap:0.5rem;flex-wrap:wrap;max-width:900px;margin-bottom:2rem;">
+      <button onclick="showPolicyTab('tab-terms', this)" class="policy-tab policy-tab-active" style="padding:0.6rem 1.4rem;border-radius:30px;border:2px solid var(--sage);background:var(--sage);color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.875rem;cursor:pointer;transition:all 0.2s;">📄 Terms &amp; Conditions</button>
+      <button onclick="showPolicyTab('tab-gdpr', this)" class="policy-tab" style="padding:0.6rem 1.4rem;border-radius:30px;border:2px solid var(--sage);background:transparent;color:var(--sage);font-family:'Nunito',sans-serif;font-weight:700;font-size:0.875rem;cursor:pointer;transition:all 0.2s;">🔒 Privacy &amp; GDPR</button>
+      <button onclick="showPolicyTab('tab-safeguarding', this)" class="policy-tab" style="padding:0.6rem 1.4rem;border-radius:30px;border:2px solid var(--sage);background:transparent;color:var(--sage);font-family:'Nunito',sans-serif;font-weight:700;font-size:0.875rem;cursor:pointer;transition:all 0.2s;">🛡️ Safeguarding</button>
     </div>
+
+    <!-- Terms & Conditions Tab -->
+    <div id="tab-terms" class="policy-tab-content reveal" style="max-width:900px;">
+      <div style="background:var(--warm-white);border:1px solid var(--border);border-radius:20px;padding:2.5rem;">
+        <p style="color:var(--text-mid);font-size:0.95rem;line-height:1.8;margin-bottom:1.5rem;">
+          Please read Sian's full Terms and Conditions before booking. All bookings are subject to these terms.
+        </p>
+        <a href="https://drive.google.com/file/d/1mY-IwfBuHAZkx5xAL9B5h941SI6M-eZu/preview" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;">📄 Read Full Terms &amp; Conditions (PDF)</a>
+      </div>
+    </div>
+
+    <!-- GDPR Tab -->
+    <div id="tab-gdpr" class="policy-tab-content reveal" style="max-width:900px;display:none;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:2rem;">
+        <div style="background:var(--warm-white);border:1px solid var(--border);border-radius:16px;padding:2rem;">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--brown);margin-bottom:1rem;">What information Sian collects</h3>
+          <p style="color:var(--text-mid);font-size:0.875rem;line-height:1.8;">When you make an enquiry or booking, Sian collects basic contact information — your name, email address, phone number, and details about your child's learning needs. This is used solely to provide the tutoring service and communicate with you about sessions.</p>
+        </div>
+        <div style="background:var(--warm-white);border:1px solid var(--border);border-radius:16px;padding:2rem;">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--brown);margin-bottom:1rem;">How your data is used</h3>
+          <p style="color:var(--text-mid);font-size:0.875rem;line-height:1.8;">Your information is never sold or shared with third parties. It is held securely and used only for session management and communication. You can request to view, update, or delete your data at any time by contacting Sian directly at <a href="mailto:believetoachievetuition@gmail.com" style="color:var(--sage);">believetoachievetuition@gmail.com</a>.</p>
+        </div>
+        <div style="background:var(--warm-white);border:1px solid var(--border);border-radius:16px;padding:2rem;">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--brown);margin-bottom:1rem;">Data retention</h3>
+          <p style="color:var(--text-mid);font-size:0.875rem;line-height:1.8;">Records are kept for as long as necessary to provide the tutoring service and meet any legal obligations. Once no longer needed, information is securely deleted. Session notes are kept only while the tutoring relationship is active.</p>
+        </div>
+        <div style="background:var(--warm-white);border:1px solid var(--border);border-radius:16px;padding:2rem;">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--brown);margin-bottom:1rem;">Your rights</h3>
+          <p style="color:var(--text-mid);font-size:0.875rem;line-height:1.8;">Under GDPR you have the right to access your data, correct inaccuracies, request deletion, and object to processing. To exercise any of these rights, please contact Sian directly. Believe to Achieve Tuition is committed to handling all personal data responsibly and in line with UK data protection law.</p>
+        </div>
+      </div>
+      <a href="https://drive.google.com/file/d/1lk_bMKG20lEE2GkK39f-hqHS1Lw7_25g/preview" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;">📄 Read Full GDPR &amp; Privacy Policy (PDF)</a>
+    </div>
+
+    <!-- Safeguarding Tab -->
+    <div id="tab-safeguarding" class="policy-tab-content reveal" style="max-width:900px;display:none;">
+      <div style="background:var(--sage-dark,#2c4a3e);border-radius:20px;padding:2.5rem;">
+        <p style="color:rgba(255,255,255,0.8);font-size:0.95rem;line-height:1.8;margin-bottom:2rem;">The safety and wellbeing of every child is always the top priority at Believe to Achieve Tuition.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-bottom:2rem;">
+          <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:1.75rem;">
+            <div style="font-size:2rem;margin-bottom:0.75rem;">🛡️</div>
+            <h3 style="font-family:'Playfair Display',serif;color:#fff;font-size:1rem;margin-bottom:0.75rem;">Enhanced DBS Checked</h3>
+            <p style="color:rgba(255,255,255,0.7);font-size:0.8rem;line-height:1.7;">Sian holds an Enhanced DBS (Disclosure and Barring Service) certificate and is registered on the DBS Update Service, meaning her clearance is kept current at all times.</p>
+          </div>
+          <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:1.75rem;">
+            <div style="font-size:2rem;margin-bottom:0.75rem;">📋</div>
+            <h3 style="font-family:'Playfair Display',serif;color:#fff;font-size:1rem;margin-bottom:0.75rem;">Safeguarding Policy</h3>
+            <p style="color:rgba(255,255,255,0.7);font-size:0.8rem;line-height:1.7;">Believe to Achieve Tuition operates a clear safeguarding policy. If Sian has any concerns about a child's welfare, she follows appropriate reporting procedures in line with statutory guidance.</p>
+          </div>
+          <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:1.75rem;">
+            <div style="font-size:2rem;margin-bottom:0.75rem;">🏫</div>
+            <h3 style="font-family:'Playfair Display',serif;color:#fff;font-size:1rem;margin-bottom:0.75rem;">Professional Standards</h3>
+            <p style="color:rgba(255,255,255,0.7);font-size:0.8rem;line-height:1.7;">As a qualified teacher with QTS and 10 years' classroom experience, Sian adheres to the professional standards expected of all teaching practitioners, including ongoing safeguarding awareness.</p>
+          </div>
+        </div>
+        <p style="color:rgba(255,255,255,0.6);font-size:0.8rem;margin-bottom:1.5rem;">If you have any safeguarding concerns or questions, please contact Sian directly at <a href="mailto:believetoachievetuition@gmail.com" style="color:var(--amber);text-decoration:none;">believetoachievetuition@gmail.com</a>. For independent guidance, you can also contact the NSPCC helpline on 0808 800 5000.</p>
+        <a href="https://drive.google.com/file/d/1mftYrHsbiN8Kgn9c8bHJ9lugX2JcAi2g/preview" target="_blank" style="display:inline-block;text-decoration:none;padding:0.75rem 1.75rem;border-radius:30px;background:var(--amber);color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.9rem;">📄 Read Full Safeguarding Policy (PDF)</a>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<!-- GDPR & PRIVACY -->
-<section id="gdpr" style="background:var(--warm-white);padding:60px 2rem;">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-tag">Privacy & Data</div>
-      <h2 class="section-title" style="font-size:1.8rem;">Your <em>Privacy</em></h2>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:900px;" class="reveal">
-      <div style="background:var(--cream);border:1px solid var(--border);border-radius:16px;padding:2rem;">
-        <h3 style="font-family:'Playfair Display',serif;color:var(--brown);margin-bottom:1rem;">What information Sian collects</h3>
-        <p style="color:var(--text-mid);font-size:0.875rem;line-height:1.8;">When you make an enquiry or booking, Sian collects basic contact information — your name, email address, phone number, and details about your child's learning needs. This is used solely to provide the tutoring service and communicate with you about sessions.</p>
-      </div>
-      <div style="background:var(--cream);border:1px solid var(--border);border-radius:16px;padding:2rem;">
-        <h3 style="font-family:'Playfair Display',serif;color:var(--brown);margin-bottom:1rem;">How your data is used</h3>
-        <p style="color:var(--text-mid);font-size:0.875rem;line-height:1.8;">Your information is never sold or shared with third parties. It is held securely and used only for session management and communication. You can request to view, update, or delete your data at any time by contacting Sian directly at <a href="mailto:believetoachievetuition@gmail.com" style="color:var(--sage);">believetoachievetuition@gmail.com</a>.</p>
-      </div>
-      <div style="background:var(--cream);border:1px solid var(--border);border-radius:16px;padding:2rem;">
-        <h3 style="font-family:'Playfair Display',serif;color:var(--brown);margin-bottom:1rem;">Data retention</h3>
-        <p style="color:var(--text-mid);font-size:0.875rem;line-height:1.8;">Records are kept for as long as necessary to provide the tutoring service and meet any legal obligations. Once no longer needed, information is securely deleted. Session notes are kept only while the tutoring relationship is active.</p>
-      </div>
-      <div style="background:var(--cream);border:1px solid var(--border);border-radius:16px;padding:2rem;">
-        <h3 style="font-family:'Playfair Display',serif;color:var(--brown);margin-bottom:1rem;">Your rights</h3>
-        <p style="color:var(--text-mid);font-size:0.875rem;line-height:1.8;">Under GDPR you have the right to access your data, correct inaccuracies, request deletion, and object to processing. To exercise any of these rights, please contact Sian directly. Believe to Achieve Tuition is committed to handling all personal data responsibly and in line with UK data protection law.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SAFEGUARDING -->
-<section id="safeguarding" style="background:var(--sage-dark,#2c4a3e);padding:60px 2rem;">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-tag" style="background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);">Child Safety</div>
-      <h2 class="section-title" style="font-size:1.8rem;color:#fff;">Safeguarding &amp; <em style="color:var(--amber);">Child Protection</em></h2>
-      <p class="section-sub" style="color:rgba(255,255,255,0.75);max-width:600px;">The safety and wellbeing of every child is always the top priority at Believe to Achieve Tuition.</p>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;max-width:900px;" class="reveal">
-      <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:1.75rem;">
-        <div style="font-size:2rem;margin-bottom:0.75rem;">🛡️</div>
-        <h3 style="font-family:'Playfair Display',serif;color:#fff;font-size:1rem;margin-bottom:0.75rem;">Enhanced DBS Checked</h3>
-        <p style="color:rgba(255,255,255,0.7);font-size:0.8rem;line-height:1.7;">Sian holds an Enhanced DBS (Disclosure and Barring Service) certificate and is registered on the DBS Update Service, meaning her clearance is kept current at all times.</p>
-      </div>
-      <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:1.75rem;">
-        <div style="font-size:2rem;margin-bottom:0.75rem;">📋</div>
-        <h3 style="font-family:'Playfair Display',serif;color:#fff;font-size:1rem;margin-bottom:0.75rem;">Safeguarding Policy</h3>
-        <p style="color:rgba(255,255,255,0.7);font-size:0.8rem;line-height:1.7;">Believe to Achieve Tuition operates a clear safeguarding policy. If Sian has any concerns about a child's welfare, she follows appropriate reporting procedures in line with statutory guidance.</p>
-      </div>
-      <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:1.75rem;">
-        <div style="font-size:2rem;margin-bottom:0.75rem;">🏫</div>
-        <h3 style="font-family:'Playfair Display',serif;color:#fff;font-size:1rem;margin-bottom:0.75rem;">Professional Standards</h3>
-        <p style="color:rgba(255,255,255,0.7);font-size:0.8rem;line-height:1.7;">As a qualified teacher with QTS and 10 years' classroom experience, Sian adheres to the professional standards expected of all teaching practitioners, including ongoing safeguarding awareness.</p>
-      </div>
-    </div>
-    <p class="reveal" style="color:rgba(255,255,255,0.6);font-size:0.8rem;margin-top:2rem;max-width:900px;">If you have any safeguarding concerns or questions, please contact Sian directly at <a href="mailto:believetoachievetuition@gmail.com" style="color:var(--amber);text-decoration:none;">believetoachievetuition@gmail.com</a>. For independent guidance, you can also contact the NSPCC helpline on 0808 800 5000.</p>
-  </div>
-</section>
+<!-- anchor redirects for old links -->
+<span id="terms" style="display:none;"></span>
+<span id="gdpr" style="display:none;"></span>
+<span id="safeguarding" style="display:none;"></span>
 
 
 <footer>
@@ -1592,12 +1620,24 @@
   <p style="margin-bottom:0.375rem;">
     <strong>Believe to Achieve Tuition</strong> &nbsp;·&nbsp; Private Tuition by Sian &nbsp;·&nbsp; BSc Primary Education (specialising in maths) &nbsp;·&nbsp; Enhanced DBS Checked
   </p>
-  <p style="margin-bottom:0.5rem;">© 2025 Believe to Achieve Tuition. All rights reserved.</p>
-  <p><a href="#terms" style="color:var(--sage-light);text-decoration:none;font-size:0.8rem;">Terms &amp; Conditions</a> &nbsp;·&nbsp; <a href="#gdpr" style="color:var(--sage-light);text-decoration:none;font-size:0.8rem;">Privacy &amp; GDPR</a> &nbsp;·&nbsp; <a href="#safeguarding" style="color:var(--sage-light);text-decoration:none;font-size:0.8rem;">Safeguarding</a></p>
+  <p style="margin-bottom:0.5rem;">© 2026 Believe to Achieve Tuition. All rights reserved.</p>
+  <p style="margin-bottom:0.5rem;"><a href="#policies" style="color:var(--sage-light);text-decoration:none;font-size:0.8rem;">Terms &amp; Conditions</a> &nbsp;·&nbsp; <a href="#policies" onclick="setTimeout(()=>showPolicyTab('tab-gdpr',document.querySelectorAll('.policy-tab')[1]),50)" style="color:var(--sage-light);text-decoration:none;font-size:0.8rem;">Privacy &amp; GDPR</a> &nbsp;·&nbsp; <a href="#policies" onclick="setTimeout(()=>showPolicyTab('tab-safeguarding',document.querySelectorAll('.policy-tab')[2]),50)" style="color:var(--sage-light);text-decoration:none;font-size:0.8rem;">Safeguarding</a></p>
+  <p><a href="https://www.facebook.com/believetoachievetuition" target="_blank" rel="noopener" style="color:var(--amber);text-decoration:none;font-size:0.85rem;font-weight:700;">📘 Follow on Facebook</a></p>
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Mobile menu
+  function showPolicyTab(tabId, btn) {
+    document.querySelectorAll('.policy-tab-content').forEach(el => el.style.display = 'none');
+    document.getElementById(tabId).style.display = 'block';
+    document.querySelectorAll('.policy-tab').forEach(b => {
+      b.style.background = 'transparent';
+      b.style.color = 'var(--sage)';
+    });
+    btn.style.background = 'var(--sage)';
+    btn.style.color = '#fff';
+  }
+
   function toggleMenu() {
     document.getElementById('mobileMenu').classList.toggle('active');
   }
@@ -1621,15 +1661,44 @@
     if (!isOpen) el.classList.add('open');
   }
 
-  // Contact form mock submit
-  function submitForm() {
-    const inputs = document.querySelectorAll('#contactForm input, #contactForm textarea, #contactForm select');
-    let valid = true;
-    inputs.forEach(input => {
-      if (!input.value.trim() && input.type !== 'select-one') valid = false;
-    });
-    document.getElementById('contactForm').style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
+  // Contact form submit via EmailJS
+  async function submitForm() {
+    const nameEl   = document.getElementById('contact-name');
+    const emailEl  = document.getElementById('contact-email');
+    const ageEl    = document.getElementById('contact-age');
+    const typeEl   = document.getElementById('contact-type');
+    const msgEl    = document.getElementById('contact-msg');
+    const btnEl    = document.getElementById('contact-submit-btn');
+    const errEl    = document.getElementById('contact-error');
+
+    const name    = nameEl?.value.trim();
+    const email   = emailEl?.value.trim();
+    const age     = ageEl?.value;
+    const type    = typeEl?.value;
+    const message = msgEl?.value.trim();
+
+    if (!name || !email || !message) {
+      if (errEl) { errEl.textContent = 'Please fill in your name, email, and message.'; errEl.style.display = 'block'; }
+      return;
+    }
+    if (errEl) errEl.style.display = 'none';
+    if (btnEl) { btnEl.disabled = true; btnEl.textContent = 'Sending…'; }
+
+    try {
+      await emailjs.send(BW_EMAILJS_SERVICE_ID, BW_EMAILJS_TEMPLATE_ID, {
+        parent_name: 'ENQUIRY — ' + name,
+        parent_email: 'believetoachievetuition@gmail.com',
+        booking_summary: `Name: ${name}\nEmail: ${email}\nChild age: ${age || 'Not specified'}\nInterested in: ${type || 'Not specified'}\n\nMessage:\n${message}`,
+        total: '',
+        payment_ref: '',
+        tc_link: ''
+      });
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } catch (err) {
+      if (btnEl) { btnEl.disabled = false; btnEl.textContent = 'Send Message ✦'; }
+      if (errEl) { errEl.textContent = 'Sorry, something went wrong. Please email believetoachievetuition@gmail.com directly.'; errEl.style.display = 'block'; }
+    }
   }
 
   // Navbar scroll effect
