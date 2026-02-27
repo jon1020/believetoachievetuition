@@ -1107,14 +1107,13 @@
         <p class="service-sub">Small groups · Sunday sessions · Max 4 children</p>
         <p class="service-desc">Fun, focused learning in a warm and nurturing small group setting. With a maximum of 4 children, every child still receives plenty of individual attention — plus the motivation of learning alongside peers.</p>
         <div class="service-details">
-          <div class="service-detail"><span class="icon">⏱</span> 60 minutes minimum</div>
+          <div class="service-detail"><span class="icon">⏱</span> Sessions start from 1 hour</div>
           <div class="service-detail"><span class="icon">📅</span> Sundays only</div>
           <div class="service-detail"><span class="icon">👨‍👩‍👧‍👦</span> Maximum 4 children per group</div>
           <div class="service-detail"><span class="icon">👦</span> Ages 4–10</div>
           <div class="service-detail"><span class="icon">📍</span> Carnon Downs Village Hall, Truro, Cornwall</div>
           <div class="service-detail"><span class="icon">💷</span> 1hr Maths or Literacy: £30 · 2hr Maths &amp; Literacy: £60 · Sibling discount available</div>
         </div>
-        <div class="price-note">💬 Contact Sian for current pricing</div>
         <a href="#booking" class="btn-primary" style="display:inline-block;font-size:0.85rem;padding:0.75rem 1.5rem;">Book Group Session</a>
       </div>
       <div class="service-card reveal">
@@ -1362,19 +1361,19 @@
       <div class="review-card reveal">
         <div class="review-stars" style="color:var(--sage);font-size:0.8rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;">✔ Recommends on Facebook</div>
         <p class="review-text">"We've been using Sian for over a year now and she is amazing. We contacted her as two of our kids had hit a wall with home schooling and we couldn't get them to progress with a few problem areas. Within weeks Sian had turned this around and had them both enjoying those subjects again. She had such a positive impact that we decided to keep up the tutoring lessons after our kids caught up. From her extensive teaching experience, she has so much more understanding of what children should be capable of, that she knows exactly where to push our kids to get them to their full potential."</p>
-        <div class="review-author">David Ellis</div>
+        <div class="review-author">David</div>
         <div class="review-meta">Parent</div>
       </div>
       <div class="review-card reveal">
         <div class="review-stars" style="color:var(--sage);font-size:0.8rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;">✔ Recommends on Facebook</div>
         <p class="review-text">"My son had his first session with Sian today — he is neurodiverse and has suspected dyslexia. Sian was so understanding with him, going out of her way to choose colours he could read and also a way to communicate with him without him having to talk. He felt comfortable and engaged and I really enjoyed seeing this in him. Can't wait for my boy to carry on getting better with his reading and confidence! Sian is very approachable and kind. I would highly recommend, especially with children who need an extra hand!"</p>
-        <div class="review-author">Voraa Alanaa Faith</div>
+        <div class="review-author">Vora</div>
         <div class="review-meta">Parent</div>
       </div>
       <div class="review-card reveal">
         <div class="review-stars" style="color:var(--sage);font-size:0.8rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;">✔ Recommends on Facebook</div>
         <p class="review-text">"Sian has been tutoring my son for two years now and has helped him improve both his maths and literacy greatly. She is incredibly patient with him, as he has a tendency to be very easily distracted but is also able to get him to focus. Having Sian tutor him has helped our HomeEd journey no end as I am able to focus on specific areas of learning following their sessions. Sian has also recommended workbooks which we use in conjunction with his weekly lessons. Kallan looks forward to his tutoring sessions and is completely comfortable with Sian. Would highly recommend Believe to Achieve Tuition."</p>
-        <div class="review-author">Carrie Ffarrington</div>
+        <div class="review-author">Carrie</div>
         <div class="review-meta">Parent</div>
       </div>
     </div>
@@ -1452,6 +1451,9 @@
               <option>5 years old</option>
               <option>6 years old</option>
               <option>7 years old</option>
+              <option>8 years old</option>
+              <option>9 years old</option>
+              <option>10 years old</option>
               <option>Other</option>
             </select>
           </div>
@@ -1503,7 +1505,7 @@
           <div class="contact-info-icon">📍</div>
           <div>
             <h4>Location</h4>
-            <p>Online sessions: nationwide (UK)<br>Group sessions: Carnon Downs, Truro</p>
+            <p>Online sessions: Nationwide (UK)<br>Group sessions: Carnon Downs, Truro</p>
           </div>
         </div>
       </div>
@@ -1751,15 +1753,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 const BW_AVAILABILITY = {
-  "2026-03-01": true,
-  "2026-03-08": true,
-  "2026-03-15": { "9:00": false, "10:00": true },
-  "2026-03-22": true,
-  "2026-03-29": true,
-  "2026-04-05": true,
-  "2026-04-12": false,
-  "2026-04-19": true,
-  "2026-04-26": true,
+  "2026-03-22": { "9:00": true, "10:00": true },
+  "2026-03-29": { "9:00": true, "10:00": true },
 };
 
 const BW_EMAILJS_PUBLIC_KEY  = 'YcHluYUj5pINA5zCe';
