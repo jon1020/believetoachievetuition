@@ -87,6 +87,17 @@
     }
     .nav-cta:hover { background: var(--amber-light) !important; transform: translateY(-1px); }
 
+    .nav-facebook {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: #1877F2; color: #fff;
+      text-decoration: none; flex-shrink: 0;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(24,119,242,0.3);
+    }
+    .nav-facebook:hover { background: #145db9; transform: translateY(-1px); }
+    .nav-facebook svg { width: 18px; height: 18px; fill: #fff; }
+
     .hamburger {
       display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px;
     }
@@ -886,6 +897,11 @@
     <li><a href="#faq">FAQs</a></li>
     <li><a href="#policies">Policies</a></li>
     <li><a href="#booking" class="nav-cta">Book Now</a></li>
+    <li>
+      <a href="https://www.facebook.com/people/Believe-to-Achieve-Tuition/61580662933247/" target="_blank" rel="noopener" class="nav-facebook" title="Follow us on Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.269h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+      </a>
+    </li>
   </ul>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
