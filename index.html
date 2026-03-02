@@ -1826,17 +1826,55 @@
       });
     });
 
-    // Mini confetti on load (cheerful, one-shot)
-    const colors = ['#E05A4E','#2A8C8C','#F0C030','#E8776D','#5BB5B5','#FDECEA'];
-    for (let i = 0; i < 28; i++) {
-      setTimeout(() => {
-        const c = document.createElement('div');
-        const size = 6 + Math.random() * 7;
-        c.style.cssText = `position:fixed;top:-12px;left:${Math.random()*100}vw;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>0.5?'50%':'3px'};pointer-events:none;z-index:9998;opacity:0.9;transform:rotate(${Math.random()*360}deg);transition:top 2s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.5s ease 1.5s,transform 2s linear;`;
-        document.body.appendChild(c);
-        requestAnimationFrame(() => { c.style.top = `${55+Math.random()*45}vh`; c.style.transform = `rotate(${Math.random()*720}deg)`; c.style.opacity = '0'; });
-        setTimeout(() => c.remove(), 2500);
-      }, 300 + i * 55);
+    // Confetti / fireworks on every page load (cheerful, one-shot)
+    function launchConfetti() {
+      const colors = ['#E05A4E','#2A8C8C','#F0C030','#E8776D','#5BB5B5','#FF85A1','#FFA500','#9B59B6'];
+      const count = 55;
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          const c = document.createElement('div');
+          const size = 7 + Math.random() * 9;
+          const startLeft = Math.random() * 100;
+          const endTop = 50 + Math.random() * 50;
+          const startRotate = Math.random() * 360;
+          const endRotate = startRotate + 360 + Math.random() * 360;
+          // Set initial state (top of screen, no transition yet)
+          c.style.cssText = [
+            'position:fixed',
+            'top:-16px',
+            `left:${startLeft}vw`,
+            `width:${size}px`,
+            `height:${size}px`,
+            `background:${colors[Math.floor(Math.random()*colors.length)]}`,
+            `border-radius:${Math.random()>0.4?'50%':'3px'}`,
+            'pointer-events:none',
+            'z-index:9999',
+            'opacity:1',
+            `transform:rotate(${startRotate}deg)`,
+            'will-change:transform,top,opacity'
+          ].join(';') + ';';
+          document.body.appendChild(c);
+          // Double RAF ensures the browser has painted the initial position
+          // before we apply the transition — critical for mobile browsers
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              c.style.transition = 'top 2.2s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.6s ease 1.6s, transform 2.2s linear';
+              c.style.top = `${endTop}vh`;
+              c.style.transform = `rotate(${endRotate}deg)`;
+              c.style.opacity = '0';
+            });
+          });
+          setTimeout(() => { if (c.parentNode) c.parentNode.removeChild(c); }, 3000);
+        }, 200 + i * 45);
+      }
+    }
+
+    // Use 'load' event so the page is fully painted before we start,
+    // which is more reliable on mobile than DOMContentLoaded
+    if (document.readyState === 'complete') {
+      setTimeout(launchConfetti, 100);
+    } else {
+      window.addEventListener('load', () => setTimeout(launchConfetti, 100));
     }
   });
 </script>
