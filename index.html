@@ -773,6 +773,16 @@
     .bw-step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all 0.3s; }
     .bw-step-dot.bw-active { background: var(--amber); width: 24px; border-radius: 4px; }
     .bw-step-dot.bw-done { background: var(--sage); }
+    .bw-mg-options { display: grid; gap: 0.75rem; margin-bottom: 1.25rem; }
+    .bw-mg-opt { border: 2px solid var(--border); border-radius: 14px; padding: 1.1rem 1.25rem; cursor: pointer; background: var(--warm-white); transition: border-color 0.15s, background 0.15s; display: flex; align-items: flex-start; gap: 1rem; }
+    .bw-mg-opt:hover { border-color: var(--amber); background: var(--amber-pale); }
+    .bw-mg-opt.bw-mg-selected { border-color: var(--amber); background: var(--amber-pale); }
+    .bw-mg-icon { font-size: 1.6rem; line-height: 1; flex-shrink: 0; margin-top: 0.1rem; }
+    .bw-mg-label { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+    .bw-mg-sub { font-size: 0.8rem; color: var(--text-mid); line-height: 1.5; }
+    .bw-mg-price-pill { display: inline-block; margin-top: 0.4rem; background: var(--gold-pale); color: #8a6000; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.04em; padding: 0.2rem 0.6rem; border-radius: 20px; }
+    .bw-mg-note { background: #f0f7f1; border: 1px solid #c3dfc7; border-radius: 10px; padding: 0.85rem 1rem; font-size: 0.82rem; color: #3a6b40; line-height: 1.6; margin-bottom: 1.25rem; display: none; }
+    .bw-mg-note.bw-show { display: block; }
     .bw-section { display: none; }
     .bw-section.bw-active { display: block; animation: bwFadeIn 0.3s ease; }
     @keyframes bwFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -1269,6 +1279,7 @@
               <div class="bw-step-dot bw-active" id="bw-dot-1"></div>
               <div class="bw-step-dot" id="bw-dot-2"></div>
               <div class="bw-step-dot" id="bw-dot-3"></div>
+              <div class="bw-step-dot" id="bw-dot-4"></div>
             </div>
 
             <!-- STEP 1 -->
@@ -1332,13 +1343,43 @@
                 </div>
               </div>
               <div class="bw-mt1">
-                <button class="bw-btn bw-btn-primary" id="bw-proceed-btn" onclick="bwGoTo(2)" disabled>Continue to Your Details</button>
+                <button class="bw-btn bw-btn-primary" id="bw-proceed-btn" onclick="bwGoTo('1b')" disabled>Continue →</button>
+              </div>
+            </div>
+
+            <!-- STEP 1b — Meet & Greet -->
+            <div class="bw-section" id="bw-step-1b">
+              <button class="bw-btn bw-btn-back" onclick="bwGoTo(1)">← Back</button>
+              <div class="bw-section-title">Is this your child's first session?</div>
+              <p style="font-size:0.875rem;color:var(--text-mid);line-height:1.7;margin-bottom:1.25rem;">Before joining a group session, Sian loves to meet each child 1:1 so they feel settled and comfortable from the very first Sunday. You're welcome to come along too!</p>
+              <div class="bw-mg-options">
+                <div class="bw-mg-opt" id="bw-mg-yes" onclick="bwSelectMeetGreet(true)">
+                  <div class="bw-mg-icon">👋</div>
+                  <div>
+                    <div class="bw-mg-label">Yes — I'd love a meet &amp; greet first</div>
+                    <div class="bw-mg-sub">Sian will arrange a short 1:1 with your child before the Sunday session — either in person or online, whichever suits you. You only pay £15 now to secure the meet &amp; greet. The remaining balance for the Sunday session is only collected afterwards, once you're happy to go ahead.</div>
+                    <div class="bw-mg-price-pill">£15 due now · remainder due after meet &amp; greet</div>
+                  </div>
+                </div>
+                <div class="bw-mg-opt" id="bw-mg-no" onclick="bwSelectMeetGreet(false)">
+                  <div class="bw-mg-icon">📅</div>
+                  <div>
+                    <div class="bw-mg-label">No — book straight into the Sunday session</div>
+                    <div class="bw-mg-sub">Your child has already had a meet &amp; greet, or you're happy to head straight in. Full session payment is due as normal.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="bw-mg-note" id="bw-mg-note">
+                ✅ <strong>Great choice!</strong> Sian will be in touch to arrange a convenient time — either in person or online. For now, you'll just pay <strong>£15</strong> to secure the meet &amp; greet. The remaining balance for the Sunday session is only taken once you're happy to go ahead.
+              </div>
+              <div class="bw-mt1">
+                <button class="bw-btn bw-btn-primary" id="bw-mg-proceed-btn" onclick="bwGoTo(2)" disabled>Continue to Your Details</button>
               </div>
             </div>
 
             <!-- STEP 2 -->
             <div class="bw-section" id="bw-step-2">
-              <button class="bw-btn bw-btn-back" onclick="bwGoTo(1)">← Back</button>
+              <button class="bw-btn bw-btn-back" onclick="bwGoTo('1b')">← Back</button>
               <div class="bw-section-title">Your details</div>
               <div class="bw-booking-summary" id="bw-booking-summary"></div>
               <div class="bw-field-row">
@@ -1369,7 +1410,7 @@
                 <div class="bw-success-icon">✓</div>
                 <div class="bw-badge">Booking Received</div>
                 <h2>You're all booked!</h2>
-                <p>A confirmation email has been sent to you with payment details. Please make your bank transfer to secure your place.</p>
+                <p id="bw-success-msg">A confirmation email has been sent to you with payment details. Please make your bank transfer to secure your place.</p>
                 <div class="bw-success-details" id="bw-success-details"></div>
                 <p style="font-size:0.82rem;color:var(--text-light);margin-top:0.75rem;">Can't find the email? Check your spam folder or contact <strong>believetoachievetuition@gmail.com</strong></p>
               </div>
@@ -1915,7 +1956,7 @@ const BW_SESSIONS = [
   { value: '2hr-both',     label: '2 Hours Maths & Literacy', price: 60, hours: 2, sub: 'Full session · 9–11am' },
 ];
 
-let bwChildren=[], bwNextId=1, bwAddingSession=null, bwAddingTime=null, bwFormOpen=false, bwSelectedDate=null, bwCalYear, bwCalMonth;
+let bwChildren=[], bwNextId=1, bwAddingSession=null, bwAddingTime=null, bwFormOpen=false, bwSelectedDate=null, bwCalYear, bwCalMonth, bwMeetGreet=null;
 
 function bwDateStatus(ds){const av=BW_AVAILABILITY[ds];if(av===undefined)return'hidden';const s9=av['9:00']??0;const s10=av['10:00']??0;if(s9===0&&s10===0)return'full';if(s9>=4&&s10>=4)return'avail';return'partial';}
 function bwSlotAvailable(ds,slot){const av=BW_AVAILABILITY[ds];if(!av)return false;return(av[slot]??0)>0;}
@@ -2068,7 +2109,17 @@ function bwGoTo(step){
   if(step===2)bwBuildBookingSummary();
   document.querySelectorAll('.bw-section').forEach(s=>s.classList.remove('bw-active'));
   document.getElementById('bw-step-'+step).classList.add('bw-active');
-  for(let i=1;i<=3;i++){const dot=document.getElementById('bw-dot-'+i);if(dot)dot.className='bw-step-dot'+(i<step?' bw-done':i===step?' bw-active':'');}
+  const stepOrder=[1,'1b',2,3];
+  const idx=stepOrder.indexOf(step);
+  for(let i=0;i<4;i++){const dot=document.getElementById('bw-dot-'+(i+1));if(dot)dot.className='bw-step-dot'+(i<idx?' bw-done':i===idx?' bw-active':'');}
+}
+
+function bwSelectMeetGreet(val){
+  bwMeetGreet=val;
+  document.getElementById('bw-mg-yes').classList.toggle('bw-mg-selected',val===true);
+  document.getElementById('bw-mg-no').classList.toggle('bw-mg-selected',val===false);
+  document.getElementById('bw-mg-note').classList.toggle('bw-show',val===true);
+  document.getElementById('bw-mg-proceed-btn').disabled=false;
 }
 
 function bwBuildBookingSummary(){
@@ -2085,7 +2136,15 @@ function bwBuildBookingSummary(){
     else html+=`<div class="bw-bs-row"><span style="padding-left:0.5rem">Price</span><span>£${c.price}</span></div>`;
   });
   html+=`<div class="bw-bs-row" style="margin-top:0.5rem;"><span>Date</span><span>${dateLabel}</span></div>`;
-  html+=`<div class="bw-bs-row bw-total"><span>Total due</span><span>£${bwCalcTotal()}</span></div>`;
+  if(bwMeetGreet){
+    html+=`<hr class="bw-bs-div">`;
+    html+=`<div class="bw-bs-row" style="color:var(--text-mid);"><span>👋 Meet &amp; greet</span><span>Included</span></div>`;
+    html+=`<div class="bw-bs-row" style="font-size:0.78rem;color:var(--text-light);padding-bottom:0.25rem;"><span style="padding-left:0.5rem;">Due today</span><span>£15</span></div>`;
+    html+=`<div class="bw-bs-row" style="font-size:0.78rem;color:var(--text-light);"><span style="padding-left:0.5rem;">Due after meet &amp; greet</span><span>£${bwCalcTotal()-15}</span></div>`;
+    html+=`<div class="bw-bs-row bw-total"><span>Total due today</span><span>£15</span></div>`;
+  } else {
+    html+=`<div class="bw-bs-row bw-total"><span>Total due</span><span>£${bwCalcTotal()}</span></div>`;
+  }
   document.getElementById('bw-booking-summary').innerHTML=html;
 }
 
@@ -2098,10 +2157,12 @@ async function bwSubmitBooking(){
   const errEl=document.getElementById('bw-error-note'); errEl.style.display='none';
   if(!first||!last||!email||!phone){errEl.textContent='Please fill in all fields.';errEl.style.display='block';return;}
   if(!tcOk){errEl.textContent='Please read and agree to the Terms and Conditions to continue.';errEl.style.display='block';return;}
-  const hasSibling=bwChildren.length>=2;const total=bwCalcTotal();
+  const hasSibling=bwChildren.length>=2;const fullTotal=bwCalcTotal();
+  const total=bwMeetGreet?15:fullTotal;
   const d=new Date(bwSelectedDate+'T00:00:00');
   const dateLabel=d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  const bookingSummaryText=bwChildren.map((c,i)=>{const dp=hasSibling?Math.round(BW_SIBLING_RATE*c.hours):c.price;return`Child ${i+1}: ${c.name}\nSession: ${c.label} (${c.timeLabel})\nPrice: £${dp}${hasSibling?' (sibling rate)':''}`;}).join('\n\n')+`\n\nDate: ${dateLabel}\nTotal: £${total}`;
+  const mgLine=bwMeetGreet?`\n\n👋 MEET & GREET REQUESTED\nDue today: £15\nRemaining balance (£${fullTotal-15}) due after meet & greet, only if happy to proceed.`:'';
+  const bookingSummaryText=bwChildren.map((c,i)=>{const dp=hasSibling?Math.round(BW_SIBLING_RATE*c.hours):c.price;return`Child ${i+1}: ${c.name}\nSession: ${c.label} (${c.timeLabel})\nPrice: £${dp}${hasSibling?' (sibling rate)':''}`;}).join('\n\n')+`\n\nDate: ${dateLabel}${mgLine}\nTotal due today: £${total}`;
   const payRef=(first[0]+last).replace(/\s/g,'').toUpperCase()+'-'+bwSelectedDate.replace(/-/g,'');
   document.querySelectorAll('.bw-section').forEach(s=>s.classList.remove('bw-active'));
   document.getElementById('bw-step-sending').classList.add('bw-active');
@@ -2121,7 +2182,15 @@ function bwShowSuccess(dateLabel,total,payRef){
   bwChildren.forEach(c=>{html+=`<div class="bw-bs-row"><span style="font-weight:700;">${c.name}</span><span>${c.label} · ${c.timeLabel}</span></div>`;});
   if(hasSibling)html+=`<div class="bw-bs-row bw-disc"><span>Sibling discount applied</span></div>`;
   html+=`<div class="bw-bs-row"><span>Date</span><span>${dateLabel}</span></div>`;
-  html+=`<div class="bw-bs-row bw-total"><span>Amount due</span><span>£${total}</span></div>`;
+  if(bwMeetGreet){
+    html+=`<div class="bw-bs-row" style="color:var(--text-mid);font-size:0.82rem;"><span>👋 Meet &amp; greet requested</span><span>✓</span></div>`;
+    html+=`<div class="bw-bs-row bw-total"><span>Amount due today</span><span>£15</span></div>`;
+    html+=`<div style="background:#f0f7f1;border:1px solid #c3dfc7;border-radius:10px;padding:0.75rem 1rem;margin-top:0.75rem;font-size:0.82rem;color:#3a6b40;line-height:1.6;">The remaining <strong>£${bwCalcTotal()-15}</strong> for the Sunday session will only be collected once you've met Sian and are happy to go ahead.</div>`;
+    document.getElementById('bw-success-msg').textContent="A confirmation email has been sent to you. Please pay £15 via bank transfer to secure your meet & greet — Sian will be in touch to arrange a time!";
+  } else {
+    html+=`<div class="bw-bs-row bw-total"><span>Amount due</span><span>£${total}</span></div>`;
+    document.getElementById('bw-success-msg').textContent="A confirmation email has been sent to you with payment details. Please make your bank transfer to secure your place.";
+  }
   html+=`<div style="background:var(--sage-pale);border-radius:8px;padding:0.6rem 0.85rem;margin-top:0.75rem;"><div style="font-size:0.72rem;font-weight:700;color:var(--brown-mid);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.2rem;">Payment Reference</div><div style="font-weight:700;color:var(--text);font-size:1rem;letter-spacing:0.05em;">${payRef}</div></div>`;
   document.getElementById('bw-success-details').innerHTML=html;
   document.querySelectorAll('.bw-section').forEach(s=>s.classList.remove('bw-active'));
