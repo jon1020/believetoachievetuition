@@ -1964,7 +1964,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 // ═══════════════════════════════════════════════════════════════
-//  ✏️  AVAILABILITY — UPDATE EACH WEEK
+//  ✏️  AVAILABILITY — edit availability.json (not this file)
 //
 //  Numbers represent SPACES REMAINING (max 4 per slot).
 //  A 9–10am booking uses 1 from "9:00".
@@ -1976,11 +1976,13 @@
 //    { "9:00": 2, "10:00": 4 }  — 2 spaces gone at 9am
 //    { "9:00": 0, "10:00": 2 }  — 9am full, 2 left at 10am
 //    { "9:00": 0, "10:00": 0 }  — fully booked
+//
+//  Dot colour rules:
+//    4           → green dot  (fully available)
+//    1 / 2 / 3   → gold dot   (partially available)
+//    0           → greyed out (fully booked)
 // ═══════════════════════════════════════════════════════════════
-const BW_AVAILABILITY = {
-  "2026-03-22": { "9:00": 0, "10:00": 0 },
-  "2026-03-29": { "9:00": 0, "10:00": 0 },
-};
+let BW_AVAILABILITY = {};
 // ═══════════════════════════════════════════════════════════════
 
 const BW_EMAILJS_PUBLIC_KEY  = 'YcHluYUj5pINA5zCe';
@@ -2003,10 +2005,14 @@ function bwSlotAvailable(ds,slot){const av=BW_AVAILABILITY[ds];if(!av)return fal
 window.addEventListener('load',()=>{
   const now=new Date(); bwCalYear=now.getFullYear(); bwCalMonth=now.getMonth();
   emailjs.init(BW_EMAILJS_PUBLIC_KEY);
-  bwRenderSessionOpts(); bwRenderCalendar();
+  bwRenderSessionOpts();
   document.getElementById('bw-adding-form-title').textContent='Child 1';
   document.getElementById('bw-cancel-btn').style.display='none';
   bwFormOpen=true;
+  fetch('availability.json?v='+Date.now())
+    .then(r=>r.json())
+    .then(data=>{BW_AVAILABILITY=data;bwRenderCalendar();})
+    .catch(()=>{bwRenderCalendar();});
 });
 
 function bwRenderSessionOpts(){
