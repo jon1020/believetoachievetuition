@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://believetoachievetuition.co.uk/sitemap.xml
