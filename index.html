@@ -655,10 +655,11 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      .hero-inner, .about-grid, .services-grid, .booking-layout, .contact-layout { grid-template-columns: 1fr; }
+      .about-grid, .services-grid, .booking-layout, .contact-layout { grid-template-columns: 1fr; }
       .hero-decoration { display: none; }
-      .hero-text { order: 1; }
-      .hero-card { order: 2; }
+      .hero-inner { display: flex; flex-direction: column; align-items: center; }
+      .hero-text { width: 100%; }
+      .hero-card { width: 100%; max-width: 480px; margin: 0 auto; align-self: center; }
       .includes-grid, .reviews-grid { grid-template-columns: 1fr 1fr; }
       .faq-grid { grid-template-columns: 1fr; }
       .about-accent-box { right: 0; bottom: -16px; }
@@ -666,6 +667,7 @@
       .hamburger { display: flex; }
       .nav-logo-img { width: 44px; height: 44px; }
       nav { height: 72px; }
+      .nav-logo-text span:first-child { font-size: 0.95rem; }
     }
     @media (max-width: 600px) {
       .includes-grid, .reviews-grid { grid-template-columns: 1fr; }
@@ -676,6 +678,13 @@
       #tab-safeguarding div[style*="grid-template-columns:1fr 1fr 1fr"] {
         grid-template-columns: 1fr !important;
       }
+      .bw-body { padding: 1.5rem 1.25rem 2rem; }
+      .bw-header { padding: 1.5rem 1.25rem; }
+      .bw-field-row { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; }
+      .btn-primary, .btn-secondary { text-align: center; width: 100%; }
+      .fun-banner { margin-top: 0; padding-top: 0.6rem; padding-bottom: 0.6rem; }
+      #home { padding-top: 90px; }
     }
 
     /* ── FUN DECORATIVE ELEMENTS ── */
@@ -856,6 +865,8 @@
     .bw-session-opt.bw-selected { border-color: var(--amber); background: var(--amber-pale); }
     .bw-opt-label { font-size: 0.875rem; font-weight: 600; color: var(--text); }
     .bw-opt-sub { font-size: 0.75rem; color: var(--text-light); margin-top: 0.1rem; }
+    .bw-mobile-br { display: none; }
+    @media (max-width: 600px) { .bw-mobile-br { display: inline; } }
     .bw-opt-price { font-size: 0.95rem; font-weight: 700; color: var(--text); flex-shrink: 0; margin-left: 0.75rem; }
     .bw-session-opt.bw-selected .bw-opt-price::before { content: '✓ '; color: var(--amber); }
     .bw-time-slot-wrap { display: none; margin-top: 0.9rem; }
@@ -944,6 +955,39 @@
     .bw-ld-gold { background: var(--gold); }
     .bw-ld-sage { background: var(--sage); }
     .bw-ld-blush { background: var(--border); }
+
+    .sticky-book-btn {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--amber);
+      color: white;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      padding: 0.875rem 1.5rem;
+      border-radius: 50px;
+      box-shadow: 0 4px 24px rgba(224,90,78,0.4);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .sticky-book-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .sticky-book-btn:hover {
+      background: var(--amber-light);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 32px rgba(224,90,78,0.5);
+    }
   </style>
 </head>
 <body>
@@ -1998,9 +2042,9 @@ const BW_TC_LINK = 'https://drive.google.com/file/d/1mY-IwfBuHAZkx5xAL9B5h941SI6
 const BW_SIBLING_RATE = 27;
 const BW_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const BW_SESSIONS = [
-  { value: '1hr-maths',    label: '1 Hour Maths',            price: 30, hours: 1, sub: '9–10am or 10–11am' },
-  { value: '1hr-literacy', label: '1 Hour Literacy',          price: 30, hours: 1, sub: '9–10am or 10–11am' },
-  { value: '2hr-both',     label: '2 Hours Maths & Literacy', price: 60, hours: 2, sub: 'Full session · 9–11am' },
+  { value: '1hr-maths',    label: '1 Hour Maths',            price: 30, hours: 1, sub: '9–10am or<br class="bw-mobile-br">10–11am' },
+  { value: '1hr-literacy', label: '1 Hour Literacy',          price: 30, hours: 1, sub: '9–10am or<br class="bw-mobile-br">10–11am' },
+  { value: '2hr-both',     label: '2 Hours Maths & Literacy', price: 60, hours: 2, sub: 'Full session<br class="bw-mobile-br">9–11am' },
 ];
 
 let bwChildren=[], bwNextId=1, bwAddingSession=null, bwAddingTime=null, bwFormOpen=false, bwSelectedDate=null, bwCalYear, bwCalMonth, bwMeetGreet=null;
@@ -2248,6 +2292,26 @@ function bwShowSuccess(dateLabel,total,payRef){
   document.getElementById('bw-step-success').classList.add('bw-active');
   document.querySelectorAll('.bw-step-dot').forEach(d=>d.className='bw-step-dot bw-done');
 }
+</script>
+
+<a href="#booking" class="sticky-book-btn" id="stickyBookBtn">
+  📅 Book Now
+</a>
+
+<script>
+(function() {
+  const btn = document.getElementById('stickyBookBtn');
+  const hero = document.getElementById('home');
+  function onScroll() {
+    const heroBottom = hero.getBoundingClientRect().bottom;
+    if (heroBottom < 0) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
 </script>
 
 </body>
