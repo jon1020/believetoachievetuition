@@ -613,8 +613,9 @@
       .hero-inner, .about-grid, .services-grid, .booking-layout, .contact-layout { grid-template-columns: 1fr; }
       .hero-decoration { display: none; }
       .hero-text { order: 1; }
-      .hero-card { order: 2; margin-top: 40vh; }
-      #home { padding-top: 88px; align-items: flex-start; }
+      .hero-card { order: 2; }
+      #home { padding-top: 88px; padding-bottom: 0; align-items: flex-start; }
+      .hero-inner { min-height: calc(100vh - 88px); align-content: space-between; gap: 2rem; }
       .includes-grid, .reviews-grid { grid-template-columns: 1fr 1fr; }
       .faq-grid { grid-template-columns: 1fr; }
       .about-accent-box { right: 0; bottom: -16px; }
