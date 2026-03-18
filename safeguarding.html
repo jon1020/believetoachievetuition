@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safeguarding Policy — Believe to Achieve Tuition</title>
+  <meta name="description" content="Safeguarding policy for Believe to Achieve Tuition, outlining our commitment to children's welfare and safety." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #E8F4F4;
+      --warm-white: #F2FAFA;
+      --sage: #2A8C8C;
+      --sage-light: #5BB5B5;
+      --sage-pale: #D6EEEE;
+      --amber: #E05A4E;
+      --brown: #1A4A4A;
+      --brown-mid: #2A7070;
+      --text: #0F2E2E;
+      --text-mid: #2A5858;
+      --text-light: #5A8888;
+      --border: #B8DEDE;
+      --gold: #F0C030;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--warm-white);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 2rem;
+    }
+
+    .header-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--sage);
+      text-decoration: none;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--brown-mid); }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 2px 8px rgba(26,74,74,0.2);
+      flex-shrink: 0;
+    }
+
+    .header-site-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--brown);
+      line-height: 1.2;
+    }
+
+    .header-page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--sage);
+      margin-top: 0.2rem;
+      line-height: 1.25;
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      padding: 2.5rem 2rem 4rem;
+    }
+
+    .content {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .intro {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 2rem;
+      color: var(--text-mid);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .section-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--brown);
+      margin-bottom: 1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid var(--sage-pale);
+    }
+
+    .section-card ul {
+      padding-left: 1.4rem;
+      color: var(--text-mid);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .section-card li {
+      margin-bottom: 0.35rem;
+    }
+
+    .commitment-banner {
+      background: var(--brown);
+      border-radius: 16px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.5rem;
+      color: rgba(255,255,255,0.85);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .commitment-banner p {
+      color: rgba(255,255,255,0.85);
+    }
+
+    .updated-note {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      margin-top: 2rem;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--brown);
+      color: rgba(255,255,255,0.75);
+      text-align: center;
+      padding: 1.75rem 2rem;
+      font-size: 0.875rem;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    footer strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    footer a {
+      color: var(--sage-light);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      header { padding: 1rem 1.25rem; }
+      main { padding: 1.75rem 1.25rem 3rem; }
+      .section-card { padding: 1.25rem 1.25rem; }
+      .intro { padding: 1.25rem 1.25rem; }
+      .commitment-banner { padding: 1.25rem 1.25rem; }
+      .header-page-title { font-size: 1.35rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="back-link">&#8592; Back to website</a>
+      <div class="header-brand">
+        <img src="logo.png" alt="Believe to Achieve Tuition logo" class="header-logo" />
+        <div class="header-text">
+          <div class="header-site-name">Believe to Achieve Tuition</div>
+          <div class="header-page-title">Safeguarding Policy</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="content">
+
+      <div class="intro">
+        Believe to Achieve Tuition is committed to safeguarding and promoting the welfare of children at all times.
+      </div>
+
+      <div class="section-card">
+        <h2>Commitment to Safeguarding</h2>
+        <ul>
+          <li>Sessions are delivered by a qualified primary school teacher.</li>
+          <li>An Enhanced DBS certificate is held, with ongoing checks through the DBS Update Service.</li>
+          <li>All sessions follow professional standards and statutory safeguarding guidance.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>Online Safety</h2>
+        <ul>
+          <li>Online sessions are conducted in a professional manner at all times.</li>
+          <li>Children should attend sessions in a suitable, open space within the home.</li>
+          <li>It is recommended that a parent or responsible adult is nearby, particularly for younger children.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>In-Person Safety</h2>
+        <ul>
+          <li>In-person sessions take place in appropriate community venues.</li>
+          <li>Parents are responsible for drop-off and collection of their child at agreed times.</li>
+          <li>Children remain the responsibility of parents/carers outside session times.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>Communication</h2>
+        <ul>
+          <li>Communication regarding tutoring takes place directly with parents or carers.</li>
+          <li>No private one-to-one messaging with children occurs outside of sessions.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>Concerns</h2>
+        <ul>
+          <li>Any safeguarding concerns will be taken seriously and, where necessary, reported to the appropriate authorities in line with statutory guidance.</li>
+        </ul>
+      </div>
+
+      <p class="updated-note">Last updated: January 2026</p>
+
+    </div>
+  </main>
+
+  <footer>
+    <strong>Believe to Achieve Tuition</strong><br />
+    <a href="mailto:believetoachievetuition@gmail.com">believetoachievetuition@gmail.com</a>
+  </footer>
+
+</body>
+</html>

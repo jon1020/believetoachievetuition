@@ -613,7 +613,8 @@
       .hero-inner, .about-grid, .services-grid, .booking-layout, .contact-layout { grid-template-columns: 1fr; }
       .hero-decoration { display: none; }
       .hero-text { order: 1; }
-      .hero-card { order: 2; }
+      .hero-card { order: 2; margin-top: 40vh; }
+      #home { padding-top: 88px; align-items: flex-start; }
       .includes-grid, .reviews-grid { grid-template-columns: 1fr 1fr; }
       .faq-grid { grid-template-columns: 1fr; }
       .about-accent-box { right: 0; bottom: -16px; }
@@ -1390,7 +1391,7 @@
               <div class="bw-field"><label>Phone Number</label><input type="tel" id="bw-phone" placeholder="07700 900000" /></div>
               <div class="bw-tc-wrap">
                 <input type="checkbox" id="bw-tc-checkbox" />
-                <label for="bw-tc-checkbox">I have read and agree to the <a href="https://drive.google.com/file/d/1qVeIgQ5xaw9eCpLBQcS63VY3B2Q9fGyT/preview" target="_blank">Terms and Conditions</a> of Believe to Achieve Tuition.</label>
+                <label for="bw-tc-checkbox">I have read and agree to the <a href="terms.html" target="_blank">Terms and Conditions</a> of Believe to Achieve Tuition.</label>
               </div>
               <button class="bw-btn bw-btn-primary" onclick="bwSubmitBooking()">Confirm Booking &amp; Send Details</button>
               <div class="bw-error-note" id="bw-error-note"></div>
@@ -1618,7 +1619,7 @@
         <p style="color:var(--text-mid);font-size:0.95rem;line-height:1.8;margin-bottom:1.5rem;">
           Please read Sian's full Terms and Conditions before booking. All bookings are subject to these terms.
         </p>
-        <a href="https://drive.google.com/file/d/1qVeIgQ5xaw9eCpLBQcS63VY3B2Q9fGyT/preview" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;">📄 Read Full Terms &amp; Conditions (PDF)</a>
+        <a href="terms.html" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;">📄 Read Full Terms &amp; Conditions</a>
       </div>
     </div>
 
@@ -1642,7 +1643,7 @@
           <p style="color:var(--text-mid);font-size:0.875rem;line-height:1.8;">Under GDPR you have the right to access your data, correct inaccuracies, request deletion, and object to processing. To exercise any of these rights, please contact Sian directly. Believe to Achieve Tuition is committed to handling all personal data responsibly and in line with UK data protection law.</p>
         </div>
       </div>
-      <a href="https://drive.google.com/file/d/143qATTvEovlQ7rdlxjwA9oAlEgsivC_R/preview" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;">📄 Read Full GDPR &amp; Privacy Policy (PDF)</a>
+      <a href="gdpr.html" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;">📄 Read Full GDPR &amp; Privacy Policy</a>
     </div>
 
     <!-- Safeguarding Tab -->
@@ -1667,7 +1668,7 @@
           </div>
         </div>
         <p style="color:rgba(255,255,255,0.6);font-size:0.8rem;margin-bottom:1.5rem;">If you have any safeguarding concerns or questions, please contact Sian directly at <a href="mailto:believetoachievetuition@gmail.com" style="color:var(--amber);text-decoration:none;">believetoachievetuition@gmail.com</a>. For independent guidance, you can also contact the NSPCC helpline on 0808 800 5000.</p>
-        <a href="https://drive.google.com/file/d/1apib9TbRqnt-os5iBsL0r8UsYEBwAfoP/preview" target="_blank" style="display:inline-block;text-decoration:none;padding:0.75rem 1.75rem;border-radius:30px;background:var(--amber);color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.9rem;">📄 Read Full Safeguarding Policy (PDF)</a>
+        <a href="safeguarding.html" target="_blank" style="display:inline-block;text-decoration:none;padding:0.75rem 1.75rem;border-radius:30px;background:var(--amber);color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.9rem;">📄 Read Full Safeguarding Policy</a>
       </div>
     </div>
 
@@ -1930,7 +1931,7 @@ let BW_AVAILABILITY = {};
 const BW_EMAILJS_PUBLIC_KEY  = 'YcHluYUj5pINA5zCe';
 const BW_EMAILJS_SERVICE_ID  = 'service_j11tywx';
 const BW_EMAILJS_TEMPLATE_ID = 'template_lom6kel';
-const BW_TC_LINK = 'https://drive.google.com/file/d/1qVeIgQ5xaw9eCpLBQcS63VY3B2Q9fGyT/preview';
+const BW_TC_LINK = 'terms.html';
 const BW_SIBLING_RATE = 27;
 const BW_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const BW_SESSIONS = [

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms and Conditions — Believe to Achieve Tuition</title>
+  <meta name="description" content="Terms and Conditions for tutoring sessions with Believe to Achieve Tuition." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #E8F4F4;
+      --warm-white: #F2FAFA;
+      --sage: #2A8C8C;
+      --sage-light: #5BB5B5;
+      --sage-pale: #D6EEEE;
+      --amber: #E05A4E;
+      --brown: #1A4A4A;
+      --brown-mid: #2A7070;
+      --text: #0F2E2E;
+      --text-mid: #2A5858;
+      --text-light: #5A8888;
+      --border: #B8DEDE;
+      --gold: #F0C030;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--warm-white);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 2rem;
+    }
+
+    .header-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--sage);
+      text-decoration: none;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--brown-mid); }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 2px 8px rgba(26,74,74,0.2);
+      flex-shrink: 0;
+    }
+
+    .header-text {}
+
+    .header-site-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--brown);
+      line-height: 1.2;
+    }
+
+    .header-page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--sage);
+      margin-top: 0.2rem;
+      line-height: 1.25;
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      padding: 2.5rem 2rem 4rem;
+    }
+
+    .content {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .intro {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 2rem;
+      color: var(--text-mid);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .section-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--brown);
+      margin-bottom: 1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid var(--sage-pale);
+    }
+
+    .section-card h3 {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--sage);
+      margin-top: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-card ul,
+    .section-card ol {
+      padding-left: 1.4rem;
+      color: var(--text-mid);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .section-card li {
+      margin-bottom: 0.35rem;
+    }
+
+    .section-card p {
+      color: var(--text-mid);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 0.75rem;
+    }
+    .section-card p:last-child { margin-bottom: 0; }
+
+    .updated-note {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      margin-top: 2rem;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--brown);
+      color: rgba(255,255,255,0.75);
+      text-align: center;
+      padding: 1.75rem 2rem;
+      font-size: 0.875rem;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    footer strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    footer a {
+      color: var(--sage-light);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      header { padding: 1rem 1.25rem; }
+      main { padding: 1.75rem 1.25rem 3rem; }
+      .section-card { padding: 1.25rem 1.25rem; }
+      .intro { padding: 1.25rem 1.25rem; }
+      .header-page-title { font-size: 1.35rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="back-link">&#8592; Back to website</a>
+      <div class="header-brand">
+        <img src="logo.png" alt="Believe to Achieve Tuition logo" class="header-logo" />
+        <div class="header-text">
+          <div class="header-site-name">Believe to Achieve Tuition</div>
+          <div class="header-page-title">Terms &amp; Conditions</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="content">
+
+      <div class="intro">
+        These Terms and Conditions explain how tutoring sessions are delivered and what is expected of parents and children.
+      </div>
+
+      <div class="section-card">
+        <h2>Sessions</h2>
+        <ul>
+          <li>Sessions may be delivered online or in person, depending on the service booked.</li>
+          <li>Sessions are planned in advance to support children's progress.</li>
+          <li>By enrolling a child, parents agree to their participation in the tutoring environment.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>Initial 1:1 Session (Trial)</h2>
+        <ul>
+          <li>An initial 1:1 session is required before joining a regular tutoring place.</li>
+          <li>The fee for this session is £15 and is payable in advance to secure the booking.</li>
+          <li>If a regular place is confirmed following the session, the £15 will be deducted from the first monthly payment reminder.</li>
+          <li>If a regular place is not taken up, the £15 covers the cost of the session and is non-refundable.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>Payment</h2>
+        <ul>
+          <li>Payment is required monthly in advance.</li>
+          <li>Fees are calculated based on the number of sessions or hours scheduled for that calendar month.</li>
+          <li>Payment must be received before the first scheduled session of the month to secure a place.</li>
+          <li>Payment details are provided upon enrolment.</li>
+          <li>If payment is not received on time, sessions may be suspended and the place offered to another child.</li>
+          <li>A monthly payment reminder will be sent out prior to each month.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>Missed Sessions and Refunds</h2>
+
+        <h3>1:1 Online Tutoring</h3>
+        <ul>
+          <li>Missed sessions are non-refundable once the month has begun.</li>
+          <li>At the tutor's discretion, a replacement session or credit may be offered in exceptional circumstances.</li>
+        </ul>
+
+        <h3>Group Tutoring (Online and In-Person)</h3>
+        <ul>
+          <li>Missed sessions are non-refundable and cannot be replaced.</li>
+          <li>Sessions will run as scheduled even if a child is absent, due to venue costs.</li>
+        </ul>
+
+        <h3>Tutor Cancellation</h3>
+        <ul>
+          <li>If a session is cancelled by the tutor, a replacement session will be offered or a refund/credit applied.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>Behaviour and Participation</h2>
+        <ul>
+          <li>Children are expected to behave respectfully and engage appropriately.</li>
+          <li>Behaviour that significantly disrupts learning or safety will be addressed.</li>
+          <li>Ongoing behaviour concerns may result in sessions being discontinued or withdrawal from a group.</li>
+          <li>Payments already made are non-refundable.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>Withdrawal from Tutoring</h2>
+        <ul>
+          <li>A minimum of one full calendar month's notice is required to withdraw from tutoring.</li>
+          <li>Notice must be given in writing.</li>
+          <li>Fees already paid are non-refundable.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>Refreshments</h2>
+        <ul>
+          <li>Light refreshments such as biscuits and hot drinks may be offered to children during sessions.</li>
+          <li>A separate Refreshment &amp; Dietary Requirements Consent Form must be completed by a parent or carer before any refreshments are offered to a child.</li>
+          <li>It is the responsibility of parents and carers to ensure the information provided on this form is accurate and up to date. Believe to Achieve Tuition will take reasonable steps to accommodate dietary requirements but cannot guarantee a completely allergen-free environment.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>Photography &amp; Social Media</h2>
+        <ul>
+          <li>Photographs or short videos may be taken during sessions for use on social media, the Believe to Achieve Tuition website, or promotional materials.</li>
+          <li>A separate Photography &amp; Social Media Consent Form must be completed by a parent or carer before any images of a child are taken or shared.</li>
+          <li>Children's full names will never be published alongside any image. Parents may withdraw or update their consent at any time by notifying Sian in writing.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>Changes to Policies</h2>
+        <ul>
+          <li>Policies may be updated occasionally.</li>
+          <li>Parents will be informed of any significant changes.</li>
+        </ul>
+      </div>
+
+      <p class="updated-note">Last updated: March 2026</p>
+
+    </div>
+  </main>
+
+  <footer>
+    <strong>Believe to Achieve Tuition</strong><br />
+    <a href="mailto:believetoachievetuition@gmail.com">believetoachievetuition@gmail.com</a>
+  </footer>
+
+</body>
+</html>
