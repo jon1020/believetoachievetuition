@@ -813,6 +813,7 @@
     .bw-session-opt.bw-selected { border-color: var(--amber); background: var(--amber-pale); }
     .bw-opt-label { font-size: 0.875rem; font-weight: 600; color: var(--text); }
     .bw-opt-sub { font-size: 0.75rem; color: var(--text-light); margin-top: 0.1rem; }
+    @media (max-width: 600px) { .bw-time-break { display: block; } }
     .bw-opt-price { font-size: 0.95rem; font-weight: 700; color: var(--text); flex-shrink: 0; margin-left: 0.75rem; }
     .bw-session-opt.bw-selected .bw-opt-price::before { content: '✓ '; color: var(--amber); }
     .bw-time-slot-wrap { display: none; margin-top: 0.9rem; }
@@ -1938,7 +1939,7 @@ const BW_MONTHS = ['January','February','March','April','May','June','July','Aug
 const BW_SESSIONS = [
   { value: '1hr-maths',    label: '1 Hour Maths',            price: 30, hours: 1, sub: '9–10am or 10–11am' },
   { value: '1hr-literacy', label: '1 Hour Literacy',          price: 30, hours: 1, sub: '9–10am or 10–11am' },
-  { value: '2hr-both',     label: '2 Hours Maths & Literacy', price: 60, hours: 2, sub: 'Full session · 9–11am' },
+  { value: '2hr-both',     label: '2 Hours Maths & Literacy', price: 60, hours: 2, sub: 'Full session <span class="bw-time-break">9–11am</span>' },
 ];
 
 let bwChildren=[], bwNextId=1, bwAddingSession=null, bwAddingTime=null, bwFormOpen=false, bwSelectedDate=null, bwCalYear, bwCalMonth, bwMeetGreet=null;
