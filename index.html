@@ -2083,7 +2083,7 @@ function bwPickDate(ds,date){
   bwSelectedDate=ds;
   document.getElementById('bw-dp-date').textContent=date.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   document.getElementById('bw-date-pill').classList.add('bw-show');
-  if(bwAddingSession&&bwAddingSession.hours===1){bwRenderTimeSlotBtns(ds);document.getElementById('bw-time-slot-wrap').classList.add('bw-visible');bwAddingTime=null;}
+  if(bwAddingSession&&bwAddingSession.hours===1){const prevTime=bwAddingTime;bwAddingTime=null;bwRenderTimeSlotBtns(ds);document.getElementById('bw-time-slot-wrap').classList.add('bw-visible');if(prevTime){if(bwSlotAvailable(ds,prevTime)){bwAddingTime=prevTime;document.querySelectorAll('.bw-ts-btn').forEach(b=>{if(b.textContent===(prevTime==='9:00'?'9–10am':'10–11am'))b.classList.add('bw-selected');});}else{alert('That slot is fully booked on this date — please choose another time or date.');}}}else if(bwAddingSession&&bwAddingSession.hours===2){if(!bwSlotAvailable(ds,'9-11:00')){document.querySelectorAll('.bw-session-opt').forEach(el=>el.classList.remove('bw-selected'));bwAddingSession=null;bwAddingTime=null;alert('Sorry, the 2-hour session (9–11am) is not available on this date.');}}
   bwRenderCalendar();bwRenderProceedBtn();
 }
 
