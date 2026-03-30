@@ -1986,15 +1986,12 @@ function bwPickSession(value){
   document.querySelectorAll('.bw-session-opt').forEach(el=>el.classList.toggle('bw-selected',el.querySelector('.bw-opt-label').textContent===bwAddingSession.label));
   document.querySelectorAll('.bw-ts-btn').forEach(b=>b.classList.remove('bw-selected'));
   const tsWrap=document.getElementById('bw-time-slot-wrap');
-  if(bwAddingSession.hours===1){bwRenderTimeSlotBtns(bwSelectedDate);tsWrap.classList.add('bw-visible');}
-  else{
-    tsWrap.classList.remove('bw-visible');
-    if(bwSelectedDate&&!bwSlotAvailable(bwSelectedDate,'9-11:00')){document.querySelectorAll('.bw-session-opt').forEach(el=>el.classList.remove('bw-selected'));bwAddingSession=null;alert('Sorry, the 2-hour session (9–11am) is not available on this Sunday as one or both slots are fully booked.');}
-    else bwAddingTime='9:00';
-  }
+  if(bwAddingSession.hours===1){bwRenderTimeSlotBtns(null);tsWrap.classList.add('bw-visible');}
+  else{tsWrap.classList.remove('bw-visible');bwAddingTime='9:00';}
+  bwRenderCalendar();
 }
 
-function bwPickTimeSlot(slot,btn){bwAddingTime=slot;document.querySelectorAll('.bw-ts-btn').forEach(b=>b.classList.remove('bw-selected'));btn.classList.add('bw-selected');}
+function bwPickTimeSlot(slot,btn){bwAddingTime=slot;document.querySelectorAll('.bw-ts-btn').forEach(b=>b.classList.remove('bw-selected'));btn.classList.add('bw-selected');bwRenderCalendar();}
 
 function bwConfirmChild(){
   const nameEl=document.getElementById('bw-adding-name'); const name=nameEl.value.trim();
@@ -2070,9 +2067,7 @@ function bwRenderCalendar(){
     const el=document.createElement('button');el.type='button';el.className='bw-cal-day';el.textContent=d;
     if(date.getDay()===0&&date>=today){
       const status=bwDateStatus(ds);
-      if(status==='avail'){el.classList.add('bw-avail');if(bwSelectedDate===ds)el.classList.add('bw-picked');el.addEventListener('click',()=>bwPickDate(ds,date));}
-      else if(status==='partial'){el.classList.add('bw-partial');if(bwSelectedDate===ds)el.classList.add('bw-picked');el.addEventListener('click',()=>bwPickDate(ds,date));}
-      else if(status==='full'){el.classList.add('bw-full');el.title='Fully booked';}
+      if(status!=='hidden'){const filterSlot=bwAddingSession?(bwAddingSession.hours===2?'9-11:00':(bwAddingTime||null)):null;const slotAvail=filterSlot?bwSlotAvailable(ds,filterSlot):(status!=='full');if(slotAvail){const cls=status==='avail'?'bw-avail':'bw-partial';el.classList.add(cls);if(bwSelectedDate===ds)el.classList.add('bw-picked');el.addEventListener('click',()=>bwPickDate(ds,date));}else{el.classList.add('bw-full');el.title='Fully booked';}}
     }
     if(ds===bwToDS(today))el.classList.add('bw-today');
     grid.appendChild(el);
@@ -2083,7 +2078,6 @@ function bwPickDate(ds,date){
   bwSelectedDate=ds;
   document.getElementById('bw-dp-date').textContent=date.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   document.getElementById('bw-date-pill').classList.add('bw-show');
-  if(bwAddingSession&&bwAddingSession.hours===1){const prevTime=bwAddingTime;bwAddingTime=null;bwRenderTimeSlotBtns(ds);document.getElementById('bw-time-slot-wrap').classList.add('bw-visible');if(prevTime){if(bwSlotAvailable(ds,prevTime)){bwAddingTime=prevTime;document.querySelectorAll('.bw-ts-btn').forEach(b=>{if(b.textContent===(prevTime==='9:00'?'9–10am':'10–11am'))b.classList.add('bw-selected');});}else{alert('That slot is fully booked on this date — please choose another time or date.');}}}else if(bwAddingSession&&bwAddingSession.hours===2){if(!bwSlotAvailable(ds,'9-11:00')){document.querySelectorAll('.bw-session-opt').forEach(el=>el.classList.remove('bw-selected'));bwAddingSession=null;bwAddingTime=null;alert('Sorry, the 2-hour session (9–11am) is not available on this date.');}}
   bwRenderCalendar();bwRenderProceedBtn();
 }
 
