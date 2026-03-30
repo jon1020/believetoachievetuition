@@ -1947,7 +1947,7 @@ const BW_SESSIONS = [
 
 let bwChildren=[], bwNextId=1, bwAddingSession=null, bwAddingTime=null, bwFormOpen=false, bwSelectedDate=null, bwCalYear, bwCalMonth, bwMeetGreet=null;
 
-function bwDateStatus(ds){const av=BW_AVAILABILITY[ds];if(av===undefined)return'hidden';const s9=av['9:00']??0;const s10=av['10:00']??0;if(s9===0&&s10===0)return'full';if(s9>=4&&s10>=4)return'avail';return'partial';}
+function bwDateStatus(ds){const av=BW_AVAILABILITY[ds];if(av===undefined)return'hidden';const s9=av['9:00']??0;const s10=av['10:00']??0;const s2=av['9-11:00']??0;if(s9===0&&s10===0&&s2===0)return'full';if(s9>=4&&s10>=4&&s2>=4)return'avail';return'partial';}
 function bwSlotAvailable(ds,slot){const av=BW_AVAILABILITY[ds];if(!av)return false;return(av[slot]??0)>0;}
 
 window.addEventListener('load',()=>{
@@ -1989,7 +1989,7 @@ function bwPickSession(value){
   if(bwAddingSession.hours===1){bwRenderTimeSlotBtns(bwSelectedDate);tsWrap.classList.add('bw-visible');}
   else{
     tsWrap.classList.remove('bw-visible');
-    if(bwSelectedDate&&(!bwSlotAvailable(bwSelectedDate,'9:00')||!bwSlotAvailable(bwSelectedDate,'10:00'))){document.querySelectorAll('.bw-session-opt').forEach(el=>el.classList.remove('bw-selected'));bwAddingSession=null;alert('Sorry, the 2-hour session (9–11am) is not available on this Sunday as one or both slots are fully booked.');}
+    if(bwSelectedDate&&!bwSlotAvailable(bwSelectedDate,'9-11:00')){document.querySelectorAll('.bw-session-opt').forEach(el=>el.classList.remove('bw-selected'));bwAddingSession=null;alert('Sorry, the 2-hour session (9–11am) is not available on this Sunday as one or both slots are fully booked.');}
     else bwAddingTime='9:00';
   }
 }
