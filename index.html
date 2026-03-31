@@ -2067,7 +2067,7 @@ function bwRenderCalendar(){
     const el=document.createElement('button');el.type='button';el.className='bw-cal-day';el.textContent=d;
     if(date.getDay()===0&&date>=today){
       const status=bwDateStatus(ds);
-      if(status!=='hidden'){const child1=bwChildren[0];const filterSlot=child1?(child1.hours===2?'9-11:00':child1.time):null;const slotAvail=filterSlot?bwSlotAvailable(ds,filterSlot):(status!=='full');if(slotAvail){const cls=status==='avail'?'bw-avail':'bw-partial';el.classList.add(cls);if(bwSelectedDate===ds)el.classList.add('bw-picked');el.addEventListener('click',()=>bwPickDate(ds,date));}else{el.classList.add('bw-full');el.title='Fully booked';}}
+      if(status!=='hidden'){const child1=bwChildren.length>0?bwChildren[0]:null;const filterSlot=child1?(child1.hours===2?'9-11:00':child1.time):null;const slotAvail=filterSlot?bwSlotAvailable(ds,filterSlot):(status!=='full');if(slotAvail){const cls=status==='avail'?'bw-avail':'bw-partial';el.classList.add(cls);if(bwSelectedDate===ds)el.classList.add('bw-picked');el.addEventListener('click',()=>bwPickDate(ds,date));}else{el.classList.add('bw-full');el.title='Fully booked';}}
     }
     if(ds===bwToDS(today))el.classList.add('bw-today');
     grid.appendChild(el);
