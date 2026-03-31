@@ -1976,7 +1976,7 @@ function bwRenderTimeSlotBtns(ds){
   [{slot:'9:00',label:'9–10am'},{slot:'10:00',label:'10–11am'}].forEach(t=>{
     const btn=document.createElement('button'); btn.type='button'; btn.className='bw-ts-btn'; btn.textContent=t.label;
     if(ds&&!bwSlotAvailable(ds,t.slot)){btn.disabled=true;btn.title='Fully booked';}
-    else btn.addEventListener('click',()=>bwPickTimeSlot(t.slot,btn));
+    else btn.addEventListener('click',(e)=>{e.stopPropagation();bwPickTimeSlot(t.slot,btn);});
     c.appendChild(btn);
   });
 }
