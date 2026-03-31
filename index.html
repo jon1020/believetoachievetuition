@@ -1956,10 +1956,11 @@ window.addEventListener('load',()=>{
   document.getElementById('bw-adding-form-title').textContent='Child 1';
   document.getElementById('bw-cancel-btn').style.display='none';
   bwFormOpen=true;
+  bwRenderSessionOpts();
   fetch('availability.json?v='+Date.now())
     .then(r=>r.json())
-    .then(data=>{BW_AVAILABILITY=data; bwRenderSessionOpts(); bwRenderCalendar();})
-    .catch(()=>{bwRenderSessionOpts(); bwRenderCalendar();});
+    .then(data=>{BW_AVAILABILITY=data; bwRenderCalendar();})
+    .catch(()=>{bwRenderCalendar();});
 });
 
 function bwRenderSessionOpts(){
