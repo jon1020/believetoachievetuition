@@ -1239,36 +1239,36 @@
         <div class="booking-step">
           <div class="step-num">1</div>
           <div class="step-content">
-            <h4>Choose your session type</h4>
-            <p>Select either an online 1:1 session (30 or 60 min) or a Sunday in-person group session.</p>
+            <h4>Pick a Sunday</h4>
+            <p>The calendar shows every available Sunday. Green means all slots are open, amber means only some slots remain.</p>
           </div>
         </div>
         <div class="booking-step">
           <div class="step-num">2</div>
           <div class="step-content">
-            <h4>Pick a date and time</h4>
-            <p>Browse Sian's available slots and choose what works for your family.</p>
+            <h4>Choose your slot</h4>
+            <p>Only slots with spaces on your chosen date will appear — 9–10am, 10–11am, or the full 9–11am session.</p>
           </div>
         </div>
         <div class="booking-step">
           <div class="step-num">3</div>
           <div class="step-content">
-            <h4>Tell Sian about your child</h4>
-            <p>Share your child's name, age, and any context you'd like Sian to know before the session.</p>
+            <h4>Add your children</h4>
+            <p>Enter each child's name. Booking two or more children? A sibling discount is automatically applied.</p>
           </div>
         </div>
         <div class="booking-step">
           <div class="step-num">4</div>
           <div class="step-content">
-            <h4>Sian confirms within 24 hours</h4>
-            <p>You'll receive a confirmation email with everything you need — a video link for online sessions or location details for group sessions.</p>
+            <h4>Your details &amp; confirm</h4>
+            <p>Fill in your contact details and submit. Sian will confirm your booking within 24 hours.</p>
           </div>
         </div>
         <div class="booking-step">
           <div class="step-num">5</div>
           <div class="step-content">
             <h4>You're all set!</h4>
-            <p>See you at the session — Sian can't wait to meet your child.</p>
+            <p>See you on Sunday — Sian can't wait to meet your child.</p>
           </div>
         </div>
       </div>
@@ -1286,59 +1286,61 @@
               <div class="bw-step-dot" id="bw-dot-2"></div>
               <div class="bw-step-dot" id="bw-dot-3"></div>
               <div class="bw-step-dot" id="bw-dot-4"></div>
+              <div class="bw-step-dot" id="bw-dot-5"></div>
             </div>
 
-            <!-- STEP 1 -->
+            <!-- STEP 1: Pick a date -->
             <div class="bw-section bw-active" id="bw-step-1">
-              <div class="bw-section-title">Who are you booking for?</div>
-              <div class="bw-info-note">📅 All sessions run on <strong>Sundays</strong>, in-person as small groups.<br>1-hour sessions: <strong>9–10am</strong> or <strong>10–11am</strong><br>2-hour sessions: <strong>9–11am</strong> (full session)</div>
+              <div class="bw-section-title">Step 1 — Pick a Sunday</div>
+              <div class="bw-info-note">📅 Sessions run every <strong>Sunday</strong> in Carnon Downs, Truro. Tap a highlighted date to see available slots.</div>
+              <div class="bw-cal-legend">
+                <div class="bw-legend-item"><div class="bw-legend-dot bw-ld-sage"></div> All slots available</div>
+                <div class="bw-legend-item"><div class="bw-legend-dot bw-ld-gold"></div> Some slots available</div>
+                <div class="bw-legend-item"><div class="bw-legend-dot bw-ld-blush"></div> Fully booked</div>
+              </div>
+              <div class="bw-cal-nav">
+                <button class="bw-cal-nav-btn" type="button" onclick="bwChangeMonth(-1)">&#8249;</button>
+                <span class="bw-cal-month" id="bw-cal-month"></span>
+                <button class="bw-cal-nav-btn" type="button" onclick="bwChangeMonth(1)">&#8250;</button>
+              </div>
+              <div class="bw-cal-grid" id="bw-cal-grid"></div>
+            </div>
+
+            <!-- STEP 2: Pick a slot -->
+            <div class="bw-section" id="bw-step-2">
+              <button class="bw-btn bw-btn-back" type="button" onclick="bwGoTo(1)">← Back</button>
+              <div class="bw-section-title">Step 2 — Choose a slot</div>
+              <div class="bw-info-note" id="bw-step2-date-note"></div>
+              <div id="bw-slot-options"></div>
+            </div>
+
+            <!-- STEP 3: Children -->
+            <div class="bw-section" id="bw-step-3">
+              <button class="bw-btn bw-btn-back" type="button" onclick="bwGoTo(2)">← Back</button>
+              <div class="bw-section-title">Step 3 — Who's coming?</div>
+              <div class="bw-info-note" id="bw-step3-summary-note"></div>
               <div id="bw-children-list"></div>
+              <div id="bw-sibling-active" class="bw-sibling-active" style="display:none;">🎉 <strong>Sibling discount applied!</strong> Each child is charged £27/hr instead of the standard rate.</div>
+
+              <!-- Add child form -->
               <div class="bw-adding-form" id="bw-adding-form">
                 <div class="bw-adding-form-title" id="bw-adding-form-title">Child 1</div>
                 <div class="bw-name-field">
                   <label>Child's name</label>
                   <input type="text" id="bw-adding-name" placeholder="e.g. Lily" />
                 </div>
-                <span class="bw-form-label">Choose a session</span>
-                <div class="bw-session-opts" id="bw-session-opts"></div>
-                <div class="bw-time-slot-wrap" id="bw-time-slot-wrap">
-                  <span class="bw-form-label">Choose a time slot</span>
-                  <div class="bw-time-slots" id="bw-time-slots"></div>
-                </div>
-                <div class="bw-form-btns">
+                <div class="bw-form-btns" style="margin-top:0.9rem;">
                   <button class="bw-btn-cancel" type="button" id="bw-cancel-btn" onclick="bwCancelChild()" style="display:none;">Cancel</button>
                   <button class="bw-btn-confirm" type="button" onclick="bwConfirmChild()">Add Child ✓</button>
                 </div>
               </div>
+
               <div id="bw-add-more-wrap" style="display:none;">
-                <button class="bw-add-child-btn" type="button" onclick="bwOpenFormForNext()">
+                <button class="bw-add-child-btn" type="button" onclick="bwOpenAddChild()">
                   <span class="bw-plus">+</span> Add another child
                 </button>
               </div>
-              <div id="bw-sibling-locked" class="bw-sibling-locked" style="display:none;">🔒 Add a second child to unlock the sibling discount</div>
-              <div id="bw-sibling-active" class="bw-sibling-active" style="display:none;">🎉 <strong>Sibling discount applied!</strong> Each child is charged £27/hr instead of the standard rate.</div>
-              <div class="bw-cal-section" id="bw-cal-section" style="display:none;">
-                <div class="bw-info-note">📅 The Sunday you choose applies to <strong>all children</strong> in this booking.</div>
-                <div class="bw-cal-label">Pick a Sunday</div>
-                <div class="bw-cal-legend">
-                  <div class="bw-legend-item"><div class="bw-legend-dot bw-ld-sage"></div> All slots available</div>
-                  <div class="bw-legend-item"><div class="bw-legend-dot bw-ld-gold"></div> Partially available</div>
-                  <div class="bw-legend-item"><div class="bw-legend-dot bw-ld-blush"></div> Fully booked</div>
-                </div>
-                <div class="bw-cal-nav">
-                  <button class="bw-cal-nav-btn" type="button" onclick="bwChangeMonth(-1)">&#8249;</button>
-                  <span class="bw-cal-month" id="bw-cal-month"></span>
-                  <button class="bw-cal-nav-btn" type="button" onclick="bwChangeMonth(1)">&#8250;</button>
-                </div>
-                <div class="bw-cal-grid" id="bw-cal-grid"></div>
-                <div class="bw-date-pill" id="bw-date-pill">
-                  <div>
-                    <div class="bw-dp-date" id="bw-dp-date"></div>
-                    <div class="bw-dp-time">Small group · In-person</div>
-                  </div>
-                  <button class="bw-dp-clear" type="button" onclick="bwClearDate()">✕ Change</button>
-                </div>
-              </div>
+
               <div id="bw-total-section" style="display:none;">
                 <div class="bw-total-row">
                   <span class="bw-total-label">Total</span>
@@ -1349,21 +1351,21 @@
                 </div>
               </div>
               <div class="bw-mt1">
-                <button class="bw-btn bw-btn-primary" id="bw-proceed-btn" onclick="bwGoTo('1b')" disabled>Continue →</button>
+                <button class="bw-btn bw-btn-primary" id="bw-proceed-btn" onclick="bwGoTo(4)" disabled>Continue →</button>
               </div>
             </div>
 
-            <!-- STEP 1b — Meet & Greet -->
-            <div class="bw-section" id="bw-step-1b">
-              <button class="bw-btn bw-btn-back" onclick="bwGoTo(1)">← Back</button>
-              <div class="bw-section-title">Is this your child's first session?</div>
+            <!-- STEP 4: Meet & greet -->
+            <div class="bw-section" id="bw-step-4">
+              <button class="bw-btn bw-btn-back" type="button" onclick="bwGoTo(3)">← Back</button>
+              <div class="bw-section-title">Step 4 — Is this your first session?</div>
               <p style="font-size:0.875rem;color:var(--text-mid);line-height:1.7;margin-bottom:1.25rem;">Before joining a group session, Sian loves to meet each child 1:1 so they feel settled and comfortable from the very first Sunday. You're welcome to come along too!</p>
               <div class="bw-mg-options">
                 <div class="bw-mg-opt" id="bw-mg-yes" onclick="bwSelectMeetGreet(true)">
                   <div class="bw-mg-icon">👋</div>
                   <div>
                     <div class="bw-mg-label">Yes — I'd love a meet &amp; greet first</div>
-                    <div class="bw-mg-sub">Sian will arrange a short 1:1 with your child before the Sunday session — either in person or online, whichever suits you. You only pay £15 now to secure the meet &amp; greet. The remaining balance for the Sunday session is only collected afterwards, once you're happy to go ahead.</div>
+                    <div class="bw-mg-sub">Sian will arrange a short 1:1 before the Sunday session. You only pay £15 now — the remaining balance is collected afterwards, once you're happy to go ahead.</div>
                     <div class="bw-mg-price-pill">£15 due now · remainder due after meet &amp; greet</div>
                   </div>
                 </div>
@@ -1371,22 +1373,22 @@
                   <div class="bw-mg-icon">📅</div>
                   <div>
                     <div class="bw-mg-label">No — book straight into the Sunday session</div>
-                    <div class="bw-mg-sub">Your child has already had a meet &amp; greet, or you're happy to head straight in. Full session payment is due as normal.</div>
+                    <div class="bw-mg-sub">Your child has already met Sian, or you're happy to head straight in. Full payment is due as normal.</div>
                   </div>
                 </div>
               </div>
               <div class="bw-mg-note" id="bw-mg-note">
-                ✅ <strong>Great choice!</strong> Sian will be in touch to arrange a convenient time — either in person or online. For now, you'll just pay <strong>£15</strong> to secure the meet &amp; greet. The remaining balance for the Sunday session is only taken once you're happy to go ahead.
+                ✅ <strong>Great choice!</strong> Sian will be in touch to arrange a time. For now, you'll just pay <strong>£15</strong> to secure the meet &amp; greet.
               </div>
               <div class="bw-mt1">
-                <button class="bw-btn bw-btn-primary" id="bw-mg-proceed-btn" onclick="bwGoTo(2)" disabled>Continue to Your Details</button>
+                <button class="bw-btn bw-btn-primary" id="bw-mg-proceed-btn" onclick="bwGoTo(5)" disabled>Continue to Your Details →</button>
               </div>
             </div>
 
-            <!-- STEP 2 -->
-            <div class="bw-section" id="bw-step-2">
-              <button class="bw-btn bw-btn-back" onclick="bwGoTo('1b')">← Back</button>
-              <div class="bw-section-title">Your details</div>
+            <!-- STEP 5: Parent details -->
+            <div class="bw-section" id="bw-step-5">
+              <button class="bw-btn bw-btn-back" type="button" onclick="bwGoTo(4)">← Back</button>
+              <div class="bw-section-title">Step 5 — Your details</div>
               <div class="bw-booking-summary" id="bw-booking-summary"></div>
               <div class="bw-field-row">
                 <div class="bw-field"><label>First Name</label><input type="text" id="bw-first-name" placeholder="Jane" /></div>
@@ -1418,9 +1420,10 @@
                 <h2>You're all booked!</h2>
                 <p id="bw-success-msg">A confirmation email has been sent to you with payment details. Please make your bank transfer to secure your place.</p>
                 <div class="bw-success-details" id="bw-success-details"></div>
-                <p style="font-size:0.82rem;color:var(--text-light);margin-top:0.75rem;">Can't find the email? Check your spam folder or contact <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5133343d38342734253e3032393834273425243825383e3f11363c30383d7f323e3c">[email&#160;protected]</a></strong></p>
+                <p style="font-size:0.82rem;color:var(--text-light);margin-top:0.75rem;">Can't find the email? Check your spam folder or contact <strong>believetoachievetuition@gmail.com</strong></p>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -1930,10 +1933,13 @@
 <!-- BOOKING WIDGET SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-// ── BOOKING WIDGET ──────────────────────────────────────────────────────────
-// Availability loaded from availability.json
-// Keys: "9:00", "10:00", "9-11:00" — values = spaces remaining (out of 4)
-// ────────────────────────────────────────────────────────────────────────────
+// ── BOOKING WIDGET — Date-first flow ────────────────────────────────────────
+// Flow: Pick date → Pick slot → Add children → Meet & greet → Details → Done
+//
+// availability.json format:
+//   "YYYY-MM-DD": { "9:00": <spaces>, "10:00": <spaces>, "9-11:00": <spaces> }
+//   spaces = integer, how many spaces REMAIN (out of 4)
+// ─────────────────────────────────────────────────────────────────────────────
 
 let BW_AVAILABILITY = {};
 
@@ -1941,377 +1947,143 @@ const BW_EMAILJS_PUBLIC_KEY  = 'YcHluYUj5pINA5zCe';
 const BW_EMAILJS_SERVICE_ID  = 'service_j11tywx';
 const BW_EMAILJS_TEMPLATE_ID = 'template_lom6kel';
 const BW_TC_LINK             = 'terms.html';
-const BW_SIBLING_RATE        = 27;
-const BW_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const BW_SESSIONS = [
-  { value: '1hr-maths',    label: '1 Hour Maths',             price: 30, hours: 1, sub: '9–10am or 10–11am' },
-  { value: '1hr-literacy', label: '1 Hour Literacy',           price: 30, hours: 1, sub: '9–10am or 10–11am' },
-  { value: '2hr-both',     label: '2 Hours Maths &amp; Literacy', price: 60, hours: 2, sub: 'Full session <span class="bw-time-break">9–11am</span>' },
+const BW_SIBLING_RATE        = 27; // £ per hour per child when 2+ children
+
+const BW_MONTHS = ['January','February','March','April','May','June','July',
+  'August','September','October','November','December'];
+
+// The three possible slots and their display info
+const BW_SLOT_DEFS = [
+  { key: '9:00',    label: '9–10am',          hours: 1, basePrice: 30,
+    session: '1 Hour (9–10am)', sessionSub: 'Maths or Literacy' },
+  { key: '10:00',   label: '10–11am',         hours: 1, basePrice: 30,
+    session: '1 Hour (10–11am)', sessionSub: 'Maths or Literacy' },
+  { key: '9-11:00', label: '9–11am (full)',   hours: 2, basePrice: 60,
+    session: '2 Hours (9–11am)', sessionSub: 'Maths & Literacy' },
 ];
 
 // State
-let bwChildren      = [];   // confirmed children [{id, name, label, price, hours, time, timeLabel}]
-let bwNextId        = 1;
-let bwAddingSession = null; // session object currently being chosen in the form
-let bwAddingTime    = null; // time slot key currently chosen in the form ("9:00" / "10:00" / "9-11:00")
-let bwFormOpen      = false;
-let bwSelectedDate  = null; // "YYYY-MM-DD"
 let bwCalYear, bwCalMonth;
-let bwMeetGreet     = null;
+let bwSelectedDate = null;  // "YYYY-MM-DD"
+let bwSelectedSlot = null;  // one of BW_SLOT_DEFS
+let bwChildren     = [];    // [{id, name}]
+let bwNextId       = 1;
+let bwMeetGreet    = null;  // true / false
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 function bwToDS(date) {
   return date.getFullYear() + '-' +
-    String(date.getMonth() + 1).padStart(2,'0') + '-' +
-    String(date.getDate()).padStart(2,'0');
+    String(date.getMonth() + 1).padStart(2, '0') + '-' +
+    String(date.getDate()).padStart(2, '0');
 }
 
-// Returns how many spaces remain for a specific slot key on a date string
-function bwSpacesLeft(ds, slotKey) {
+function bwSpaces(ds, slotKey) {
   const av = BW_AVAILABILITY[ds];
   if (!av) return 0;
   return av[slotKey] ?? 0;
 }
 
-// Given the current widget state, return the list of slot keys we need to be
-// available on a date for it to be bookable. Covers:
-//   - confirmed children (bwChildren)
-//   - the child currently being entered in the form (bwAddingSession + bwAddingTime)
-function bwRequiredSlots() {
-  const slots = [];
-
-  // Confirmed children
-  bwChildren.forEach(c => {
-    slots.push(c.hours === 2 ? '9-11:00' : c.time);
-  });
-
-  // Child currently in the form (only if session AND time are both chosen)
-  if (bwFormOpen && bwAddingSession) {
-    if (bwAddingSession.hours === 2) {
-      slots.push('9-11:00');
-    } else if (bwAddingTime) {
-      slots.push(bwAddingTime);
-    }
-  }
-
-  return slots;
-}
-
-// Is this date visible at all in availability.json?
-function bwDateInAvailability(ds) {
-  return BW_AVAILABILITY[ds] !== undefined;
-}
-
-// Is every required slot available (>0 spaces) on this date?
-// If no slots required yet (nothing selected), the date is NOT shown —
-// the calendar only appears once at least one slot is determined.
-function bwDateIsBookable(ds) {
-  const required = bwRequiredSlots();
-  if (required.length === 0) return false; // hide calendar until slot chosen
-  return required.every(slot => bwSpacesLeft(ds, slot) > 0);
-}
-
-// Visual status for legend dot colour (green / amber / grey)
-// Based purely on overall availability, ignoring current selection
+// For calendar dot colour: looks at all slots combined
 function bwDateOverallStatus(ds) {
   const av = BW_AVAILABILITY[ds];
   if (!av) return 'hidden';
-  const total = (av['9:00'] ?? 0) + (av['10:00'] ?? 0) + (av['9-11:00'] ?? 0);
-  if (total === 0) return 'full';
-  const maxPossible = 12; // 4+4+4
-  if (total >= maxPossible) return 'avail';
+  const s9  = av['9:00']    ?? 0;
+  const s10 = av['10:00']   ?? 0;
+  const s2  = av['9-11:00'] ?? 0;
+  if (s9 === 0 && s10 === 0 && s2 === 0) return 'full';
+  if (s9 >= 4  && s10 >= 4  && s2 >= 4)  return 'avail';
   return 'partial';
 }
 
-// ── Initialisation ───────────────────────────────────────────────────────────
+function bwCalcTotal() {
+  const count = bwChildren.length;
+  if (!bwSelectedSlot || count === 0) return 0;
+  const rate = count >= 2 ? BW_SIBLING_RATE : bwSelectedSlot.basePrice / bwSelectedSlot.hours;
+  return Math.round(rate * bwSelectedSlot.hours * count);
+}
+
+function bwFriendlyDate(ds) {
+  const d = new Date(ds + 'T00:00:00');
+  return d.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+}
+
+// ── Step navigation ───────────────────────────────────────────────────────────
+
+function bwGoTo(step) {
+  if (step === 5) bwBuildBookingSummary();
+  document.querySelectorAll('.bw-section').forEach(s => s.classList.remove('bw-active'));
+  document.getElementById('bw-step-' + step).classList.add('bw-active');
+  const steps = [1, 2, 3, 4, 5];
+  const idx   = steps.indexOf(step);
+  for (let i = 1; i <= 5; i++) {
+    const dot = document.getElementById('bw-dot-' + i);
+    if (!dot) continue;
+    dot.className = 'bw-step-dot' +
+      (i - 1 < idx ? ' bw-done' : i - 1 === idx ? ' bw-active' : '');
+  }
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
 
 window.addEventListener('load', () => {
-  const now = new Date();
+  const now  = new Date();
   bwCalYear  = now.getFullYear();
   bwCalMonth = now.getMonth();
-
   emailjs.init(BW_EMAILJS_PUBLIC_KEY);
-
-  // Show form for first child
-  document.getElementById('bw-adding-form-title').textContent = 'Child 1';
-  document.getElementById('bw-cancel-btn').style.display = 'none';
-  document.getElementById('bw-adding-form').style.display = 'block';
-  bwFormOpen = true;
-
-  bwRenderSessionOpts();
 
   fetch('availability.json?v=' + Date.now())
     .then(r => r.json())
-    .then(data => { BW_AVAILABILITY = data; bwRenderCalendar(); })
-    .catch(() => { bwRenderCalendar(); });
+    .then(data => { BW_AVAILABILITY = data; })
+    .catch(() => {})
+    .finally(() => bwRenderCalendar());
 });
 
-// ── Session option buttons ───────────────────────────────────────────────────
-
-function bwRenderSessionOpts() {
-  const c = document.getElementById('bw-session-opts');
-  c.innerHTML = '';
-  BW_SESSIONS.forEach(s => {
-    const el = document.createElement('div');
-    el.className = 'bw-session-opt';
-    el.innerHTML = `<div><div class="bw-opt-label">${s.label}</div><div class="bw-opt-sub">${s.sub}</div></div><div class="bw-opt-price">£${s.price}</div>`;
-    el.addEventListener('click', () => bwPickSession(s.value));
-    c.appendChild(el);
-  });
-}
-
-function bwPickSession(value) {
-  bwAddingSession = BW_SESSIONS.find(s => s.value === value);
-  bwAddingTime    = null;
-
-  // Highlight selected session
-  document.querySelectorAll('.bw-session-opt').forEach(el => {
-    el.classList.toggle('bw-selected',
-      el.querySelector('.bw-opt-label').textContent === bwAddingSession.label);
-  });
-
-  // Clear any time slot selection
-  document.querySelectorAll('.bw-ts-btn').forEach(b => b.classList.remove('bw-selected'));
-
-  const tsWrap = document.getElementById('bw-time-slot-wrap');
-  if (bwAddingSession.hours === 1) {
-    // 1-hour: show time slot buttons
-    bwRenderTimeSlotBtns();
-    tsWrap.classList.add('bw-visible');
-  } else {
-    // 2-hour: slot is fixed as full session
-    tsWrap.classList.remove('bw-visible');
-    bwAddingTime = '9-11:00';
-  }
-
-  bwRenderCalendar();
-}
-
-function bwRenderTimeSlotBtns() {
-  const c = document.getElementById('bw-time-slots');
-  c.innerHTML = '';
-  [{ slot: '9:00', label: '9–10am' }, { slot: '10:00', label: '10–11am' }].forEach(t => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'bw-ts-btn';
-    btn.textContent = t.label;
-    btn.addEventListener('click', e => { e.stopPropagation(); bwPickTimeSlot(t.slot, btn); });
-    c.appendChild(btn);
-  });
-}
-
-function bwPickTimeSlot(slot, btn) {
-  bwAddingTime = slot;
-  document.querySelectorAll('.bw-ts-btn').forEach(b => b.classList.remove('bw-selected'));
-  btn.classList.add('bw-selected');
-  bwRenderCalendar(); // re-render so calendar reflects the chosen slot
-}
-
-// ── Child confirm / cancel ───────────────────────────────────────────────────
-
-function bwConfirmChild() {
-  const nameEl = document.getElementById('bw-adding-name');
-  const name   = nameEl.value.trim();
-  if (!name) { nameEl.classList.add('bw-error'); nameEl.focus(); return; }
-  nameEl.classList.remove('bw-error');
-  if (!bwAddingSession) { alert('Please select a session for this child.'); return; }
-  if (!bwAddingTime)    { alert('Please choose a time slot for this child.'); return; }
-
-  const timeLabel = bwAddingSession.hours === 2 ? '9–11am'
-    : bwAddingTime === '9:00' ? '9–10am' : '10–11am';
-
-  bwChildren.push({
-    id: bwNextId++,
-    name,
-    ...bwAddingSession,
-    time: bwAddingTime,   // saved slot key e.g. "9:00" / "10:00" / "9-11:00"
-    timeLabel,
-  });
-
-  bwFormOpen      = false;
-  bwAddingSession = null;
-  bwAddingTime    = null;
-  bwResetFormUI();
-  bwRenderAll();
-}
-
-function bwCancelChild() {
-  bwFormOpen      = false;
-  bwAddingSession = null;
-  bwAddingTime    = null;
-  bwResetFormUI();
-  bwRenderAll();
-}
-
-function bwResetFormUI() {
-  document.getElementById('bw-adding-name').value = '';
-  document.getElementById('bw-adding-name').classList.remove('bw-error');
-  document.querySelectorAll('.bw-session-opt').forEach(o => o.classList.remove('bw-selected'));
-  document.getElementById('bw-time-slot-wrap').classList.remove('bw-visible');
-  document.getElementById('bw-adding-form').style.display = 'none';
-}
-
-function bwOpenFormForNext() {
-  bwFormOpen      = true;
-  bwAddingSession = null;
-  bwAddingTime    = null;
-
-  document.getElementById('bw-adding-form-title').textContent = 'Child ' + (bwChildren.length + 1);
-  document.getElementById('bw-adding-name').value = '';
-  document.getElementById('bw-adding-name').classList.remove('bw-error');
-  document.querySelectorAll('.bw-session-opt').forEach(o => o.classList.remove('bw-selected'));
-  document.getElementById('bw-time-slot-wrap').classList.remove('bw-visible');
-  document.getElementById('bw-adding-form').style.display   = 'block';
-  document.getElementById('bw-add-more-wrap').style.display = 'none';
-  document.getElementById('bw-cancel-btn').style.display    = 'block';
-  document.getElementById('bw-adding-name').focus();
-
-  bwRenderCalendar(); // re-render: form is open again, slot unknown, calendar hides
-}
-
-function bwRemoveChild(id) {
-  bwChildren = bwChildren.filter(c => c.id !== id);
-  // If the removed child's date is no longer valid, clear it
-  if (bwSelectedDate && !bwDateIsBookable(bwSelectedDate)) {
-    bwSelectedDate = null;
-    document.getElementById('bw-date-pill').classList.remove('bw-show');
-  }
-  bwRenderAll();
-}
-
-// ── Render confirmed children list + surrounding UI ──────────────────────────
-
-function bwRenderAll() {
-  const count      = bwChildren.length;
-  const hasSibling = count >= 2;
-
-  document.getElementById('bw-children-list').innerHTML = bwChildren.map((c, i) => {
-    const dp = hasSibling ? Math.round(BW_SIBLING_RATE * c.hours) : c.price;
-    const priceHTML = hasSibling
-      ? `<span style="text-decoration:line-through;opacity:0.35;font-size:0.8rem;margin-right:0.3rem;">£${c.price}</span><span style="color:var(--sage);font-weight:700;">£${dp}</span>`
-      : `<span style="color:var(--text);">£${c.price}</span>`;
-    return `<div class="bw-child-card">
-      <div class="bw-child-card-header">
-        <div>
-          <div class="bw-child-tag">Child ${i + 1}</div>
-          <div class="bw-child-name-display">${c.name}</div>
-        </div>
-        <button class="bw-remove-child-btn" type="button" onclick="bwRemoveChild(${c.id})">✕ Remove</button>
-      </div>
-      <div class="bw-child-session-row">
-        <div><div class="bw-s-label">${c.label}</div><div class="bw-s-time">${c.timeLabel}</div></div>
-        <div class="bw-s-price">${priceHTML}</div>
-      </div>
-    </div>`;
-  }).join('');
-
-  document.getElementById('bw-add-more-wrap').style.display  = (count > 0 && count < 5 && !bwFormOpen) ? 'block' : 'none';
-  document.getElementById('bw-sibling-locked').style.display = (count === 1 && !bwFormOpen) ? 'flex'  : 'none';
-  document.getElementById('bw-sibling-active').style.display = (hasSibling && !bwFormOpen) ? 'block' : 'none';
-  document.getElementById('bw-cal-section').style.display    = (count > 0 && !bwFormOpen)  ? 'block' : 'none';
-
-  bwRenderTotal();
-  bwRenderCalendar();
-  bwRenderProceedBtn();
-}
-
-function bwCalcTotal() {
-  const h = bwChildren.length >= 2;
-  return bwChildren.reduce((s, c) => s + (h ? Math.round(BW_SIBLING_RATE * c.hours) : c.price), 0);
-}
-
-function bwRenderTotal() {
-  const count      = bwChildren.length;
-  const hasSibling = count >= 2;
-  const total      = bwCalcTotal();
-  const standard   = bwChildren.reduce((s, c) => s + c.price, 0);
-
-  document.getElementById('bw-total-section').style.display = (count > 0 && !bwFormOpen) ? 'block' : 'none';
-  document.getElementById('bw-total-amt').textContent = '£' + total;
-
-  const sn = document.getElementById('bw-saving-note');
-  if (hasSibling && total < standard) {
-    sn.style.display = 'block';
-    sn.textContent   = 'Saving £' + (standard - total) + ' with sibling discount';
-  } else {
-    sn.style.display = 'none';
-  }
-}
-
-function bwRenderProceedBtn() {
-  document.getElementById('bw-proceed-btn').disabled =
-    !(bwChildren.length > 0 && bwSelectedDate && !bwFormOpen);
-}
-
-// ── Calendar ─────────────────────────────────────────────────────────────────
+// ── STEP 1: Calendar ──────────────────────────────────────────────────────────
 
 function bwRenderCalendar() {
   document.getElementById('bw-cal-month').textContent = BW_MONTHS[bwCalMonth] + ' ' + bwCalYear;
-  const grid = document.getElementById('bw-cal-grid');
-  grid.innerHTML = '';
+  const grid        = document.getElementById('bw-cal-grid');
+  grid.innerHTML    = '';
+  const today       = new Date(); today.setHours(0, 0, 0, 0);
+  const firstDay    = new Date(bwCalYear, bwCalMonth, 1).getDay();
+  const daysInMonth = new Date(bwCalYear, bwCalMonth + 1, 0).getDate();
 
-  // Day headers
   ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d => {
     const h = document.createElement('div');
-    h.className   = 'bw-cal-head';
-    h.textContent = d;
+    h.className = 'bw-cal-head'; h.textContent = d;
     grid.appendChild(h);
   });
 
-  const firstDay    = new Date(bwCalYear, bwCalMonth, 1).getDay();
-  const daysInMonth = new Date(bwCalYear, bwCalMonth + 1, 0).getDate();
-  const today       = new Date(); today.setHours(0,0,0,0);
-
-  // Empty cells before the 1st
   for (let i = 0; i < firstDay; i++) {
-    const e = document.createElement('div'); e.className = 'bw-cal-day'; grid.appendChild(e);
+    const e = document.createElement('div'); e.className = 'bw-cal-day';
+    grid.appendChild(e);
   }
 
   for (let d = 1; d <= daysInMonth; d++) {
-    const date = new Date(bwCalYear, bwCalMonth, d);
-    const ds   = bwToDS(date);
-    const el   = document.createElement('button');
-    el.type      = 'button';
-    el.className = 'bw-cal-day';
+    const date   = new Date(bwCalYear, bwCalMonth, d);
+    const ds     = bwToDS(date);
+    const isSun  = date.getDay() === 0;
+    const isPast = date < today;
+    const el     = document.createElement('button');
+    el.type        = 'button';
+    el.className   = 'bw-cal-day';
     el.textContent = d;
 
-    if (date.getDay() === 0 && date >= today && bwDateInAvailability(ds)) {
-      // Only show a Sunday if it's in availability.json at all
-      const bookable = bwDateIsBookable(ds);
-      const overall  = bwDateOverallStatus(ds);
-
-      if (bookable) {
-        // Green or amber dot depending on overall availability
-        el.classList.add(overall === 'avail' ? 'bw-avail' : 'bw-partial');
-        if (bwSelectedDate === ds) el.classList.add('bw-picked');
-        el.addEventListener('click', () => bwPickDate(ds, date));
-      } else {
-        // Slot not available for the chosen session — show as fully booked
+    if (isSun && !isPast && BW_AVAILABILITY[ds] !== undefined) {
+      const status = bwDateOverallStatus(ds);
+      if (status === 'full') {
         el.classList.add('bw-full');
-        el.title = 'Not available for this session';
+        el.title = 'Fully booked';
+      } else {
+        el.classList.add(status === 'avail' ? 'bw-avail' : 'bw-partial');
+        el.addEventListener('click', () => bwPickDate(ds));
       }
     }
 
     if (ds === bwToDS(today)) el.classList.add('bw-today');
     grid.appendChild(el);
   }
-}
-
-function bwPickDate(ds, date) {
-  bwSelectedDate = ds;
-  document.getElementById('bw-dp-date').textContent =
-    date.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
-  document.getElementById('bw-date-pill').classList.add('bw-show');
-  bwRenderCalendar();
-  bwRenderProceedBtn();
-}
-
-function bwClearDate() {
-  bwSelectedDate = null;
-  document.getElementById('bw-date-pill').classList.remove('bw-show');
-  bwRenderCalendar();
-  bwRenderProceedBtn();
 }
 
 function bwChangeMonth(dir) {
@@ -2321,19 +2093,176 @@ function bwChangeMonth(dir) {
   bwRenderCalendar();
 }
 
-// ── Step navigation ───────────────────────────────────────────────────────────
+function bwPickDate(ds) {
+  bwSelectedDate = ds;
+  bwSelectedSlot = null;
+  bwChildren     = [];
+  bwNextId       = 1;
+  bwMeetGreet    = null;
+  bwGoTo(2);
+  bwRenderSlotPicker();
+}
 
-function bwGoTo(step) {
-  if (step === 2) bwBuildBookingSummary();
-  document.querySelectorAll('.bw-section').forEach(s => s.classList.remove('bw-active'));
-  document.getElementById('bw-step-' + step).classList.add('bw-active');
-  const stepOrder = [1, '1b', 2, 3];
-  const idx = stepOrder.indexOf(step);
-  for (let i = 0; i < 4; i++) {
-    const dot = document.getElementById('bw-dot-' + (i + 1));
-    if (dot) dot.className = 'bw-step-dot' + (i < idx ? ' bw-done' : i === idx ? ' bw-active' : '');
+// ── STEP 2: Slot picker ───────────────────────────────────────────────────────
+
+function bwRenderSlotPicker() {
+  const dateStr = bwFriendlyDate(bwSelectedDate);
+  document.getElementById('bw-step2-date-note').innerHTML =
+    '📅 <strong>' + dateStr + '</strong> — choose an available session below.';
+
+  const container = document.getElementById('bw-slot-options');
+  container.innerHTML = '';
+
+  let anyAvailable = false;
+  BW_SLOT_DEFS.forEach(slot => {
+    const spaces = bwSpaces(bwSelectedDate, slot.key);
+    const el     = document.createElement('div');
+    el.className = 'bw-session-opt' + (spaces === 0 ? ' bw-slot-full' : '');
+
+    const spacesText = spaces === 0
+      ? '<span style="color:var(--text-light);font-size:0.75rem;">Fully booked</span>'
+      : '<span style="color:var(--sage);font-size:0.75rem;font-weight:700;">' + spaces + ' space' + (spaces === 1 ? '' : 's') + ' left</span>';
+
+    el.innerHTML = `
+      <div>
+        <div class="bw-opt-label">${slot.session}</div>
+        <div class="bw-opt-sub">${slot.sessionSub}</div>
+        <div style="margin-top:0.25rem;">${spacesText}</div>
+      </div>
+      <div class="bw-opt-price">£${slot.basePrice}</div>`;
+
+    if (spaces > 0) {
+      anyAvailable = true;
+      el.addEventListener('click', () => bwPickSlot(slot));
+    } else {
+      el.style.opacity = '0.45';
+      el.style.cursor  = 'default';
+    }
+
+    container.appendChild(el);
+  });
+
+  if (!anyAvailable) {
+    container.innerHTML = '<div class="bw-info-note" style="color:var(--amber);">😔 Sorry, all slots on this date are fully booked. Please go back and choose another Sunday.</div>';
   }
 }
+
+function bwPickSlot(slot) {
+  bwSelectedSlot = slot;
+  // Reset children when slot changes
+  bwChildren = [];
+  bwNextId   = 1;
+  bwGoTo(3);
+  bwRenderChildrenStep();
+}
+
+// ── STEP 3: Children ──────────────────────────────────────────────────────────
+
+function bwRenderChildrenStep() {
+  const count = bwChildren.length;
+
+  // Summary note at top
+  document.getElementById('bw-step3-summary-note').innerHTML =
+    '📅 <strong>' + bwFriendlyDate(bwSelectedDate) + '</strong> &nbsp;·&nbsp; ' +
+    bwSelectedSlot.session;
+
+  // Children list
+  const hasSibling = count >= 2;
+  document.getElementById('bw-children-list').innerHTML = bwChildren.map((c, i) => {
+    const price = hasSibling
+      ? Math.round(BW_SIBLING_RATE * bwSelectedSlot.hours)
+      : bwSelectedSlot.basePrice;
+    const priceHTML = hasSibling
+      ? `<span style="text-decoration:line-through;opacity:0.35;font-size:0.8rem;margin-right:0.3rem;">£${bwSelectedSlot.basePrice}</span><span style="color:var(--sage);font-weight:700;">£${price}</span>`
+      : `<span>£${price}</span>`;
+    return `<div class="bw-child-card">
+      <div class="bw-child-card-header">
+        <div>
+          <div class="bw-child-tag">Child ${i + 1}</div>
+          <div class="bw-child-name-display">${c.name}</div>
+        </div>
+        <button class="bw-remove-child-btn" type="button" onclick="bwRemoveChild(${c.id})">✕ Remove</button>
+      </div>
+      <div class="bw-child-session-row">
+        <div><div class="bw-s-label">${bwSelectedSlot.session}</div><div class="bw-s-time">${bwSelectedSlot.sessionSub}</div></div>
+        <div class="bw-s-price">${priceHTML}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Sibling banner
+  document.getElementById('bw-sibling-active').style.display = hasSibling ? 'block' : 'none';
+
+  // Add child form visibility
+  const formEl = document.getElementById('bw-adding-form');
+  if (count === 0) {
+    // First child — always show form, no cancel
+    document.getElementById('bw-adding-form-title').textContent = 'Child 1';
+    document.getElementById('bw-adding-name').value = '';
+    document.getElementById('bw-cancel-btn').style.display = 'none';
+    formEl.style.display = 'block';
+  }
+  document.getElementById('bw-add-more-wrap').style.display = (count > 0 && count < 5 && formEl.style.display === 'none') ? 'block' : 'none';
+
+  // Total
+  const totalEl = document.getElementById('bw-total-section');
+  totalEl.style.display = count > 0 && formEl.style.display === 'none' ? 'block' : 'none';
+  document.getElementById('bw-total-amt').textContent = '£' + bwCalcTotal();
+  const sn = document.getElementById('bw-saving-note');
+  const standard = bwSelectedSlot.basePrice * count;
+  const actual   = bwCalcTotal();
+  if (hasSibling && actual < standard) {
+    sn.style.display = 'block';
+    sn.textContent   = 'Saving £' + (standard - actual) + ' with sibling discount';
+  } else {
+    sn.style.display = 'none';
+  }
+
+  // Proceed button
+  document.getElementById('bw-proceed-btn').disabled = !(count > 0 && formEl.style.display === 'none');
+}
+
+function bwConfirmChild() {
+  const nameEl = document.getElementById('bw-adding-name');
+  const name   = nameEl.value.trim();
+  if (!name) { nameEl.classList.add('bw-error'); nameEl.focus(); return; }
+  nameEl.classList.remove('bw-error');
+  bwChildren.push({ id: bwNextId++, name });
+  document.getElementById('bw-adding-form').style.display = 'none';
+  bwRenderChildrenStep();
+}
+
+function bwCancelChild() {
+  document.getElementById('bw-adding-name').value = '';
+  document.getElementById('bw-adding-form').style.display = 'none';
+  bwRenderChildrenStep();
+}
+
+function bwOpenAddChild() {
+  document.getElementById('bw-adding-form-title').textContent = 'Child ' + (bwChildren.length + 1);
+  document.getElementById('bw-adding-name').value = '';
+  document.getElementById('bw-adding-name').classList.remove('bw-error');
+  document.getElementById('bw-cancel-btn').style.display = 'block';
+  document.getElementById('bw-adding-form').style.display = 'block';
+  document.getElementById('bw-add-more-wrap').style.display = 'none';
+  document.getElementById('bw-total-section').style.display = 'none';
+  document.getElementById('bw-proceed-btn').disabled = true;
+  document.getElementById('bw-adding-name').focus();
+}
+
+function bwRemoveChild(id) {
+  bwChildren = bwChildren.filter(c => c.id !== id);
+  if (bwChildren.length === 0) {
+    // Show form again for first child
+    document.getElementById('bw-adding-form-title').textContent = 'Child 1';
+    document.getElementById('bw-adding-name').value = '';
+    document.getElementById('bw-cancel-btn').style.display = 'none';
+    document.getElementById('bw-adding-form').style.display = 'block';
+  }
+  bwRenderChildrenStep();
+}
+
+// ── STEP 4: Meet & greet ──────────────────────────────────────────────────────
 
 function bwSelectMeetGreet(val) {
   bwMeetGreet = val;
@@ -2343,24 +2272,26 @@ function bwSelectMeetGreet(val) {
   document.getElementById('bw-mg-proceed-btn').disabled = false;
 }
 
-// ── Booking summary + submit ──────────────────────────────────────────────────
+// ── STEP 5: Summary + submit ──────────────────────────────────────────────────
 
 function bwBuildBookingSummary() {
   const hasSibling = bwChildren.length >= 2;
-  const d          = new Date(bwSelectedDate + 'T00:00:00');
-  const dateLabel  = d.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  const dateLabel  = bwFriendlyDate(bwSelectedDate);
+  const total      = bwCalcTotal();
+  const standard   = bwSelectedSlot.basePrice * bwChildren.length;
   let html = '';
 
   bwChildren.forEach((c, i) => {
     if (i > 0) html += '<hr class="bw-bs-div">';
-    const dp = hasSibling ? Math.round(BW_SIBLING_RATE * c.hours) : c.price;
-    html += `<div class="bw-bs-row"><span style="font-weight:700;">${c.name}</span><span>${c.label}</span></div>`;
-    html += `<div class="bw-bs-row"><span style="padding-left:0.5rem;opacity:0.6">Time</span><span>${c.timeLabel}</span></div>`;
+    const price = hasSibling
+      ? Math.round(BW_SIBLING_RATE * bwSelectedSlot.hours)
+      : bwSelectedSlot.basePrice;
+    html += `<div class="bw-bs-row"><span style="font-weight:700;">${c.name}</span><span>${bwSelectedSlot.session}</span></div>`;
     if (hasSibling) {
-      html += `<div class="bw-bs-row"><span style="padding-left:0.5rem;opacity:0.45">Standard</span><span style="text-decoration:line-through;opacity:0.45">£${c.price}</span></div>`;
-      html += `<div class="bw-bs-row bw-disc"><span style="padding-left:0.5rem">Sibling rate</span><span>£${dp}</span></div>`;
+      html += `<div class="bw-bs-row"><span style="padding-left:0.5rem;opacity:0.45">Standard</span><span style="text-decoration:line-through;opacity:0.45">£${bwSelectedSlot.basePrice}</span></div>`;
+      html += `<div class="bw-bs-row bw-disc"><span style="padding-left:0.5rem">Sibling rate</span><span>£${price}</span></div>`;
     } else {
-      html += `<div class="bw-bs-row"><span style="padding-left:0.5rem">Price</span><span>£${c.price}</span></div>`;
+      html += `<div class="bw-bs-row"><span style="padding-left:0.5rem">Price</span><span>£${price}</span></div>`;
     }
   });
 
@@ -2369,11 +2300,14 @@ function bwBuildBookingSummary() {
   if (bwMeetGreet) {
     html += `<hr class="bw-bs-div">`;
     html += `<div class="bw-bs-row" style="color:var(--text-mid);"><span>👋 Meet &amp; greet</span><span>Included</span></div>`;
-    html += `<div class="bw-bs-row" style="font-size:0.78rem;color:var(--text-light);padding-bottom:0.25rem;"><span style="padding-left:0.5rem;">Due today</span><span>£15</span></div>`;
-    html += `<div class="bw-bs-row" style="font-size:0.78rem;color:var(--text-light);"><span style="padding-left:0.5rem;">Due after meet &amp; greet</span><span>£${bwCalcTotal() - 15}</span></div>`;
+    html += `<div class="bw-bs-row" style="font-size:0.78rem;color:var(--text-light);padding-bottom:0.25rem;"><span style="padding-left:0.5rem">Due today</span><span>£15</span></div>`;
+    html += `<div class="bw-bs-row" style="font-size:0.78rem;color:var(--text-light);"><span style="padding-left:0.5rem">Due after meet &amp; greet</span><span>£${total - 15}</span></div>`;
     html += `<div class="bw-bs-row bw-total"><span>Total due today</span><span>£15</span></div>`;
   } else {
-    html += `<div class="bw-bs-row bw-total"><span>Total due</span><span>£${bwCalcTotal()}</span></div>`;
+    if (hasSibling && total < standard) {
+      html += `<div class="bw-bs-row bw-disc"><span>Sibling discount saving</span><span>-£${standard - total}</span></div>`;
+    }
+    html += `<div class="bw-bs-row bw-total"><span>Total due</span><span>£${total}</span></div>`;
   }
 
   document.getElementById('bw-booking-summary').innerHTML = html;
@@ -2389,29 +2323,26 @@ async function bwSubmitBooking() {
   errEl.style.display = 'none';
 
   if (!first || !last || !email || !phone) {
-    errEl.textContent   = 'Please fill in all fields.';
-    errEl.style.display = 'block';
-    return;
+    errEl.textContent = 'Please fill in all fields.'; errEl.style.display = 'block'; return;
   }
   if (!tcOk) {
-    errEl.textContent   = 'Please read and agree to the Terms and Conditions to continue.';
-    errEl.style.display = 'block';
-    return;
+    errEl.textContent = 'Please read and agree to the Terms and Conditions to continue.';
+    errEl.style.display = 'block'; return;
   }
 
-  const hasSibling = bwChildren.length >= 2;
-  const fullTotal  = bwCalcTotal();
-  const total      = bwMeetGreet ? 15 : fullTotal;
-  const d          = new Date(bwSelectedDate + 'T00:00:00');
-  const dateLabel  = d.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
-  const mgLine     = bwMeetGreet
-    ? `\n\n👋 MEET & GREET REQUESTED\nDue today: £15\nRemaining balance (£${fullTotal - 15}) due after meet & greet, only if happy to proceed.`
+  const hasSibling  = bwChildren.length >= 2;
+  const fullTotal   = bwCalcTotal();
+  const totalDue    = bwMeetGreet ? 15 : fullTotal;
+  const dateLabel   = bwFriendlyDate(bwSelectedDate);
+  const mgLine      = bwMeetGreet
+    ? `\n\n👋 MEET & GREET REQUESTED\nDue today: £15\nRemaining balance (£${fullTotal - 15}) due after meet & greet.`
     : '';
-  const bookingSummaryText = bwChildren.map((c, i) => {
-    const dp = hasSibling ? Math.round(BW_SIBLING_RATE * c.hours) : c.price;
-    return `Child ${i + 1}: ${c.name}\nSession: ${c.label} (${c.timeLabel})\nPrice: £${dp}${hasSibling ? ' (sibling rate)' : ''}`;
-  }).join('\n\n') + `\n\nDate: ${dateLabel}${mgLine}\nTotal due today: £${total}`;
-  const payRef = (first[0] + last).replace(/\s/g,'').toUpperCase() + '-' + bwSelectedDate.replace(/-/g,'');
+  const childLines  = bwChildren.map((c, i) => {
+    const price = hasSibling ? Math.round(BW_SIBLING_RATE * bwSelectedSlot.hours) : bwSelectedSlot.basePrice;
+    return `Child ${i + 1}: ${c.name}\nSession: ${bwSelectedSlot.session}\nPrice: £${price}${hasSibling ? ' (sibling rate)' : ''}`;
+  }).join('\n\n');
+  const summaryText = childLines + `\n\nDate: ${dateLabel}${mgLine}\nTotal due today: £${totalDue}`;
+  const payRef      = (first[0] + last).replace(/\s/g,'').toUpperCase() + '-' + bwSelectedDate.replace(/-/g,'');
 
   document.querySelectorAll('.bw-section').forEach(s => s.classList.remove('bw-active'));
   document.getElementById('bw-step-sending').classList.add('bw-active');
@@ -2419,28 +2350,28 @@ async function bwSubmitBooking() {
   try {
     await emailjs.send(BW_EMAILJS_SERVICE_ID, BW_EMAILJS_TEMPLATE_ID, {
       parent_name: first + ' ' + last, parent_email: email,
-      booking_summary: bookingSummaryText, total, payment_ref: payRef, tc_link: BW_TC_LINK,
+      booking_summary: summaryText, total: totalDue, payment_ref: payRef, tc_link: BW_TC_LINK,
     });
     await emailjs.send(BW_EMAILJS_SERVICE_ID, BW_EMAILJS_TEMPLATE_ID, {
       parent_name: 'NEW BOOKING — ' + first + ' ' + last,
       parent_email: 'believetoachievetuition@gmail.com',
-      booking_summary: bookingSummaryText + '\n\nPhone: ' + phone + '\nEmail: ' + email,
-      total, payment_ref: payRef, tc_link: BW_TC_LINK,
+      booking_summary: summaryText + '\n\nPhone: ' + phone + '\nEmail: ' + email,
+      total: totalDue, payment_ref: payRef, tc_link: BW_TC_LINK,
     });
-    bwShowSuccess(dateLabel, total, payRef);
+    bwShowSuccess(dateLabel, totalDue, fullTotal);
   } catch(err) {
     document.querySelectorAll('.bw-section').forEach(s => s.classList.remove('bw-active'));
-    document.getElementById('bw-step-2').classList.add('bw-active');
-    errEl.textContent   = 'Sorry, there was a problem. Please try again or email believetoachievetuition@gmail.com directly.';
+    document.getElementById('bw-step-5').classList.add('bw-active');
+    errEl.textContent = 'Sorry, something went wrong. Please try again or email believetoachievetuition@gmail.com directly.';
     errEl.style.display = 'block';
   }
 }
 
-function bwShowSuccess(dateLabel, total, payRef) {
+function bwShowSuccess(dateLabel, totalDue, fullTotal) {
   const hasSibling = bwChildren.length >= 2;
   let html = '';
   bwChildren.forEach(c => {
-    html += `<div class="bw-bs-row"><span style="font-weight:700;">${c.name}</span><span>${c.label} · ${c.timeLabel}</span></div>`;
+    html += `<div class="bw-bs-row"><span style="font-weight:700;">${c.name}</span><span>${bwSelectedSlot.session}</span></div>`;
   });
   if (hasSibling) html += `<div class="bw-bs-row bw-disc"><span>Sibling discount applied</span></div>`;
   html += `<div class="bw-bs-row"><span>Date</span><span>${dateLabel}</span></div>`;
@@ -2448,10 +2379,10 @@ function bwShowSuccess(dateLabel, total, payRef) {
   if (bwMeetGreet) {
     html += `<div class="bw-bs-row" style="color:var(--text-mid);font-size:0.82rem;"><span>👋 Meet &amp; greet requested</span><span>✓</span></div>`;
     html += `<div class="bw-bs-row bw-total"><span>Amount due today</span><span>£15</span></div>`;
-    html += `<div style="background:#f0f7f1;border:1px solid #c3dfc7;border-radius:10px;padding:0.75rem 1rem;margin-top:0.75rem;font-size:0.82rem;color:#3a6b40;line-height:1.6;">The remaining <strong>£${bwCalcTotal() - 15}</strong> for the Sunday session will only be collected once you've met Sian and are happy to go ahead.</div>`;
+    html += `<div style="background:#f0f7f1;border:1px solid #c3dfc7;border-radius:10px;padding:0.75rem 1rem;margin-top:0.75rem;font-size:0.82rem;color:#3a6b40;line-height:1.6;">The remaining <strong>£${fullTotal - 15}</strong> for the Sunday session will only be collected once you've met Sian and are happy to go ahead.</div>`;
     document.getElementById('bw-success-msg').textContent = 'A confirmation email has been sent to you. Please pay £15 via bank transfer to secure your meet & greet — Sian will be in touch to arrange a time!';
   } else {
-    html += `<div class="bw-bs-row bw-total"><span>Amount due</span><span>£${total}</span></div>`;
+    html += `<div class="bw-bs-row bw-total"><span>Amount due</span><span>£${totalDue}</span></div>`;
     document.getElementById('bw-success-msg').textContent = 'A confirmation email has been sent to you with payment details. Please make your bank transfer to secure your place.';
   }
 
