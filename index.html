@@ -1930,255 +1930,533 @@
 <!-- BOOKING WIDGET SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-// Availability is loaded from availability.json — edit that file to update dates.
+// ── BOOKING WIDGET ──────────────────────────────────────────────────────────
+// Availability loaded from availability.json
+// Keys: "9:00", "10:00", "9-11:00" — values = spaces remaining (out of 4)
+// ────────────────────────────────────────────────────────────────────────────
+
 let BW_AVAILABILITY = {};
 
 const BW_EMAILJS_PUBLIC_KEY  = 'YcHluYUj5pINA5zCe';
 const BW_EMAILJS_SERVICE_ID  = 'service_j11tywx';
 const BW_EMAILJS_TEMPLATE_ID = 'template_lom6kel';
-const BW_TC_LINK = 'terms.html';
-const BW_SIBLING_RATE = 27;
+const BW_TC_LINK             = 'terms.html';
+const BW_SIBLING_RATE        = 27;
 const BW_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const BW_SESSIONS = [
-  { value: '1hr-maths',    label: '1 Hour Maths',            price: 30, hours: 1, sub: '9–10am or 10–11am' },
-  { value: '1hr-literacy', label: '1 Hour Literacy',          price: 30, hours: 1, sub: '9–10am or 10–11am' },
-  { value: '2hr-both',     label: '2 Hours Maths & Literacy', price: 60, hours: 2, sub: 'Full session <span class="bw-time-break">9–11am</span>' },
+  { value: '1hr-maths',    label: '1 Hour Maths',             price: 30, hours: 1, sub: '9–10am or 10–11am' },
+  { value: '1hr-literacy', label: '1 Hour Literacy',           price: 30, hours: 1, sub: '9–10am or 10–11am' },
+  { value: '2hr-both',     label: '2 Hours Maths &amp; Literacy', price: 60, hours: 2, sub: 'Full session <span class="bw-time-break">9–11am</span>' },
 ];
 
-let bwChildren=[], bwNextId=1, bwAddingSession=null, bwAddingTime=null, bwFormOpen=false, bwSelectedDate=null, bwCalYear, bwCalMonth, bwMeetGreet=null;
+// State
+let bwChildren      = [];   // confirmed children [{id, name, label, price, hours, time, timeLabel}]
+let bwNextId        = 1;
+let bwAddingSession = null; // session object currently being chosen in the form
+let bwAddingTime    = null; // time slot key currently chosen in the form ("9:00" / "10:00" / "9-11:00")
+let bwFormOpen      = false;
+let bwSelectedDate  = null; // "YYYY-MM-DD"
+let bwCalYear, bwCalMonth;
+let bwMeetGreet     = null;
 
-function bwDateStatus(ds){const av=BW_AVAILABILITY[ds];if(av===undefined)return'hidden';const s9=av['9:00']??0;const s10=av['10:00']??0;const s2=av['9-11:00']??0;if(s9===0&&s10===0&&s2===0)return'full';if(s9>=4&&s10>=4&&s2>=4)return'avail';return'partial';}
-function bwSlotAvailable(ds,slot){const av=BW_AVAILABILITY[ds];if(!av)return false;return(av[slot]??0)>0;}
+// ── Helpers ──────────────────────────────────────────────────────────────────
 
-window.addEventListener('load',()=>{
-  const now=new Date(); bwCalYear=now.getFullYear(); bwCalMonth=now.getMonth();
+function bwToDS(date) {
+  return date.getFullYear() + '-' +
+    String(date.getMonth() + 1).padStart(2,'0') + '-' +
+    String(date.getDate()).padStart(2,'0');
+}
+
+// Returns how many spaces remain for a specific slot key on a date string
+function bwSpacesLeft(ds, slotKey) {
+  const av = BW_AVAILABILITY[ds];
+  if (!av) return 0;
+  return av[slotKey] ?? 0;
+}
+
+// Given the current widget state, return the list of slot keys we need to be
+// available on a date for it to be bookable. Covers:
+//   - confirmed children (bwChildren)
+//   - the child currently being entered in the form (bwAddingSession + bwAddingTime)
+function bwRequiredSlots() {
+  const slots = [];
+
+  // Confirmed children
+  bwChildren.forEach(c => {
+    slots.push(c.hours === 2 ? '9-11:00' : c.time);
+  });
+
+  // Child currently in the form (only if session AND time are both chosen)
+  if (bwFormOpen && bwAddingSession) {
+    if (bwAddingSession.hours === 2) {
+      slots.push('9-11:00');
+    } else if (bwAddingTime) {
+      slots.push(bwAddingTime);
+    }
+  }
+
+  return slots;
+}
+
+// Is this date visible at all in availability.json?
+function bwDateInAvailability(ds) {
+  return BW_AVAILABILITY[ds] !== undefined;
+}
+
+// Is every required slot available (>0 spaces) on this date?
+// If no slots required yet (nothing selected), the date is NOT shown —
+// the calendar only appears once at least one slot is determined.
+function bwDateIsBookable(ds) {
+  const required = bwRequiredSlots();
+  if (required.length === 0) return false; // hide calendar until slot chosen
+  return required.every(slot => bwSpacesLeft(ds, slot) > 0);
+}
+
+// Visual status for legend dot colour (green / amber / grey)
+// Based purely on overall availability, ignoring current selection
+function bwDateOverallStatus(ds) {
+  const av = BW_AVAILABILITY[ds];
+  if (!av) return 'hidden';
+  const total = (av['9:00'] ?? 0) + (av['10:00'] ?? 0) + (av['9-11:00'] ?? 0);
+  if (total === 0) return 'full';
+  const maxPossible = 12; // 4+4+4
+  if (total >= maxPossible) return 'avail';
+  return 'partial';
+}
+
+// ── Initialisation ───────────────────────────────────────────────────────────
+
+window.addEventListener('load', () => {
+  const now = new Date();
+  bwCalYear  = now.getFullYear();
+  bwCalMonth = now.getMonth();
+
   emailjs.init(BW_EMAILJS_PUBLIC_KEY);
-  document.getElementById('bw-adding-form-title').textContent='Child 1';
-  document.getElementById('bw-cancel-btn').style.display='none';
-  bwFormOpen=true;
+
+  // Show form for first child
+  document.getElementById('bw-adding-form-title').textContent = 'Child 1';
+  document.getElementById('bw-cancel-btn').style.display = 'none';
+  document.getElementById('bw-adding-form').style.display = 'block';
+  bwFormOpen = true;
+
   bwRenderSessionOpts();
-  fetch('availability.json?v='+Date.now())
-    .then(r=>r.json())
-    .then(data=>{BW_AVAILABILITY=data; bwRenderCalendar();})
-    .catch(()=>{bwRenderCalendar();});
+
+  fetch('availability.json?v=' + Date.now())
+    .then(r => r.json())
+    .then(data => { BW_AVAILABILITY = data; bwRenderCalendar(); })
+    .catch(() => { bwRenderCalendar(); });
 });
 
-function bwRenderSessionOpts(){
-  const c=document.getElementById('bw-session-opts'); c.innerHTML='';
-  BW_SESSIONS.forEach(s=>{
-    const el=document.createElement('div'); el.className='bw-session-opt';
-    el.innerHTML=`<div><div class="bw-opt-label">${s.label}</div><div class="bw-opt-sub">${s.sub}</div></div><div class="bw-opt-price">£${s.price}</div>`;
-    el.addEventListener('click',()=>bwPickSession(s.value)); c.appendChild(el);
+// ── Session option buttons ───────────────────────────────────────────────────
+
+function bwRenderSessionOpts() {
+  const c = document.getElementById('bw-session-opts');
+  c.innerHTML = '';
+  BW_SESSIONS.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'bw-session-opt';
+    el.innerHTML = `<div><div class="bw-opt-label">${s.label}</div><div class="bw-opt-sub">${s.sub}</div></div><div class="bw-opt-price">£${s.price}</div>`;
+    el.addEventListener('click', () => bwPickSession(s.value));
+    c.appendChild(el);
   });
 }
 
-function bwRenderTimeSlotBtns(ds){
-  const c=document.getElementById('bw-time-slots'); c.innerHTML='';
-  [{slot:'9:00',label:'9–10am'},{slot:'10:00',label:'10–11am'}].forEach(t=>{
-    const btn=document.createElement('button'); btn.type='button'; btn.className='bw-ts-btn'; btn.textContent=t.label;
-    btn.addEventListener('click',(e)=>{e.stopPropagation();bwPickTimeSlot(t.slot,btn);});
+function bwPickSession(value) {
+  bwAddingSession = BW_SESSIONS.find(s => s.value === value);
+  bwAddingTime    = null;
+
+  // Highlight selected session
+  document.querySelectorAll('.bw-session-opt').forEach(el => {
+    el.classList.toggle('bw-selected',
+      el.querySelector('.bw-opt-label').textContent === bwAddingSession.label);
+  });
+
+  // Clear any time slot selection
+  document.querySelectorAll('.bw-ts-btn').forEach(b => b.classList.remove('bw-selected'));
+
+  const tsWrap = document.getElementById('bw-time-slot-wrap');
+  if (bwAddingSession.hours === 1) {
+    // 1-hour: show time slot buttons
+    bwRenderTimeSlotBtns();
+    tsWrap.classList.add('bw-visible');
+  } else {
+    // 2-hour: slot is fixed as full session
+    tsWrap.classList.remove('bw-visible');
+    bwAddingTime = '9-11:00';
+  }
+
+  bwRenderCalendar();
+}
+
+function bwRenderTimeSlotBtns() {
+  const c = document.getElementById('bw-time-slots');
+  c.innerHTML = '';
+  [{ slot: '9:00', label: '9–10am' }, { slot: '10:00', label: '10–11am' }].forEach(t => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'bw-ts-btn';
+    btn.textContent = t.label;
+    btn.addEventListener('click', e => { e.stopPropagation(); bwPickTimeSlot(t.slot, btn); });
     c.appendChild(btn);
   });
 }
 
-function bwPickSession(value){
-  bwAddingSession=BW_SESSIONS.find(s=>s.value===value); bwAddingTime=null;
-  document.querySelectorAll('.bw-session-opt').forEach(el=>el.classList.toggle('bw-selected',el.querySelector('.bw-opt-label').textContent===bwAddingSession.label));
-  document.querySelectorAll('.bw-ts-btn').forEach(b=>b.classList.remove('bw-selected'));
-  const tsWrap=document.getElementById('bw-time-slot-wrap');
-  if(bwAddingSession.hours===1){bwRenderTimeSlotBtns(null);tsWrap.classList.add('bw-visible');}
-  else{tsWrap.classList.remove('bw-visible');bwAddingTime='9:00';}
-  bwRenderCalendar();
+function bwPickTimeSlot(slot, btn) {
+  bwAddingTime = slot;
+  document.querySelectorAll('.bw-ts-btn').forEach(b => b.classList.remove('bw-selected'));
+  btn.classList.add('bw-selected');
+  bwRenderCalendar(); // re-render so calendar reflects the chosen slot
 }
 
-function bwPickTimeSlot(slot,btn){bwAddingTime=slot;document.querySelectorAll('.bw-ts-btn').forEach(b=>b.classList.remove('bw-selected'));btn.classList.add('bw-selected');bwRenderCalendar();}
+// ── Child confirm / cancel ───────────────────────────────────────────────────
 
-function bwConfirmChild(){
-  const nameEl=document.getElementById('bw-adding-name'); const name=nameEl.value.trim();
-  if(!name){nameEl.classList.add('bw-error');nameEl.focus();return;} nameEl.classList.remove('bw-error');
-  if(!bwAddingSession){alert('Please select a session for this child.');return;}
-  if(!bwAddingTime){alert('Please choose a time slot for this child.');return;}
-  const timeLabel=bwAddingSession.hours===2?'9–11am':bwAddingTime==='9:00'?'9–10am':'10–11am';
-  bwChildren.push({id:bwNextId++,name,...bwAddingSession,time:bwAddingTime,timeLabel});
-  bwFormOpen=false;bwAddingSession=null;bwAddingTime=null;bwResetForm();bwRenderAll();
+function bwConfirmChild() {
+  const nameEl = document.getElementById('bw-adding-name');
+  const name   = nameEl.value.trim();
+  if (!name) { nameEl.classList.add('bw-error'); nameEl.focus(); return; }
+  nameEl.classList.remove('bw-error');
+  if (!bwAddingSession) { alert('Please select a session for this child.'); return; }
+  if (!bwAddingTime)    { alert('Please choose a time slot for this child.'); return; }
+
+  const timeLabel = bwAddingSession.hours === 2 ? '9–11am'
+    : bwAddingTime === '9:00' ? '9–10am' : '10–11am';
+
+  bwChildren.push({
+    id: bwNextId++,
+    name,
+    ...bwAddingSession,
+    time: bwAddingTime,   // saved slot key e.g. "9:00" / "10:00" / "9-11:00"
+    timeLabel,
+  });
+
+  bwFormOpen      = false;
+  bwAddingSession = null;
+  bwAddingTime    = null;
+  bwResetFormUI();
+  bwRenderAll();
 }
 
-function bwCancelChild(){bwFormOpen=false;bwAddingSession=null;bwAddingTime=null;bwResetForm();bwRenderAll();}
+function bwCancelChild() {
+  bwFormOpen      = false;
+  bwAddingSession = null;
+  bwAddingTime    = null;
+  bwResetFormUI();
+  bwRenderAll();
+}
 
-function bwResetForm(){
-  document.getElementById('bw-adding-name').value='';
+function bwResetFormUI() {
+  document.getElementById('bw-adding-name').value = '';
   document.getElementById('bw-adding-name').classList.remove('bw-error');
-  document.querySelectorAll('.bw-session-opt').forEach(o=>o.classList.remove('bw-selected'));
+  document.querySelectorAll('.bw-session-opt').forEach(o => o.classList.remove('bw-selected'));
   document.getElementById('bw-time-slot-wrap').classList.remove('bw-visible');
-  document.getElementById('bw-adding-form').style.display='none';
+  document.getElementById('bw-adding-form').style.display = 'none';
 }
 
-function bwOpenFormForNext(){
-  bwFormOpen=true;bwAddingSession=null;bwAddingTime=null;
-  document.getElementById('bw-adding-form-title').textContent='Child '+(bwChildren.length+1);
-  document.getElementById('bw-adding-name').value='';
+function bwOpenFormForNext() {
+  bwFormOpen      = true;
+  bwAddingSession = null;
+  bwAddingTime    = null;
+
+  document.getElementById('bw-adding-form-title').textContent = 'Child ' + (bwChildren.length + 1);
+  document.getElementById('bw-adding-name').value = '';
   document.getElementById('bw-adding-name').classList.remove('bw-error');
-  document.querySelectorAll('.bw-session-opt').forEach(o=>o.classList.remove('bw-selected'));
+  document.querySelectorAll('.bw-session-opt').forEach(o => o.classList.remove('bw-selected'));
   document.getElementById('bw-time-slot-wrap').classList.remove('bw-visible');
-  document.getElementById('bw-adding-form').style.display='block';
-  document.getElementById('bw-add-more-wrap').style.display='none';
-  document.getElementById('bw-cancel-btn').style.display='block';
+  document.getElementById('bw-adding-form').style.display   = 'block';
+  document.getElementById('bw-add-more-wrap').style.display = 'none';
+  document.getElementById('bw-cancel-btn').style.display    = 'block';
   document.getElementById('bw-adding-name').focus();
+
+  bwRenderCalendar(); // re-render: form is open again, slot unknown, calendar hides
 }
 
-function bwRemoveChild(id){bwChildren=bwChildren.filter(c=>c.id!==id);bwRenderAll();}
+function bwRemoveChild(id) {
+  bwChildren = bwChildren.filter(c => c.id !== id);
+  // If the removed child's date is no longer valid, clear it
+  if (bwSelectedDate && !bwDateIsBookable(bwSelectedDate)) {
+    bwSelectedDate = null;
+    document.getElementById('bw-date-pill').classList.remove('bw-show');
+  }
+  bwRenderAll();
+}
 
-function bwRenderAll(){
-  const count=bwChildren.length; const hasSibling=count>=2;
-  document.getElementById('bw-children-list').innerHTML=bwChildren.map((c,i)=>{
-    const dp=hasSibling?Math.round(BW_SIBLING_RATE*c.hours):c.price;
-    const priceHTML=hasSibling?`<span style="text-decoration:line-through;opacity:0.35;font-size:0.8rem;margin-right:0.3rem;">£${c.price}</span><span style="color:var(--sage);font-weight:700;">£${dp}</span>`:`<span style="color:var(--text);">£${c.price}</span>`;
-    return`<div class="bw-child-card"><div class="bw-child-card-header"><div><div class="bw-child-tag">Child ${i+1}</div><div class="bw-child-name-display">${c.name}</div></div><button class="bw-remove-child-btn" type="button" onclick="bwRemoveChild(${c.id})">✕ Remove</button></div><div class="bw-child-session-row"><div><div class="bw-s-label">${c.label}</div><div class="bw-s-time">${c.timeLabel}</div></div><div class="bw-s-price">${priceHTML}</div></div></div>`;
+// ── Render confirmed children list + surrounding UI ──────────────────────────
+
+function bwRenderAll() {
+  const count      = bwChildren.length;
+  const hasSibling = count >= 2;
+
+  document.getElementById('bw-children-list').innerHTML = bwChildren.map((c, i) => {
+    const dp = hasSibling ? Math.round(BW_SIBLING_RATE * c.hours) : c.price;
+    const priceHTML = hasSibling
+      ? `<span style="text-decoration:line-through;opacity:0.35;font-size:0.8rem;margin-right:0.3rem;">£${c.price}</span><span style="color:var(--sage);font-weight:700;">£${dp}</span>`
+      : `<span style="color:var(--text);">£${c.price}</span>`;
+    return `<div class="bw-child-card">
+      <div class="bw-child-card-header">
+        <div>
+          <div class="bw-child-tag">Child ${i + 1}</div>
+          <div class="bw-child-name-display">${c.name}</div>
+        </div>
+        <button class="bw-remove-child-btn" type="button" onclick="bwRemoveChild(${c.id})">✕ Remove</button>
+      </div>
+      <div class="bw-child-session-row">
+        <div><div class="bw-s-label">${c.label}</div><div class="bw-s-time">${c.timeLabel}</div></div>
+        <div class="bw-s-price">${priceHTML}</div>
+      </div>
+    </div>`;
   }).join('');
-  document.getElementById('bw-add-more-wrap').style.display=(count>0&&count<5&&!bwFormOpen)?'block':'none';
-  document.getElementById('bw-sibling-locked').style.display=(count===1&&!bwFormOpen)?'flex':'none';
-  document.getElementById('bw-sibling-active').style.display=(hasSibling&&!bwFormOpen)?'block':'none';
-  document.getElementById('bw-cal-section').style.display=(count>0&&!bwFormOpen)?'block':'none';
-  bwRenderTotal();bwRenderProceedBtn();
+
+  document.getElementById('bw-add-more-wrap').style.display  = (count > 0 && count < 5 && !bwFormOpen) ? 'block' : 'none';
+  document.getElementById('bw-sibling-locked').style.display = (count === 1 && !bwFormOpen) ? 'flex'  : 'none';
+  document.getElementById('bw-sibling-active').style.display = (hasSibling && !bwFormOpen) ? 'block' : 'none';
+  document.getElementById('bw-cal-section').style.display    = (count > 0 && !bwFormOpen)  ? 'block' : 'none';
+
+  bwRenderTotal();
+  bwRenderCalendar();
+  bwRenderProceedBtn();
 }
 
-function bwCalcTotal(){const h=bwChildren.length>=2;return bwChildren.reduce((s,c)=>s+(h?Math.round(BW_SIBLING_RATE*c.hours):c.price),0);}
-
-function bwRenderTotal(){
-  const count=bwChildren.length;const hasSibling=count>=2;const total=bwCalcTotal();const standard=bwChildren.reduce((s,c)=>s+c.price,0);
-  document.getElementById('bw-total-section').style.display=(count>0&&!bwFormOpen)?'block':'none';
-  document.getElementById('bw-total-amt').textContent='£'+total;
-  const sn=document.getElementById('bw-saving-note');
-  if(hasSibling&&total<standard){sn.style.display='block';sn.textContent='Saving £'+(standard-total)+' with sibling discount';}else sn.style.display='none';
+function bwCalcTotal() {
+  const h = bwChildren.length >= 2;
+  return bwChildren.reduce((s, c) => s + (h ? Math.round(BW_SIBLING_RATE * c.hours) : c.price), 0);
 }
 
-function bwRenderProceedBtn(){document.getElementById('bw-proceed-btn').disabled=!(bwChildren.length>0&&bwSelectedDate&&!bwFormOpen);}
+function bwRenderTotal() {
+  const count      = bwChildren.length;
+  const hasSibling = count >= 2;
+  const total      = bwCalcTotal();
+  const standard   = bwChildren.reduce((s, c) => s + c.price, 0);
 
-function bwRenderCalendar(){
-  document.getElementById('bw-cal-month').textContent=BW_MONTHS[bwCalMonth]+' '+bwCalYear;
-  const grid=document.getElementById('bw-cal-grid'); grid.innerHTML='';
-  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d=>{const h=document.createElement('div');h.className='bw-cal-head';h.textContent=d;grid.appendChild(h);});
-  const firstDay=new Date(bwCalYear,bwCalMonth,1).getDay();
-  const daysInMonth=new Date(bwCalYear,bwCalMonth+1,0).getDate();
-  const today=new Date();today.setHours(0,0,0,0);
-  for(let i=0;i<firstDay;i++){const e=document.createElement('div');e.className='bw-cal-day';grid.appendChild(e);}
-  for(let d=1;d<=daysInMonth;d++){
-    const date=new Date(bwCalYear,bwCalMonth,d);const ds=bwToDS(date);
-    const el=document.createElement('button');el.type='button';el.className='bw-cal-day';el.textContent=d;
-    if(date.getDay()===0&&date>=today){
-      const status=bwDateStatus(ds);
-      if(status!=='hidden'){const filterSlots=bwChildren.map(c=>c.hours===2?'9-11:00':c.time);const slotAvail=filterSlots.length>0?filterSlots.every(slot=>bwSlotAvailable(ds,slot)):(status!=='full');if(slotAvail){const cls=status==='avail'?'bw-avail':'bw-partial';el.classList.add(cls);if(bwSelectedDate===ds)el.classList.add('bw-picked');el.addEventListener('click',()=>bwPickDate(ds,date));}else{el.classList.add('bw-full');el.title='Fully booked';}}
+  document.getElementById('bw-total-section').style.display = (count > 0 && !bwFormOpen) ? 'block' : 'none';
+  document.getElementById('bw-total-amt').textContent = '£' + total;
+
+  const sn = document.getElementById('bw-saving-note');
+  if (hasSibling && total < standard) {
+    sn.style.display = 'block';
+    sn.textContent   = 'Saving £' + (standard - total) + ' with sibling discount';
+  } else {
+    sn.style.display = 'none';
+  }
+}
+
+function bwRenderProceedBtn() {
+  document.getElementById('bw-proceed-btn').disabled =
+    !(bwChildren.length > 0 && bwSelectedDate && !bwFormOpen);
+}
+
+// ── Calendar ─────────────────────────────────────────────────────────────────
+
+function bwRenderCalendar() {
+  document.getElementById('bw-cal-month').textContent = BW_MONTHS[bwCalMonth] + ' ' + bwCalYear;
+  const grid = document.getElementById('bw-cal-grid');
+  grid.innerHTML = '';
+
+  // Day headers
+  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d => {
+    const h = document.createElement('div');
+    h.className   = 'bw-cal-head';
+    h.textContent = d;
+    grid.appendChild(h);
+  });
+
+  const firstDay    = new Date(bwCalYear, bwCalMonth, 1).getDay();
+  const daysInMonth = new Date(bwCalYear, bwCalMonth + 1, 0).getDate();
+  const today       = new Date(); today.setHours(0,0,0,0);
+
+  // Empty cells before the 1st
+  for (let i = 0; i < firstDay; i++) {
+    const e = document.createElement('div'); e.className = 'bw-cal-day'; grid.appendChild(e);
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const date = new Date(bwCalYear, bwCalMonth, d);
+    const ds   = bwToDS(date);
+    const el   = document.createElement('button');
+    el.type      = 'button';
+    el.className = 'bw-cal-day';
+    el.textContent = d;
+
+    if (date.getDay() === 0 && date >= today && bwDateInAvailability(ds)) {
+      // Only show a Sunday if it's in availability.json at all
+      const bookable = bwDateIsBookable(ds);
+      const overall  = bwDateOverallStatus(ds);
+
+      if (bookable) {
+        // Green or amber dot depending on overall availability
+        el.classList.add(overall === 'avail' ? 'bw-avail' : 'bw-partial');
+        if (bwSelectedDate === ds) el.classList.add('bw-picked');
+        el.addEventListener('click', () => bwPickDate(ds, date));
+      } else {
+        // Slot not available for the chosen session — show as fully booked
+        el.classList.add('bw-full');
+        el.title = 'Not available for this session';
+      }
     }
-    if(ds===bwToDS(today))el.classList.add('bw-today');
+
+    if (ds === bwToDS(today)) el.classList.add('bw-today');
     grid.appendChild(el);
   }
 }
 
-function bwPickDate(ds,date){
-  bwSelectedDate=ds;
-  document.getElementById('bw-dp-date').textContent=date.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+function bwPickDate(ds, date) {
+  bwSelectedDate = ds;
+  document.getElementById('bw-dp-date').textContent =
+    date.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
   document.getElementById('bw-date-pill').classList.add('bw-show');
-  bwRenderCalendar();bwRenderProceedBtn();
+  bwRenderCalendar();
+  bwRenderProceedBtn();
 }
 
-function bwClearDate(){
-  bwSelectedDate=null;bwAddingTime=null;
+function bwClearDate() {
+  bwSelectedDate = null;
   document.getElementById('bw-date-pill').classList.remove('bw-show');
-  if(bwAddingSession&&bwAddingSession.hours===1){bwRenderTimeSlotBtns(null);document.querySelectorAll('.bw-ts-btn').forEach(b=>b.classList.remove('bw-selected'));}
-  bwRenderCalendar();bwRenderProceedBtn();
+  bwRenderCalendar();
+  bwRenderProceedBtn();
 }
 
-function bwChangeMonth(dir){bwCalMonth+=dir;if(bwCalMonth>11){bwCalMonth=0;bwCalYear++;}if(bwCalMonth<0){bwCalMonth=11;bwCalYear--;}bwRenderCalendar();}
-function bwToDS(date){return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');}
-
-function bwGoTo(step){
-  if(step===2)bwBuildBookingSummary();
-  document.querySelectorAll('.bw-section').forEach(s=>s.classList.remove('bw-active'));
-  document.getElementById('bw-step-'+step).classList.add('bw-active');
-  const stepOrder=[1,'1b',2,3];
-  const idx=stepOrder.indexOf(step);
-  for(let i=0;i<4;i++){const dot=document.getElementById('bw-dot-'+(i+1));if(dot)dot.className='bw-step-dot'+(i<idx?' bw-done':i===idx?' bw-active':'');}
+function bwChangeMonth(dir) {
+  bwCalMonth += dir;
+  if (bwCalMonth > 11) { bwCalMonth = 0; bwCalYear++; }
+  if (bwCalMonth < 0)  { bwCalMonth = 11; bwCalYear--; }
+  bwRenderCalendar();
 }
 
-function bwSelectMeetGreet(val){
-  bwMeetGreet=val;
-  document.getElementById('bw-mg-yes').classList.toggle('bw-mg-selected',val===true);
-  document.getElementById('bw-mg-no').classList.toggle('bw-mg-selected',val===false);
-  document.getElementById('bw-mg-note').classList.toggle('bw-show',val===true);
-  document.getElementById('bw-mg-proceed-btn').disabled=false;
+// ── Step navigation ───────────────────────────────────────────────────────────
+
+function bwGoTo(step) {
+  if (step === 2) bwBuildBookingSummary();
+  document.querySelectorAll('.bw-section').forEach(s => s.classList.remove('bw-active'));
+  document.getElementById('bw-step-' + step).classList.add('bw-active');
+  const stepOrder = [1, '1b', 2, 3];
+  const idx = stepOrder.indexOf(step);
+  for (let i = 0; i < 4; i++) {
+    const dot = document.getElementById('bw-dot-' + (i + 1));
+    if (dot) dot.className = 'bw-step-dot' + (i < idx ? ' bw-done' : i === idx ? ' bw-active' : '');
+  }
 }
 
-function bwBuildBookingSummary(){
-  const hasSibling=bwChildren.length>=2;
-  const d=new Date(bwSelectedDate+'T00:00:00');
-  const dateLabel=d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  let html='';
-  bwChildren.forEach((c,i)=>{
-    if(i>0)html+='<hr class="bw-bs-div">';
-    const dp=hasSibling?Math.round(BW_SIBLING_RATE*c.hours):c.price;
-    html+=`<div class="bw-bs-row"><span style="font-weight:700;">${c.name}</span><span>${c.label}</span></div>`;
-    html+=`<div class="bw-bs-row"><span style="padding-left:0.5rem;opacity:0.6">Time</span><span>${c.timeLabel}</span></div>`;
-    if(hasSibling){html+=`<div class="bw-bs-row"><span style="padding-left:0.5rem;opacity:0.45">Standard</span><span style="text-decoration:line-through;opacity:0.45">£${c.price}</span></div>`;html+=`<div class="bw-bs-row bw-disc"><span style="padding-left:0.5rem">Sibling rate</span><span>£${dp}</span></div>`;}
-    else html+=`<div class="bw-bs-row"><span style="padding-left:0.5rem">Price</span><span>£${c.price}</span></div>`;
+function bwSelectMeetGreet(val) {
+  bwMeetGreet = val;
+  document.getElementById('bw-mg-yes').classList.toggle('bw-mg-selected', val === true);
+  document.getElementById('bw-mg-no').classList.toggle('bw-mg-selected',  val === false);
+  document.getElementById('bw-mg-note').classList.toggle('bw-show', val === true);
+  document.getElementById('bw-mg-proceed-btn').disabled = false;
+}
+
+// ── Booking summary + submit ──────────────────────────────────────────────────
+
+function bwBuildBookingSummary() {
+  const hasSibling = bwChildren.length >= 2;
+  const d          = new Date(bwSelectedDate + 'T00:00:00');
+  const dateLabel  = d.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  let html = '';
+
+  bwChildren.forEach((c, i) => {
+    if (i > 0) html += '<hr class="bw-bs-div">';
+    const dp = hasSibling ? Math.round(BW_SIBLING_RATE * c.hours) : c.price;
+    html += `<div class="bw-bs-row"><span style="font-weight:700;">${c.name}</span><span>${c.label}</span></div>`;
+    html += `<div class="bw-bs-row"><span style="padding-left:0.5rem;opacity:0.6">Time</span><span>${c.timeLabel}</span></div>`;
+    if (hasSibling) {
+      html += `<div class="bw-bs-row"><span style="padding-left:0.5rem;opacity:0.45">Standard</span><span style="text-decoration:line-through;opacity:0.45">£${c.price}</span></div>`;
+      html += `<div class="bw-bs-row bw-disc"><span style="padding-left:0.5rem">Sibling rate</span><span>£${dp}</span></div>`;
+    } else {
+      html += `<div class="bw-bs-row"><span style="padding-left:0.5rem">Price</span><span>£${c.price}</span></div>`;
+    }
   });
-  html+=`<div class="bw-bs-row" style="margin-top:0.5rem;"><span>Date</span><span>${dateLabel}</span></div>`;
-  if(bwMeetGreet){
-    html+=`<hr class="bw-bs-div">`;
-    html+=`<div class="bw-bs-row" style="color:var(--text-mid);"><span>👋 Meet &amp; greet</span><span>Included</span></div>`;
-    html+=`<div class="bw-bs-row" style="font-size:0.78rem;color:var(--text-light);padding-bottom:0.25rem;"><span style="padding-left:0.5rem;">Due today</span><span>£15</span></div>`;
-    html+=`<div class="bw-bs-row" style="font-size:0.78rem;color:var(--text-light);"><span style="padding-left:0.5rem;">Due after meet &amp; greet</span><span>£${bwCalcTotal()-15}</span></div>`;
-    html+=`<div class="bw-bs-row bw-total"><span>Total due today</span><span>£15</span></div>`;
+
+  html += `<div class="bw-bs-row" style="margin-top:0.5rem;"><span>Date</span><span>${dateLabel}</span></div>`;
+
+  if (bwMeetGreet) {
+    html += `<hr class="bw-bs-div">`;
+    html += `<div class="bw-bs-row" style="color:var(--text-mid);"><span>👋 Meet &amp; greet</span><span>Included</span></div>`;
+    html += `<div class="bw-bs-row" style="font-size:0.78rem;color:var(--text-light);padding-bottom:0.25rem;"><span style="padding-left:0.5rem;">Due today</span><span>£15</span></div>`;
+    html += `<div class="bw-bs-row" style="font-size:0.78rem;color:var(--text-light);"><span style="padding-left:0.5rem;">Due after meet &amp; greet</span><span>£${bwCalcTotal() - 15}</span></div>`;
+    html += `<div class="bw-bs-row bw-total"><span>Total due today</span><span>£15</span></div>`;
   } else {
-    html+=`<div class="bw-bs-row bw-total"><span>Total due</span><span>£${bwCalcTotal()}</span></div>`;
+    html += `<div class="bw-bs-row bw-total"><span>Total due</span><span>£${bwCalcTotal()}</span></div>`;
   }
-  document.getElementById('bw-booking-summary').innerHTML=html;
+
+  document.getElementById('bw-booking-summary').innerHTML = html;
 }
 
-async function bwSubmitBooking(){
-  const first=document.getElementById('bw-first-name').value.trim();
-  const last=document.getElementById('bw-last-name').value.trim();
-  const email=document.getElementById('bw-email').value.trim();
-  const phone=document.getElementById('bw-phone').value.trim();
-  const tcOk=document.getElementById('bw-tc-checkbox').checked;
-  const errEl=document.getElementById('bw-error-note'); errEl.style.display='none';
-  if(!first||!last||!email||!phone){errEl.textContent='Please fill in all fields.';errEl.style.display='block';return;}
-  if(!tcOk){errEl.textContent='Please read and agree to the Terms and Conditions to continue.';errEl.style.display='block';return;}
-  const hasSibling=bwChildren.length>=2;const fullTotal=bwCalcTotal();
-  const total=bwMeetGreet?15:fullTotal;
-  const d=new Date(bwSelectedDate+'T00:00:00');
-  const dateLabel=d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  const mgLine=bwMeetGreet?`\n\n👋 MEET & GREET REQUESTED\nDue today: £15\nRemaining balance (£${fullTotal-15}) due after meet & greet, only if happy to proceed.`:'';
-  const bookingSummaryText=bwChildren.map((c,i)=>{const dp=hasSibling?Math.round(BW_SIBLING_RATE*c.hours):c.price;return`Child ${i+1}: ${c.name}\nSession: ${c.label} (${c.timeLabel})\nPrice: £${dp}${hasSibling?' (sibling rate)':''}`;}).join('\n\n')+`\n\nDate: ${dateLabel}${mgLine}\nTotal due today: £${total}`;
-  const payRef=(first[0]+last).replace(/\s/g,'').toUpperCase()+'-'+bwSelectedDate.replace(/-/g,'');
-  document.querySelectorAll('.bw-section').forEach(s=>s.classList.remove('bw-active'));
+async function bwSubmitBooking() {
+  const first = document.getElementById('bw-first-name').value.trim();
+  const last  = document.getElementById('bw-last-name').value.trim();
+  const email = document.getElementById('bw-email').value.trim();
+  const phone = document.getElementById('bw-phone').value.trim();
+  const tcOk  = document.getElementById('bw-tc-checkbox').checked;
+  const errEl = document.getElementById('bw-error-note');
+  errEl.style.display = 'none';
+
+  if (!first || !last || !email || !phone) {
+    errEl.textContent   = 'Please fill in all fields.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (!tcOk) {
+    errEl.textContent   = 'Please read and agree to the Terms and Conditions to continue.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const hasSibling = bwChildren.length >= 2;
+  const fullTotal  = bwCalcTotal();
+  const total      = bwMeetGreet ? 15 : fullTotal;
+  const d          = new Date(bwSelectedDate + 'T00:00:00');
+  const dateLabel  = d.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  const mgLine     = bwMeetGreet
+    ? `\n\n👋 MEET & GREET REQUESTED\nDue today: £15\nRemaining balance (£${fullTotal - 15}) due after meet & greet, only if happy to proceed.`
+    : '';
+  const bookingSummaryText = bwChildren.map((c, i) => {
+    const dp = hasSibling ? Math.round(BW_SIBLING_RATE * c.hours) : c.price;
+    return `Child ${i + 1}: ${c.name}\nSession: ${c.label} (${c.timeLabel})\nPrice: £${dp}${hasSibling ? ' (sibling rate)' : ''}`;
+  }).join('\n\n') + `\n\nDate: ${dateLabel}${mgLine}\nTotal due today: £${total}`;
+  const payRef = (first[0] + last).replace(/\s/g,'').toUpperCase() + '-' + bwSelectedDate.replace(/-/g,'');
+
+  document.querySelectorAll('.bw-section').forEach(s => s.classList.remove('bw-active'));
   document.getElementById('bw-step-sending').classList.add('bw-active');
-  try{
-    await emailjs.send(BW_EMAILJS_SERVICE_ID,BW_EMAILJS_TEMPLATE_ID,{parent_name:first+' '+last,parent_email:email,booking_summary:bookingSummaryText,total,payment_ref:payRef,tc_link:BW_TC_LINK});
-    await emailjs.send(BW_EMAILJS_SERVICE_ID,BW_EMAILJS_TEMPLATE_ID,{parent_name:'NEW BOOKING — '+first+' '+last,parent_email:'believetoachievetuition@gmail.com',booking_summary:bookingSummaryText+'\n\nPhone: '+phone+'\nEmail: '+email,total,payment_ref:payRef,tc_link:BW_TC_LINK});
-    bwShowSuccess(dateLabel,total,payRef);
-  }catch(err){
-    document.querySelectorAll('.bw-section').forEach(s=>s.classList.remove('bw-active'));
+
+  try {
+    await emailjs.send(BW_EMAILJS_SERVICE_ID, BW_EMAILJS_TEMPLATE_ID, {
+      parent_name: first + ' ' + last, parent_email: email,
+      booking_summary: bookingSummaryText, total, payment_ref: payRef, tc_link: BW_TC_LINK,
+    });
+    await emailjs.send(BW_EMAILJS_SERVICE_ID, BW_EMAILJS_TEMPLATE_ID, {
+      parent_name: 'NEW BOOKING — ' + first + ' ' + last,
+      parent_email: 'believetoachievetuition@gmail.com',
+      booking_summary: bookingSummaryText + '\n\nPhone: ' + phone + '\nEmail: ' + email,
+      total, payment_ref: payRef, tc_link: BW_TC_LINK,
+    });
+    bwShowSuccess(dateLabel, total, payRef);
+  } catch(err) {
+    document.querySelectorAll('.bw-section').forEach(s => s.classList.remove('bw-active'));
     document.getElementById('bw-step-2').classList.add('bw-active');
-    errEl.textContent='Sorry, there was a problem sending your confirmation. Please try again or contact believetoachievetuition@gmail.com directly.';errEl.style.display='block';
+    errEl.textContent   = 'Sorry, there was a problem. Please try again or email believetoachievetuition@gmail.com directly.';
+    errEl.style.display = 'block';
   }
 }
 
-function bwShowSuccess(dateLabel,total,payRef){
-  const hasSibling=bwChildren.length>=2; let html='';
-  bwChildren.forEach(c=>{html+=`<div class="bw-bs-row"><span style="font-weight:700;">${c.name}</span><span>${c.label} · ${c.timeLabel}</span></div>`;});
-  if(hasSibling)html+=`<div class="bw-bs-row bw-disc"><span>Sibling discount applied</span></div>`;
-  html+=`<div class="bw-bs-row"><span>Date</span><span>${dateLabel}</span></div>`;
-  if(bwMeetGreet){
-    html+=`<div class="bw-bs-row" style="color:var(--text-mid);font-size:0.82rem;"><span>👋 Meet &amp; greet requested</span><span>✓</span></div>`;
-    html+=`<div class="bw-bs-row bw-total"><span>Amount due today</span><span>£15</span></div>`;
-    html+=`<div style="background:#f0f7f1;border:1px solid #c3dfc7;border-radius:10px;padding:0.75rem 1rem;margin-top:0.75rem;font-size:0.82rem;color:#3a6b40;line-height:1.6;">The remaining <strong>£${bwCalcTotal()-15}</strong> for the Sunday session will only be collected once you've met Sian and are happy to go ahead.</div>`;
-    document.getElementById('bw-success-msg').textContent="A confirmation email has been sent to you. Please pay £15 via bank transfer to secure your meet & greet — Sian will be in touch to arrange a time!";
+function bwShowSuccess(dateLabel, total, payRef) {
+  const hasSibling = bwChildren.length >= 2;
+  let html = '';
+  bwChildren.forEach(c => {
+    html += `<div class="bw-bs-row"><span style="font-weight:700;">${c.name}</span><span>${c.label} · ${c.timeLabel}</span></div>`;
+  });
+  if (hasSibling) html += `<div class="bw-bs-row bw-disc"><span>Sibling discount applied</span></div>`;
+  html += `<div class="bw-bs-row"><span>Date</span><span>${dateLabel}</span></div>`;
+
+  if (bwMeetGreet) {
+    html += `<div class="bw-bs-row" style="color:var(--text-mid);font-size:0.82rem;"><span>👋 Meet &amp; greet requested</span><span>✓</span></div>`;
+    html += `<div class="bw-bs-row bw-total"><span>Amount due today</span><span>£15</span></div>`;
+    html += `<div style="background:#f0f7f1;border:1px solid #c3dfc7;border-radius:10px;padding:0.75rem 1rem;margin-top:0.75rem;font-size:0.82rem;color:#3a6b40;line-height:1.6;">The remaining <strong>£${bwCalcTotal() - 15}</strong> for the Sunday session will only be collected once you've met Sian and are happy to go ahead.</div>`;
+    document.getElementById('bw-success-msg').textContent = 'A confirmation email has been sent to you. Please pay £15 via bank transfer to secure your meet & greet — Sian will be in touch to arrange a time!';
   } else {
-    html+=`<div class="bw-bs-row bw-total"><span>Amount due</span><span>£${total}</span></div>`;
-    document.getElementById('bw-success-msg').textContent="A confirmation email has been sent to you with payment details. Please make your bank transfer to secure your place.";
+    html += `<div class="bw-bs-row bw-total"><span>Amount due</span><span>£${total}</span></div>`;
+    document.getElementById('bw-success-msg').textContent = 'A confirmation email has been sent to you with payment details. Please make your bank transfer to secure your place.';
   }
-  document.getElementById('bw-success-details').innerHTML=html;
-  document.querySelectorAll('.bw-section').forEach(s=>s.classList.remove('bw-active'));
+
+  document.getElementById('bw-success-details').innerHTML = html;
+  document.querySelectorAll('.bw-section').forEach(s => s.classList.remove('bw-active'));
   document.getElementById('bw-step-success').classList.add('bw-active');
 }
 </script>
