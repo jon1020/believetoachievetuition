@@ -1952,20 +1952,15 @@ const BW_SIBLING_RATE        = 27; // £ per hour per child when 2+ children
 const BW_MONTHS = ['January','February','March','April','May','June','July',
   'August','September','October','November','December'];
 
-// The three possible slots and their display info
-const BW_SLOT_DEFS = [
-  { key: '9:00',    label: '9–10am',          hours: 1, basePrice: 30,
-    session: '1 Hour (9–10am)', sessionSub: 'Maths or Literacy' },
-  { key: '10:00',   label: '10–11am',         hours: 1, basePrice: 30,
-    session: '1 Hour (10–11am)', sessionSub: 'Maths or Literacy' },
-  { key: '9-11:00', label: '9–11am (full)',   hours: 2, basePrice: 60,
-    session: '2 Hours (9–11am)', sessionSub: 'Maths & Literacy' },
-];
+// Slots are now defined per-date in availability.json using "HH:MM-HH:MM" keys,
+// e.g. "09:00-10:00", "14:00-15:30", "09:00-11:00" — any day, any time, any length.
+// This standard rate (£ per hour) is used to auto-price each slot.
+const BW_STANDARD_RATE_PER_HOUR = 30;
 
 // State
 let bwCalYear, bwCalMonth;
 let bwSelectedDate = null;  // "YYYY-MM-DD"
-let bwSelectedSlot = null;  // one of BW_SLOT_DEFS
+let bwSelectedSlot = null;  // built dynamically from an availability.json key
 let bwChildren     = [];    // [{id, name}]
 let bwNextId       = 1;
 let bwMeetGreet    = null;  // true / false
@@ -1984,16 +1979,71 @@ function bwSpaces(ds, slotKey) {
   return av[slotKey] ?? 0;
 }
 
-// For calendar dot colour: looks at all slots combined
+// For calendar dot colour: looks at all slots for that date, whatever times they are
 function bwDateOverallStatus(ds) {
   const av = BW_AVAILABILITY[ds];
   if (!av) return 'hidden';
-  const s9  = av['9:00']    ?? 0;
-  const s10 = av['10:00']   ?? 0;
-  const s2  = av['9-11:00'] ?? 0;
-  if (s9 === 0 && s10 === 0 && s2 === 0) return 'full';
-  if (s9 >= 4  && s10 >= 4  && s2 >= 4)  return 'avail';
+  const values = Object.keys(av).map(k => av[k] ?? 0);
+  if (values.length === 0) return 'hidden';
+  if (values.every(v => v <= 0)) return 'full';
+  if (values.every(v => v >= 4)) return 'avail';
   return 'partial';
+}
+
+// Parses a "HH:MM-HH:MM" availability key into start/end minutes and duration.
+// Returns null if the key isn't in a recognised time-range format.
+function bwParseSlotKey(key) {
+  const parts = String(key).split('-');
+  if (parts.length !== 2) return null;
+  const toMinutes = (t) => {
+    const bits = t.split(':');
+    const h = parseInt(bits[0], 10);
+    const m = bits.length > 1 ? parseInt(bits[1], 10) : 0;
+    if (isNaN(h) || isNaN(m)) return null;
+    return h * 60 + m;
+  };
+  const startMin = toMinutes(parts[0]);
+  const endMin   = toMinutes(parts[1]);
+  if (startMin === null || endMin === null || endMin <= startMin) return null;
+  return { startMin, endMin, hours: (endMin - startMin) / 60 };
+}
+
+// Formats minutes-since-midnight as a friendly 12-hour time, e.g. 570 -> "9:30am"
+function bwFormatTime(mins) {
+  let h = Math.floor(mins / 60);
+  const m = mins % 60;
+  const ampm = h >= 12 ? 'pm' : 'am';
+  h = h % 12; if (h === 0) h = 12;
+  return m === 0 ? (h + ampm) : (h + ':' + String(m).padStart(2, '0') + ampm);
+}
+
+// Builds a full slot object (label, price, etc.) for a given availability.json key.
+function bwSlotFromKey(key) {
+  const p = bwParseSlotKey(key);
+  if (!p) return null;
+  const hours     = p.hours;
+  const timeLabel = bwFormatTime(p.startMin) + '–' + bwFormatTime(p.endMin);
+  const hourLabel = (hours === 1 ? '1 Hour' : hours + ' Hours');
+  const basePrice = Math.round(hours * BW_STANDARD_RATE_PER_HOUR);
+  const sessionSub = hours >= 2 ? 'Maths & Literacy' : 'Maths or Literacy';
+  return {
+    key: key,
+    startMin: p.startMin,
+    hours: hours,
+    basePrice: basePrice,
+    session: hourLabel + ' (' + timeLabel + ')',
+    sessionSub: sessionSub
+  };
+}
+
+// Returns every valid slot defined for a date, sorted by start time.
+function bwGetSlotsForDate(ds) {
+  const av = BW_AVAILABILITY[ds];
+  if (!av) return [];
+  return Object.keys(av)
+    .map(bwSlotFromKey)
+    .filter(s => s !== null)
+    .sort((a, b) => a.startMin - b.startMin);
 }
 
 function bwCalcTotal() {
@@ -2063,14 +2113,13 @@ function bwRenderCalendar() {
   for (let d = 1; d <= daysInMonth; d++) {
     const date   = new Date(bwCalYear, bwCalMonth, d);
     const ds     = bwToDS(date);
-    const isSun  = date.getDay() === 0;
     const isPast = date < today;
     const el     = document.createElement('button');
     el.type        = 'button';
     el.className   = 'bw-cal-day';
     el.textContent = d;
 
-    if (isSun && !isPast && BW_AVAILABILITY[ds] !== undefined) {
+    if (!isPast && BW_AVAILABILITY[ds] !== undefined) {
       const status = bwDateOverallStatus(ds);
       if (status === 'full') {
         el.classList.add('bw-full');
@@ -2114,7 +2163,8 @@ function bwRenderSlotPicker() {
   container.innerHTML = '';
 
   let anyAvailable = false;
-  BW_SLOT_DEFS.forEach(slot => {
+  const slots = bwGetSlotsForDate(bwSelectedDate);
+  slots.forEach(slot => {
     const spaces = bwSpaces(bwSelectedDate, slot.key);
     const el     = document.createElement('div');
     el.className = 'bw-session-opt' + (spaces === 0 ? ' bw-slot-full' : '');
